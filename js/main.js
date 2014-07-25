@@ -41,6 +41,7 @@ require(['jquery',
                         console.log(logCount);
                         if(logCount < 3){
                             window.location = "signIn.php"
+
                         } 
                     }
                 });

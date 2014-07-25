@@ -76,9 +76,10 @@ function register(){
     }
 
     //if log exist return, else send to database
-    $numberOfErrors = count($log);
+    $logCount = count($log);
 
-    if($numberOfErrors > 1){
+    if($logCount > 1){
+        $log["errors"] = "Your registration contains invalid data";
         $logObject = json_encode($log);
         echo $logObject;
     }else{
