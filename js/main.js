@@ -37,12 +37,17 @@ require(['jquery',
                     success: function (data) {
                         console.log(data);
                         var logData = JSON.parse(data);
-                        var logCount = Object.keys(logData).length;
-                        console.log(logCount);
-                        if(logCount < 3){
+                        var errorCount = Object.keys(logData.errors).length;
+                        if(logData.type == "registration" && errorCount == 0){
                             window.location = "signIn.php"
-
-                        } 
+                        }else if(logData.type == "signIn" && errorCount == 0){
+                            window.location = "home.php";
+                        }else{
+                            console.log("not working");
+                        }
+                    },
+                    error: function(){
+                        console.log("Error: Ajax request unsuccessful");
                     }
                 });
 

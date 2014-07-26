@@ -32,7 +32,7 @@ function connectDB(){
 /**
  * Name: register
  * Purpose: Allow users to register an account on the system
- * @return $log - Array: Contains the status and errors of registration 
+ * @return $log - Array: Contains invalid and duplicate data errors 
  */
 function register(){
 
@@ -40,50 +40,52 @@ function register(){
     $companyName = Util::get("companyName");
     $adminEmail = Util::get("adminEmail");
     $adminPassword = Util::get("adminPassword");
-    $validAdminEmail = Util::validateEmail($adminEmail);
+    $hashedAdminPassword;
+    $validAdminEmail;
+    $emailInUse;
+    $errorCount;
+    $log = array();
+    $log["type"] = "registration";
+    $log["errors"] = array();
+
 
     $database = connectDB();
 
-    $log = array();
-
     //check for invalid data
-    $log["type"] = "registration";
-
     if(empty($companyName)){
-        $log["companyNameErr"] = "Company name required";
+        $log["errors"]["companyNameErr"] = "Company name required";
     }
     if(empty($adminEmail)){
-        $log["adminEmailErr"] = "E-mail address required";
+        $log["errors"]["adminEmailErr"] = "E-mail address required";
+    }else{
+        $validAdminEmail = Util::validateEmail($adminEmail);
+        
+        if($validAdminEmail === false){
+            $log["errors"]["invalidEmail"] = "Email address is invalid";
+        }else{
+            //check for duplicate email addresses
+            $emailInUse = $database->count("admins", [
+                "admin_email" => $validAdminEmail
+            ]);
+            if($emailInUse > 0){
+                $log["errors"]["adminEmailInUse"] = "Email address is already registered, try another.";
+            }
+        }
     }
     if(empty($adminPassword)){
-        $log["adminPasswordErr"] = "Password required";
+        $log["errors"]["adminPasswordErr"] = "Password required";
     }
     if(strlen($adminPassword) < PASSWORD_LENGTH ){
-        $log["adminPasswordErrLength"] = "Password must be at least 8 characters in length";
+        $log["errors"]["adminPasswordErrLength"] = "Password must be at least 8 characters in length";
     }else{
         $hashedAdminPassword = password_hash($adminPassword, PASSWORD_DEFAULT);
     }
-    if($validAdminEmail === false){
-        $log["invalidEmail"] = "Email address is invalid";
-    }
     
-    //check for duplicate email addresses
-    $emailInUse = $database->count("admins", [
-            "admin_email" => $adminEmail
-    ]);
-    if($emailInUse > 0){
-        $log["adminEmailInUse"] = "Email address is already registered, try another.";
-    }
 
-    //if log exist return, else send to database
-    $logCount = count($log);
-
-    if($logCount > 1){
-        $log["errors"] = "Your registration contains invalid data";
-        $logObject = json_encode($log);
-        echo $logObject;
-    }else{
-
+    //if data is valid input to database
+    $errorCount = count($log["errors"]);
+    if($errorCount == 0){
+        
         //check if company is already registered
         $registeredCompany = $database->count("companies", [
             "company_name" => $companyName
@@ -110,19 +112,72 @@ function register(){
             "admin_password" => $hashedAdminPassword,
             "admin_email" => $adminEmail
         ]);
-
-        $log['noErrors'] = "Congratulations, you are now registered";
-        $logObject = json_encode($log);
-        echo $logObject;      
     }
+
+    $logObject = json_encode($log);
+    echo $logObject;   
 }
 
 
 
 
+/**
+ * Name: signIn
+ * Purpose: Allow users to sign into the system
+ * @return $log - Array: Contains admin data error info 
+ */
 function signIn(){
 
-    echo "your signed in";
+    $adminEmail = Util::get("adminEmail");
+    $adminPassword = Util::get("adminPassword");
+    $registeredUser = array();
+    $log = array(); 
+    $log["type"] = "signIn";
+    $log["errors"] = array();
+    $log["data"] = array();
+    $errorCount;
+    $logObject;
+    $validAdminEmail;
+    $hashedAdminPassword;
+    $database;
+    
+    $database = connectDB();
+
+    if(empty($adminEmail)){
+        $log["errors"]["adminEmailErr"] = "E-mail address required";
+    }else{
+        
+        $validAdminEmail = Util::validateEmail($adminEmail);
+        
+        if($validAdminEmail === false){
+            $log["errors"]["invalidEmail"] = "Email address is invalid";
+        }
+    }
+    if(empty($adminPassword)){
+        $log["errors"]["adminPasswordErr"] = "Password required";
+    }else{
+        $hashedAdminPassword = password_hash($adminPassword, PASSWORD_DEFAULT);
+    }
+    
+    $errorCount = count($log["errors"]);
+
+    if($errorCount == 0){
+        
+        $registeredUser = $database->select("admins", "*",[
+                "admin_password" => $hashedAdminPassword,
+                "AND" => ["admin_email" => $validAdminEmail ]
+        ]);
+        
+        if(!empty($registeredUser)){
+            $log["data"]["adminId"] = $registeredUser[0]["admin_id"];
+            $log["data"]["adminEmail"] = $registeredUser[0]["admin_email"];
+        }else{
+            $log["errors"]["incorrectDetails"] = "The details you provided are incorrect";
+        }
+    }
+
+    $logObject = json_encode($log);
+    echo $logObject;
 }
 
 

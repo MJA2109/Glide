@@ -5,8 +5,8 @@
 				<img src = '#' alt = 'Glide logo' />
 			</div>
 			<form name = 'signInForm' id = 'signInForm' action = "../api/GlideAPI.php" method = 'POST'>
-	 			<input type = 'email' name = 'companyEmail' placeholder = 'E-mail' />
-	 			<input type = 'password' name = 'passoword' placeholder = 'Password' />
+	 			<input type = 'email' name = 'adminEmail' placeholder = 'E-mail' />
+	 			<input type = 'password' name = 'adminPassword' placeholder = 'Password' />
 	 			<input type = 'hidden' name = 'action' value = 'signIn' />
 	 			<input type = 'submit' value = 'Sign In'/>
 	 		</form>
