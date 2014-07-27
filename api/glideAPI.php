@@ -74,11 +74,11 @@ function register(){
     }
     if(empty($adminPassword)){
         $log["errors"]["adminPasswordErr"] = "Password required";
-    }
-    if(strlen($adminPassword) < PASSWORD_LENGTH ){
+    }else if(strlen($adminPassword) < PASSWORD_LENGTH ){
         $log["errors"]["adminPasswordErrLength"] = "Password must be at least 8 characters in length";
     }else{
-        $hashedAdminPassword = password_hash($adminPassword, PASSWORD_DEFAULT);
+        //$hashedAdminPassword = password_hash($adminPassword, PASSWORD_DEFAULT);
+        $hashedAdminPassword = sha1($adminPassword);
     }
     
 
@@ -156,16 +156,18 @@ function signIn(){
     if(empty($adminPassword)){
         $log["errors"]["adminPasswordErr"] = "Password required";
     }else{
-        $hashedAdminPassword = password_hash($adminPassword, PASSWORD_DEFAULT);
+        $hashedAdminPassword = sha1($adminPassword);
     }
     
     $errorCount = count($log["errors"]);
 
-    if($errorCount == 0){
+    if($errorCount == 0){ 
         
         $registeredUser = $database->select("admins", "*",[
-                "admin_password" => $hashedAdminPassword,
-                "AND" => ["admin_email" => $validAdminEmail ]
+                "AND" => [
+                    "admin_email" => $validAdminEmail,
+                    "admin_password" => $hashedAdminPassword
+                ]
         ]);
         
         if(!empty($registeredUser)){
