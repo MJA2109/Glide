@@ -1,7 +1,12 @@
-<?php require("../templates/head.php"); ?>
-	<?php require("t../emplates/navigation.php"); ?> 
-
-<p>this is the admin page</p>
-
-
-<?php require("../templates/footer.php"); ?>
+<?php 
+	session_start();
+	if(!isset($_SESSION["authorized"])){
+		header("location:index.php");
+	}else{
+		require("../templates/head.php");
+		require("../templates/navigation.php");
+		echo "ADMIN";
+		echo "Congatulations you're in " . $_SESSION["adminEmail"];
+		require("../templates/footer.php");
+	}
+?>

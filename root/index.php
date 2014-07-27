@@ -4,7 +4,7 @@
  			<img src="#" alt = 'glide logo'>
  		</div>
  		<div class = 'divBtnSignin'>
- 			<button><a href = 'signin.php'>Sign In</a></button>
+ 			<button><a href = 'signIn.php'>Sign In</a></button>
  		</div>
  		<div class = 'info'>
  			<h3>this is the slogan</h3>

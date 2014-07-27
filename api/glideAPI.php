@@ -112,6 +112,7 @@ function register(){
             "admin_password" => $hashedAdminPassword,
             "admin_email" => $adminEmail
         ]);
+
     }
 
     $logObject = json_encode($log);
@@ -128,6 +129,7 @@ function register(){
  */
 function signIn(){
 
+    define("AUTHORIZED", true);
     $adminEmail = Util::get("adminEmail");
     $adminPassword = Util::get("adminPassword");
     $registeredUser = array();
@@ -171,6 +173,9 @@ function signIn(){
         ]);
         
         if(!empty($registeredUser)){
+            session_start();
+            $_SESSION["authorized"] = AUTHORIZED;
+            $_SESSION["adminEmail"] = $registeredUser[0]["admin_email"];
             $log["data"]["adminId"] = $registeredUser[0]["admin_id"];
             $log["data"]["adminEmail"] = $registeredUser[0]["admin_email"];
         }else{

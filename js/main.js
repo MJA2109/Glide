@@ -39,9 +39,9 @@ require(['jquery',
                         var logData = JSON.parse(data);
                         var errorCount = Object.keys(logData.errors).length;
                         if(logData.type == "registration" && errorCount == 0){
-                            //window.location = "signIn.php"
+                            window.location = "signIn.php"
                         }else if(logData.type == "signIn" && errorCount == 0){
-                            //window.location = "home.php";
+                            window.location = "home.php";
                         }else{
                             console.log("not working");
                         }
