@@ -40,6 +40,7 @@ function register(){
     $companyName = Util::get("companyName");
     $adminEmail = Util::get("adminEmail");
     $adminPassword = Util::get("adminPassword");
+    $adminRePassword = Util::get("adminRePassword");
     $hashedAdminPassword;
     $validAdminEmail;
     $emailInUse;
@@ -72,10 +73,12 @@ function register(){
             }
         }
     }
-    if(empty($adminPassword)){
+    if(empty($adminPassword) || empty($adminRePassword)){
         $log["errors"]["adminPasswordErr"] = "Password required";
     }else if(strlen($adminPassword) < PASSWORD_LENGTH ){
         $log["errors"]["adminPasswordErrLength"] = "Password must be at least 8 characters in length";
+    }else if($adminPassword != $adminRePassword){
+        $log["errors"]["adminPasswordMismatch"] = "Retyped password incorrect";
     }else{
         //$hashedAdminPassword = password_hash($adminPassword, PASSWORD_DEFAULT);
         $hashedAdminPassword = sha1($adminPassword);

@@ -17,6 +17,7 @@
 	 			<input type = 'text' name = 'companyName' placeholder = 'Company Name'/>
 	 			<input type = 'email' name = 'adminEmail' placeholder = 'E-mail' />
 	 			<input type = 'password' name = 'adminPassword' placeholder = 'Password' />
+	 			<input type = 'password' name = 'adminRePassword' placeholder = 'Retype Password' />
 	 			<input type = 'hidden' name = 'action' value = 'register' />
 	 			<input type = 'submit' value = 'Sign Up'/>
 	 			<p>Already have an account ? <a href = 'signIn.php'>Sign In</a></p>
