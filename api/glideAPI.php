@@ -2,6 +2,7 @@
 require "classes/medoo.php";
 require "classes/Util.php";
 
+
 //Call function based on posted action
 if(isset($_POST["action"])){
     $action = $_POST["action"];
@@ -9,6 +10,8 @@ if(isset($_POST["action"])){
         case "register" : register();
         break;
         case "signIn" : signIn();
+        break;
+        case "signOut" : signOut();
         break;
     }
 }
@@ -189,6 +192,15 @@ function signIn(){
     $logObject = json_encode($log);
     echo $logObject;
 }
+
+
+function signOut(){
+    session_start();
+    session_destroy();
+    echo "session is destroyed";
+}
+
+
 
 
 

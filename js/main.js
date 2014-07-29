@@ -55,12 +55,37 @@ require(['jquery',
             });
         }
 
-        function initialiseFunctions(){
-            submitForm('#signUpForm');
-            submitForm('#signInForm');
+
+        function signOut(){
+            var data = {
+                action: "signOut"
+            }
+            
+            $.ajax({
+                url: "../api/glideAPI.php",
+                type: "POST",
+                data: data,
+                success: function(){
+                    window.location = "index.php";
+                },
+                error: function(){
+                    console.log("Error: Ajax request unsuccessful");
+                }
+            });
         }
 
-        initialiseFunctions();
+
+        function initialiseEvents(){
+            submitForm('#signUpForm');
+            submitForm('#signInForm');
+            
+            $("#btnSignOut").on("click", function(){
+                signOut();
+            });
+        }
+
+
+        initialiseEvents();
 
     
         

@@ -7,6 +7,11 @@
 		require("../templates/navigation.php");
 		echo "ADMIN";
 		echo "Congatulations you're in " . $_SESSION["adminEmail"];
+?>
+		<button id = "btnSignOut">Sign Out</button>
+
+
+<?php
 		require("../templates/footer.php");
 	}
 ?>
