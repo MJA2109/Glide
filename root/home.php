@@ -7,6 +7,10 @@
 		require("../templates/navigation.php");
 		echo "HOME";
 		echo "Congatulations you're in " . $_SESSION["adminEmail"];
+?>		
+	
+
+<?php
 		require("../templates/footer.php");
 	}
 ?>

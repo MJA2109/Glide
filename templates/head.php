@@ -9,11 +9,12 @@ echo   "<!DOCTYPE html>
                 <meta http-equiv='X-UA-Compatible' content='IE=edge'>
                 <title>Glide</title>
                 <meta name='description' content='Glide an application for tracking, controlling and processing company expenses.' />
-                <meta name='viewport' content='width=device-width, initial-scale=1'>
-                <link rel='icon' type='image/png' href='apple-touch-icon.png'>
-                <link rel='stylesheet' href='../css/normalize.css'>
-                <link rel='stylesheet' href='//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css'>
-                <link rel='stylesheet' href='//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css'>
+                <meta name='viewport' content='width=device-width, initial-scale=1' />
+                <link rel='icon' type='image/png' href='apple-touch-icon.png' />
+                <link rel='stylesheet' href='../css/normalize.css' />
+                <link rel='stylesheet' href='//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css' />
+                <link rel='stylesheet' href='//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css' />
+                <link rel='stylesheet' href='//cdn.datatables.net/1.10.1/css/jquery.dataTables.css' />
                 <link rel='stylesheet/less' type='text/css' href='../css/main.less'>
                 <script data-main='../js/main' src = '../js/require.js'></script>
             </head>
