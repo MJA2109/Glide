@@ -13,6 +13,8 @@ if(isset($_POST["action"])){
         break;
         case "signOut" : signOut();
         break;
+        case "getExpensesData" : getExpensesData();
+        break;
     }
 }
 
@@ -118,7 +120,6 @@ function register(){
             "admin_password" => $hashedAdminPassword,
             "admin_email" => $adminEmail
         ]);
-
     }
 
     $logObject = json_encode($log);
@@ -182,6 +183,7 @@ function signIn(){
             session_start();
             $_SESSION["authorized"] = AUTHORIZED;
             $_SESSION["adminEmail"] = $registeredUser[0]["admin_email"];
+            $_SESSION["adminId"] = $registeredUser[0]["admin_id"];
             $log["data"]["adminId"] = $registeredUser[0]["admin_id"];
             $log["data"]["adminEmail"] = $registeredUser[0]["admin_email"];
         }else{
@@ -194,10 +196,61 @@ function signIn(){
 }
 
 
+/**
+ * Name: signOut
+ * Purpose: Destroys session and allows users to sign out of system
+ */
 function signOut(){
     session_start();
     session_destroy();
     echo "session is destroyed";
+}
+
+
+/**
+ * Name: getExpensesData
+ * Purpose: Retrieve data from expenses table
+ * @return $expense or $error - JSON: Contains rows for each expense related to that specific instance.
+ */
+function getExpensesData(){
+    
+    session_start();
+    
+    if(isset($_SESSION["adminId"])){
+
+        $expense = array();
+        $index = 0;
+        $expensesData;
+        $adminId;
+        $error;
+        $database = connectDB();
+        
+        $adminId = $_SESSION["adminId"];
+        
+        //use query function for more complex database queries
+        $expensesData = $database->query("SELECT user_name, merchant_name, expense_cost, expense_date, expense_status, receipt_image, expense_comment
+                                          FROM users, expenses, merchants, receipts
+                                          WHERE ".$adminId." = expenses.admin_id
+                                          AND expenses.user_id = users.user_id
+                                          AND expenses.receipt_id = receipts.receipt_id
+                                          AND expenses.merchant_id = merchants.merchant_id")->fetchAll();
+        foreach($expensesData as $data){
+            $expense[$index] = array();
+            $expense[$index]["userName"] = $data["user_name"];
+            $expense[$index]["merchantName"] = $data["merchant_name"];
+            $expense[$index]["expenseCost"] = $data["expense_cost"];
+            $expense[$index]["expenseDate"] = $data["expense_date"];
+            $expense[$index]["expenseStatus"] = $data["expense_status"];
+            $expense[$index]["receiptImage"] = $data["receipt_image"];
+            $expense[$index]["expenseComment"] = $data["expense_comment"];
+            $index++;
+        }
+
+        echo json_encode($expense);
+    }else{
+        echo json_encode(array("error" => "Admin ID not set"));
+    }
+    
 }
 
 

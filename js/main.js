@@ -23,12 +23,10 @@ require(['jquery',
 		 'bootstrap',
 		 'cssLess',
          'datatables'], function($) {
-    	
-        $(document).ready(function(){
-
 
             var appData = {
-
+                api: "../api/glideAPI.php",
+                apiKey: "dflj45fgfg343fggf454rgf53"
             }
 
             function submitForm(form){
@@ -68,7 +66,7 @@ require(['jquery',
                 }
                 
                 $.ajax({
-                    url: "../api/glideAPI.php",
+                    url: appData.api,
                     type: "POST",
                     data: data,
                     success: function(){
@@ -82,6 +80,7 @@ require(['jquery',
 
 
             function initialiseEvents(){
+                getExpensesData();
                 submitForm('#signUpForm');
                 submitForm('#signInForm');
                 $("#btnSignOut").on("click", function(){
@@ -92,9 +91,34 @@ require(['jquery',
             }
 
 
+            function getExpensesData(){
+                var data = {
+                    action: "getExpensesData"
+                }
+
+                $.ajax({
+                    url: appData.api,
+                    type: "POST",
+                    data: data,
+                    success: function(response){
+                        var expenses = JSON.parse(response);
+                        console.log(JSON.stringify(expenses));
+                        populateTable(expenses);
+                    },
+                    error: function(){
+                        console.log("Error: Ajax request unsuccessful");   
+                    }
+                });
+            }
+
+
+            function populateTable(expenses){
+                console.log("you're at populate table");
+                var html;
+            }
+
             initialiseEvents();
      
-        });  
         
 });
 

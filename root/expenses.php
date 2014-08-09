@@ -6,7 +6,7 @@
 		require("../templates/head.php");
 		require("../templates/navigation.php");
 		echo "EXPENSES";
-		echo "Congatulations you're in " . $_SESSION["adminEmail"];
+		echo "Congatulations you're in " . $_SESSION["adminEmail"] . $_SESSION["adminId"];
 ?>
 		<table id = "expensesTable">
 			<thead>
@@ -21,87 +21,8 @@
 					<th>Comment</th>
 				</tr>
 			</thead>
-			<tbody>
-				<tr>
-					<td>Michael Anderson</td>
-					<td>Hotel</td>
-					<td>Clarion</td>
-					<td>£180.56</td>
-					<td>21/09/2014</td>
-					<td>Processed</td>
-					<td>Here</td>
-					<td>Had to stay two nights.</td>
-				</tr>
-				<tr>
-					<td>Michael Anderson</td>
-					<td>Hotel</td>
-					<td>Clarion</td>
-					<td>£180.56</td>
-					<td>21/09/2014</td>
-					<td>Processed</td>
-					<td>Here</td>
-					<td>Had to stay two nights.</td>
-				</tr>
-				<tr>
-					<td>Michael Anderson</td>
-					<td>Hotel</td>
-					<td>Clarion</td>
-					<td>£180.56</td>
-					<td>21/09/2014</td>
-					<td>Processed</td>
-					<td>Here</td>
-					<td>Had to stay two nights.</td>
-				</tr>
-				<tr>
-					<td>Michael Anderson</td>
-					<td>Hotel</td>
-					<td>Clarion</td>
-					<td>£180.56</td>
-					<td>21/09/2014</td>
-					<td>Processed</td>
-					<td>Here</td>
-					<td>Had to stay two nights.</td>
-				</tr>
-				<tr>
-					<td>Michael Anderson</td>
-					<td>Hotel</td>
-					<td>Clarion</td>
-					<td>£180.56</td>
-					<td>21/09/2014</td>
-					<td>Processed</td>
-					<td>Here</td>
-					<td>Had to stay two nights.</td>
-				</tr>
-				<tr>
-					<td>Michael Anderson</td>
-					<td>Hotel</td>
-					<td>Clarion</td>
-					<td>£180.56</td>
-					<td>21/09/2014</td>
-					<td>Processed</td>
-					<td>Here</td>
-					<td>Had to stay two nights.</td>
-				</tr>
-				<tr>
-					<td>Michael Anderson</td>
-					<td>Hotel</td>
-					<td>Clarion</td>
-					<td>£180.56</td>
-					<td>21/09/2014</td>
-					<td>Processed</td>
-					<td>Here</td>
-					<td>Had to stay two nights.</td>
-				</tr>
-				<tr>
-					<td>Michael Anderson</td>
-					<td>Hotel</td>
-					<td>Clarion</td>
-					<td>£180.56</td>
-					<td>21/09/2014</td>
-					<td>Processed</td>
-					<td>Here</td>
-					<td>Had to stay two nights.</td>
-				</tr>
+			<tbody id = "expensesData">
+				<!-- call data here -->
 			</tbody>
 		</table>
 
