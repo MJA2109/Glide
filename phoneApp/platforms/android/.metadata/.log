@@ -1,0 +1,94 @@
+!SESSION 2014-09-09 20:06:20.600 -----------------------------------------------
+eclipse.buildId=M20120208-0800
+java.version=1.6.0_65
+java.vendor=Apple Inc.
+BootLoader constants: OS=macosx, ARCH=x86_64, WS=cocoa, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.java.product -keyring /Users/michaelanderson/.eclipse_keyring -showlocation
+Command-line arguments:  -os macosx -ws cocoa -arch x86_64 -product org.eclipse.epp.package.java.product -keyring /Users/michaelanderson/.eclipse_keyring -showlocation
+
+!ENTRY org.eclipse.core.net 1 0 2014-09-09 20:07:06.486
+!MESSAGE System property http.nonProxyHosts has been set to local|*.local|169.254/16|*.169.254/16 by an external source. This value will be overwritten using the values from the preferences
+!SESSION 2014-09-09 20:15:18.302 -----------------------------------------------
+eclipse.buildId=M20120208-0800
+java.version=1.6.0_65
+java.vendor=Apple Inc.
+BootLoader constants: OS=macosx, ARCH=x86_64, WS=cocoa, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.java.product -keyring /Users/michaelanderson/.eclipse_keyring -showlocation
+Command-line arguments:  -os macosx -ws cocoa -arch x86_64 -product org.eclipse.epp.package.java.product -keyring /Users/michaelanderson/.eclipse_keyring -showlocation
+
+!ENTRY org.eclipse.core.net 1 0 2014-09-09 20:15:30.336
+!MESSAGE System property http.nonProxyHosts has been set to local|*.local|169.254/16|*.169.254/16 by an external source. This value will be overwritten using the values from the preferences
+!SESSION 2014-09-09 20:18:01.099 -----------------------------------------------
+eclipse.buildId=M20120208-0800
+java.version=1.6.0_65
+java.vendor=Apple Inc.
+BootLoader constants: OS=macosx, ARCH=x86_64, WS=cocoa, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.java.product -keyring /Users/michaelanderson/.eclipse_keyring -showlocation
+Command-line arguments:  -os macosx -ws cocoa -arch x86_64 -product org.eclipse.epp.package.java.product -keyring /Users/michaelanderson/.eclipse_keyring -showlocation
+
+!ENTRY org.eclipse.core.net 1 0 2014-09-09 20:18:10.624
+!MESSAGE System property http.nonProxyHosts has been set to local|*.local|169.254/16|*.169.254/16 by an external source. This value will be overwritten using the values from the preferences
+
+!ENTRY org.eclipse.equinox.p2.operations 4 0 2014-09-09 20:19:41.481
+!MESSAGE Operation details
+!SUBENTRY 1 org.eclipse.equinox.p2.director 4 1 2014-09-09 20:19:41.481
+!MESSAGE Cannot complete the install because of a conflicting dependency.
+!SUBENTRY 2 org.eclipse.equinox.p2.director 4 0 2014-09-09 20:19:41.481
+!MESSAGE Software being installed: Android DDMS 23.0.3.1327240 (com.android.ide.eclipse.ddms.feature.feature.group 23.0.3.1327240)
+!SUBENTRY 2 org.eclipse.equinox.p2.director 4 0 2014-09-09 20:19:41.481
+!MESSAGE Software currently installed: Android DDMS 22.0.5.v201307292155--757759 (com.android.ide.eclipse.ddms.feature.group 22.0.5.v201307292155--757759)
+!SUBENTRY 2 org.eclipse.equinox.p2.director 4 1 2014-09-09 20:19:41.481
+!MESSAGE Only one of the following can be installed at once: 
+!SUBENTRY 3 org.eclipse.equinox.p2.director 4 0 2014-09-09 20:19:41.481
+!MESSAGE Dalvik Debug Monitor Service 23.0.3.1327240 (com.android.ide.eclipse.ddms 23.0.3.1327240)
+!SUBENTRY 3 org.eclipse.equinox.p2.director 4 0 2014-09-09 20:19:41.481
+!MESSAGE Dalvik Debug Monitor Service 22.0.5.v201307292155--757759 (com.android.ide.eclipse.ddms 22.0.5.v201307292155--757759)
+!SUBENTRY 2 org.eclipse.equinox.p2.director 4 1 2014-09-09 20:19:41.481
+!MESSAGE Cannot satisfy dependency:
+!SUBENTRY 3 org.eclipse.equinox.p2.director 4 0 2014-09-09 20:19:41.481
+!MESSAGE From: Android DDMS 23.0.3.1327240 (com.android.ide.eclipse.ddms.feature.feature.group 23.0.3.1327240)
+!SUBENTRY 3 org.eclipse.equinox.p2.director 4 0 2014-09-09 20:19:41.481
+!MESSAGE To: com.android.ide.eclipse.ddms [23.0.3.1327240]
+!SUBENTRY 2 org.eclipse.equinox.p2.director 4 1 2014-09-09 20:19:41.481
+!MESSAGE Cannot satisfy dependency:
+!SUBENTRY 3 org.eclipse.equinox.p2.director 4 0 2014-09-09 20:19:41.481
+!MESSAGE From: Android DDMS 22.0.5.v201307292155--757759 (com.android.ide.eclipse.ddms.feature.group 22.0.5.v201307292155--757759)
+!SUBENTRY 3 org.eclipse.equinox.p2.director 4 0 2014-09-09 20:19:41.481
+!MESSAGE To: com.android.ide.eclipse.ddms [22.0.5.v201307292155--757759]
+
+!ENTRY org.eclipse.equinox.p2.operations 4 0 2014-09-09 20:19:41.484
+!MESSAGE Operation details
+!SUBENTRY 1 org.eclipse.equinox.p2.director 4 1 2014-09-09 20:19:41.484
+!MESSAGE Cannot complete the install because of a conflicting dependency.
+!SUBENTRY 2 org.eclipse.equinox.p2.director 4 0 2014-09-09 20:19:41.484
+!MESSAGE Software being installed: Android DDMS 23.0.3.1327240 (com.android.ide.eclipse.ddms.feature.feature.group 23.0.3.1327240)
+!SUBENTRY 2 org.eclipse.equinox.p2.director 4 0 2014-09-09 20:19:41.484
+!MESSAGE Software currently installed: Android DDMS 22.0.5.v201307292155--757759 (com.android.ide.eclipse.ddms.feature.group 22.0.5.v201307292155--757759)
+!SUBENTRY 2 org.eclipse.equinox.p2.director 4 1 2014-09-09 20:19:41.484
+!MESSAGE Only one of the following can be installed at once: 
+!SUBENTRY 3 org.eclipse.equinox.p2.director 4 0 2014-09-09 20:19:41.484
+!MESSAGE Dalvik Debug Monitor Service 23.0.3.1327240 (com.android.ide.eclipse.ddms 23.0.3.1327240)
+!SUBENTRY 3 org.eclipse.equinox.p2.director 4 0 2014-09-09 20:19:41.484
+!MESSAGE Dalvik Debug Monitor Service 22.0.5.v201307292155--757759 (com.android.ide.eclipse.ddms 22.0.5.v201307292155--757759)
+!SUBENTRY 2 org.eclipse.equinox.p2.director 4 1 2014-09-09 20:19:41.484
+!MESSAGE Cannot satisfy dependency:
+!SUBENTRY 3 org.eclipse.equinox.p2.director 4 0 2014-09-09 20:19:41.484
+!MESSAGE From: Android DDMS 23.0.3.1327240 (com.android.ide.eclipse.ddms.feature.feature.group 23.0.3.1327240)
+!SUBENTRY 3 org.eclipse.equinox.p2.director 4 0 2014-09-09 20:19:41.484
+!MESSAGE To: com.android.ide.eclipse.ddms [23.0.3.1327240]
+!SUBENTRY 2 org.eclipse.equinox.p2.director 4 1 2014-09-09 20:19:41.484
+!MESSAGE Cannot satisfy dependency:
+!SUBENTRY 3 org.eclipse.equinox.p2.director 4 0 2014-09-09 20:19:41.484
+!MESSAGE From: Android DDMS 22.0.5.v201307292155--757759 (com.android.ide.eclipse.ddms.feature.group 22.0.5.v201307292155--757759)
+!SUBENTRY 3 org.eclipse.equinox.p2.director 4 0 2014-09-09 20:19:41.485
+!MESSAGE To: com.android.ide.eclipse.ddms [22.0.5.v201307292155--757759]
+!SESSION 2014-09-09 20:20:09.532 -----------------------------------------------
+eclipse.buildId=M20120208-0800
+java.version=1.6.0_65
+java.vendor=Apple Inc.
+BootLoader constants: OS=macosx, ARCH=x86_64, WS=cocoa, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.java.product -keyring /Users/michaelanderson/.eclipse_keyring -showlocation
+Command-line arguments:  -os macosx -ws cocoa -arch x86_64 -product org.eclipse.epp.package.java.product -keyring /Users/michaelanderson/.eclipse_keyring -showlocation
+
+!ENTRY org.eclipse.core.net 1 0 2014-09-09 20:20:15.945
+!MESSAGE System property http.nonProxyHosts has been set to local|*.local|169.254/16|*.169.254/16 by an external source. This value will be overwritten using the values from the preferences
