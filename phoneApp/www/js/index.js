@@ -34,16 +34,33 @@ var app = {
     // function, we must explicitly call 'app.receivedEvent(...);'
     onDeviceReady: function() {
         app.receivedEvent('deviceready');
+        initializeEvents();
     },
     // Update DOM on a Received Event
     receivedEvent: function(id) {
-        var parentElement = document.getElementById(id);
-        var listeningElement = parentElement.querySelector('.listening');
-        var receivedElement = parentElement.querySelector('.received');
-
-        listeningElement.setAttribute('style', 'display:none;');
-        receivedElement.setAttribute('style', 'display:block;');
-
-        console.log('Received Event: ' + id);
+        alert(id);
     }
 };
+
+
+function initializeEvents(){
+    captureReceipt();
+
+}
+
+
+function captureReceipt(){
+    $("#captureReceipt").click(function(){
+        navigator.camera.getPicture(onSuccess, onFail, { quality: 50, 
+        destinationType: Camera.DestinationType.FILE_URI, correctOrientation: false });
+
+        function onSuccess(imageURI) {
+            var image = document.getElementById('receipt');
+            image.src = imageURI;
+        }
+
+        function onFail(message) {
+            alert('Failed because: ' + message);
+        }
+    });
+}

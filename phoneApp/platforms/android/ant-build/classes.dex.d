@@ -6,4 +6,7 @@
 /Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/ant-build/classes/com/glide/phoneApp/R$string.class \
 /Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/ant-build/classes/com/glide/phoneApp/R$xml.class \
 /Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/ant-build/classes/com/glide/phoneApp/R.class \
+/Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/ant-build/classes/org/apache/cordova/camera/CameraLauncher.class \
+/Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/ant-build/classes/org/apache/cordova/camera/ExifHelper.class \
+/Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/ant-build/classes/org/apache/cordova/camera/FileHelper.class \
 /Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/ant-build/dexedLibs/classes-ec44aea08fdb0fe28a27ccc1d4b91e23.jar \

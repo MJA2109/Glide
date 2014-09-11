@@ -1,41 +1,108 @@
 <!DOCTYPE html>
-<!--
-    Licensed to the Apache Software Foundation (ASF) under one
-    or more contributor license agreements.  See the NOTICE file
-    distributed with this work for additional information
-    regarding copyright ownership.  The ASF licenses this file
-    to you under the Apache License, Version 2.0 (the
-    "License"); you may not use this file except in compliance
-    with the License.  You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing,
-    software distributed under the License is distributed on an
-    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-     KIND, either express or implied.  See the License for the
-    specific language governing permissions and limitations
-    under the License.
--->
 <html>
     <head>
         <meta charset="utf-8" />
         <meta name="format-detection" content="telephone=no" />
-        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
-        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
-        <link rel="stylesheet" type="text/css" href="css/index.css" />
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1">
         <meta name="msapplication-tap-highlight" content="no" />
-        <title>Hello World</title>
+        <link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.4.3.min.css" />
+        <link rel="stylesheet" type="text/css" href="css/index.css" />
+        <title>Glide</title>
     </head>
     <body>
-        <div class="app">
-            <h1>Glide Development Environment</h1>
-            <div id="deviceready" class="blink">
-                <p class="event listening">Connecting to Device</p>
-                <p class="event received">Device is Ready</p>
+        <div class="app">    
+            
+            <!-- Fix Navigation Bar -->
+            <nav>
+                <div>
+                   <a href="#home" data-role="button" data-inline="true" data-mini="true">Home</a> 
+                </div>
+                <div>
+                    <h1>Glide</h1>
+                </div>
+                <div>
+                    <img src="*" alt = "*" />
+                </div>
+            </nav>
+
+            <!-- Home Page -->
+            <div data-role = "page" id="home" class = "appPage">
+                <div data-role="content">
+                    <a href="#uploadExpenses" data-role="button">Upload Expenses</a>
+                    <a href="#startJourney" data-role="button">Start Journey</a>
+                    <a href="#accountInfo" data-role="button">Account Info</a>
+                    <a href="#previousExpenses" data-role="button">Previous Expenses</a>
+                </div>
             </div>
-        </div>
+            
+            <!-- Upload Expenses Page -->
+            <div data-role = "page" id="uploadExpenses" class = "appPage">
+                <div data-role="content">
+                    <div>
+                        <button id = "captureReceipt">Capture Receipt</button>
+                        <div id = "uploadedImage">
+                            <img src="" id = "receipt" /> 
+                        </div>
+                    </div>
+                    <div>
+                        <label for="uploadCategory" class="select">
+                            Category:
+                        </label>
+                        <select name = "uploadCategory" id="uploadCategory">
+                            <option value = "accommodation">Accommodation</option>
+                            <option value = "travel">Travel</option>
+                            <option value = "food">Food</option>
+                            <option value = "entertainment">Entertainment</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for = "uploadMerchant">Merchant:</label>
+                        <input type = "text" name = "uploadMerchant" id = "uploadMerchant" value = "" />
+                    </div>
+                    <div>
+                        <label for = "uploadCost">Cost:</label>
+                        <input type = "text" name = "uploadCost" id = "uploadCost" value = "" />
+                    </div>
+                    <div>
+                        <label for = "uploadDate">Date:</label>
+                        <input type = "date" name = "uploadDate" id = "uploadDate" />
+                    </div>
+                    <div>
+                        <label for = "uploadComment">Comment:</label>
+                        <textarea name = "uploadComment" id = "uploadComment"></textarea>
+                    </div>
+                    <div>
+                        <button>Upload</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Start Journey Page -->
+            <div data-role = "page" id="startJourney" class = "appPage">
+                <div data-role="content">
+                    <p>Start Journey</p>
+                </div>
+            </div>
+
+            <!-- Account Info Page -->
+            <div data-role = "page" id="accountInfo" class = "appPage">
+                <div data-role="content">
+                    <p>Account Info</p>
+                </div>
+            </div>
+
+            <!-- Previous Expenses Page -->
+            <div data-role = "page" id="previousExpenses" class = "appPage">
+                <div data-role="content">
+                    <p>Previous Expenses</p>
+                </div>
+            </div>
+
+        </div><!-- end of app -->
+
         <script type="text/javascript" src="cordova.js"></script>
+        <script src="js/vendor/jquery-1.10.2.min.js"></script>
+        <script type="text/javascript" src = "js/vendor/jquery.mobile-1.4.3.min.js" /></script>
         <script type="text/javascript" src="js/index.js"></script>
         <script type="text/javascript">
             app.initialize();
