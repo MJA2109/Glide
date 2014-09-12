@@ -38,42 +38,45 @@
             <!-- Upload Expenses Page -->
             <div data-role = "page" id="uploadExpenses" class = "appPage">
                 <div data-role="content">
-                    <div>
-                        <button id = "captureReceipt">Capture Receipt</button>
-                        <div id = "uploadedImage">
-                            <img src="" id = "receipt" /> 
+
+                    <form method = "POST" id = "uploadExpenseForm">
+                        <div>
+                            <input type = "button" value = "Capture Receipt" id = "btnCaptureReceipt" />
+                            <div id = "uploadedImage">
+                                
+                            </div>
                         </div>
-                    </div>
-                    <div>
-                        <label for="uploadCategory" class="select">
-                            Category:
-                        </label>
-                        <select name = "uploadCategory" id="uploadCategory">
-                            <option value = "accommodation">Accommodation</option>
-                            <option value = "travel">Travel</option>
-                            <option value = "food">Food</option>
-                            <option value = "entertainment">Entertainment</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label for = "uploadMerchant">Merchant:</label>
-                        <input type = "text" name = "uploadMerchant" id = "uploadMerchant" value = "" />
-                    </div>
-                    <div>
-                        <label for = "uploadCost">Cost:</label>
-                        <input type = "text" name = "uploadCost" id = "uploadCost" value = "" />
-                    </div>
-                    <div>
-                        <label for = "uploadDate">Date:</label>
-                        <input type = "date" name = "uploadDate" id = "uploadDate" />
-                    </div>
-                    <div>
-                        <label for = "uploadComment">Comment:</label>
-                        <textarea name = "uploadComment" id = "uploadComment"></textarea>
-                    </div>
-                    <div>
-                        <button>Upload</button>
-                    </div>
+                        <div>
+                            <label for="uploadCategory" class="select">
+                                Category:
+                            </label>
+                            <select name = "uploadCategory" id="uploadCategory">
+                                <option value = "accommodation">Accommodation</option>
+                                <option value = "travel">Travel</option>
+                                <option value = "food">Food</option>
+                                <option value = "entertainment">Entertainment</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for = "uploadMerchant">Merchant:</label>
+                            <input type = "text" name = "uploadMerchant" id = "uploadMerchant" value = "" />
+                        </div>
+                        <div>
+                            <label for = "uploadCost">Cost:</label>
+                            <input type = "text" name = "uploadCost" id = "uploadCost" value = "" />
+                        </div>
+                        <div>
+                            <label for = "uploadDate">Date:</label>
+                            <input type = "date" name = "uploadDate" id = "uploadDate" />
+                        </div>
+                        <div>
+                            <label for = "uploadComment">Comment:</label>
+                            <textarea name = "uploadComment" id = "uploadComment"></textarea>
+                        </div>
+                        <div>
+                            <input type = "button" value = "Upload" id = "btnUpload"/>
+                        </div>
+                    </form><!-- end of form  -->
                 </div>
             </div>
 
