@@ -15,6 +15,8 @@ if(isset($_POST["action"])){
         break;
         case "getExpensesData" : getExpensesData();
         break;
+        case "getUsersData" : getUsersData();
+        break;
     }
 }
 
@@ -228,7 +230,7 @@ function getExpensesData(){
         $adminId = $_SESSION["adminId"];
         
         //use query function for more complex database queries
-        $expensesData = $database->query("SELECT user_name, merchant_name, expense_cost, expense_date, expense_status, receipt_image, expense_comment
+        $expensesData = $database->query("SELECT user_name, expense_name, merchant_name, expense_cost, expense_date, expense_status, receipt_image, expense_comment
                                           FROM users, expenses, merchants, receipts
                                           WHERE ".$adminId." = expenses.admin_id
                                           AND expenses.user_id = users.user_id
@@ -237,6 +239,7 @@ function getExpensesData(){
         foreach($expensesData as $data){
             $expense[$index] = array();
             $expense[$index]["userName"] = $data["user_name"];
+            $expense[$index]["expenseName"] = $data["expense_name"];
             $expense[$index]["merchantName"] = $data["merchant_name"];
             $expense[$index]["expenseCost"] = $data["expense_cost"];
             $expense[$index]["expenseDate"] = $data["expense_date"];
@@ -251,6 +254,36 @@ function getExpensesData(){
         echo json_encode(array("error" => "Admin ID not set"));
     }
     
+}
+
+/**
+ * Name: getUsersData
+ * Purpose: Retrieve data from users table
+ * @return $userData or $error - JSON : JSON: Contains rows for each user related to that specific instance.
+ */
+function getUsersData(){
+    session_start();
+    
+    if(isset($_SESSION["adminId"])){
+        $userData;
+        $adminId;
+        $error;
+        $database = connectDB();
+
+        $adminId = $_SESSION["adminId"];
+
+        $userData = $database->select("users", [
+            "user_name",
+            "user_email",
+            ],[
+            "admin_id" => $adminId
+        ]);
+
+        echo json_encode($userData);
+
+    }else{
+        echo json_encode(array("error" => "Admin ID not set"));
+    }
 }
 
 

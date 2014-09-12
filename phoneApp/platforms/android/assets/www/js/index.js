@@ -42,7 +42,6 @@ function captureReceipt(){
         app.imageURI = imageURI;
         var image = document.getElementById('receipt');
         image.src = imageURI;
-        alert("working");
     }
 
     function onFail(message) {
@@ -75,15 +74,12 @@ function uploadReceipt(){
 
     var fileTrans = new FileTransfer();
     fileTrans.upload(imageURI, encodeURI(app.server), uploadComplete, uploadFailed, options);
-
-    alert(JSON.stringify(options));
-
+    
     function uploadFailed(error){
         alert("upload failed " + error.target);
     }
 
     function uploadComplete(data){
-        alert("upload successful" + data.response);
         resetUploadExpenseForm();
         $.mobile.loading("hide");
     }

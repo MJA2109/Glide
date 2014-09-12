@@ -13,59 +13,12 @@
 				<tr>
 					<th>User</th>
 					<th>Email</th>
-					<th>No. Of Claims</th>
-					<th>Activation Code</th>
+					<th>Sign-up Date</th>
+					<th>No. of Claims</th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr>
-					<td>David Sullivan</td>
-					<td>daveSull@sony.com</td>
-					<td>21</td>
-					<td>gfdsg4534534</td>
-				</tr>
-				<tr>
-					<td>David Sullivan</td>
-					<td>daveSull@sony.com</td>
-					<td>21</td>
-					<td>gfdsg4534534</td>
-				</tr>
-				<tr>
-					<td>David Sullivan</td>
-					<td>daveSull@sony.com</td>
-					<td>21</td>
-					<td>gfdsg4534534</td>
-				</tr>
-				<tr>
-					<td>David Sullivan</td>
-					<td>daveSull@sony.com</td>
-					<td>21</td>
-					<td>gfdsg4534534</td>
-				</tr>
-				<tr>
-					<td>David Sullivan</td>
-					<td>daveSull@sony.com</td>
-					<td>21</td>
-					<td>gfdsg4534534</td>
-				</tr>
-				<tr>
-					<td>David Sullivan</td>
-					<td>daveSull@sony.com</td>
-					<td>21</td>
-					<td>gfdsg4534534</td>
-				</tr>
-				<tr>
-					<td>David Sullivan</td>
-					<td>daveSull@sony.com</td>
-					<td>21</td>
-					<td>gfdsg4534534</td>
-				</tr>
-				<tr>
-					<td>David Sullivan</td>
-					<td>daveSull@sony.com</td>
-					<td>21</td>
-					<td>gfdsg4534534</td>
-				</tr>
+				<!-- users' data goes here -->
 			</tbody>
 		</table>
 

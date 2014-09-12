@@ -24,11 +24,20 @@ require(['jquery',
 		 'cssLess',
          'datatables'], function($) {
 
+            
+            //Contains global variables
             var appData = {
                 api: "../api/glideAPI.php",
                 apiKey: "dflj45fgfg343fggf454rgf53"
             }
 
+            
+
+            /**
+             * Name: submitFrom
+             * Purpose: Submits form using ajax. Redirection based on return Ajax values.
+             * @params: from - string : form to be processed
+             */
             function submitForm(form){
                 var frm = $(form);
                 frm.submit(function (ev) {
@@ -39,8 +48,9 @@ require(['jquery',
                         url: frm.attr('action'),
                         data: data,
                         success: function (data) {
-                            console.log(data);
                             var logData = JSON.parse(data);
+                            console.log("submitFrom - RETURNED FROM SERVER : " + JSON.stringify(logData));
+                            //check for errors
                             var errorCount = Object.keys(logData.errors).length;
                             if(logData.type == "registration" && errorCount == 0){
                                 window.location = "signIn.php"
@@ -59,7 +69,10 @@ require(['jquery',
                 });
             }
 
-
+            /**
+             * Name: signOut
+             * Purpose: Send Ajax request to API to destroy session.
+             */
             function signOut(){
                 var data = {
                     action: "signOut"
@@ -78,22 +91,28 @@ require(['jquery',
                 });
             }
 
-
+            /**
+             * Name: initialiseEvents
+             * Purpose: Initialise application events
+             */
             function initialiseEvents(){
-                getExpensesData();
+                getTableData("getExpensesData");
+                getTableData("getUsersData");
                 submitForm('#signUpForm');
                 submitForm('#signInForm');
                 $("#btnSignOut").on("click", function(){
                     signOut();
                 });
-                $("#expensesTable").dataTable();
-                $("#usersTable").dataTable();
             }
 
-
-            function getExpensesData(){
+            /**
+             * Name: getTableData
+             * Purpose: Query database for specific data
+             * @params: action - string : function to be called on server
+             */
+            function getTableData(action){
                 var data = {
-                    action: "getExpensesData"
+                    action: action
                 }
 
                 $.ajax({
@@ -101,9 +120,16 @@ require(['jquery',
                     type: "POST",
                     data: data,
                     success: function(response){
-                        var expenses = JSON.parse(response);
-                        console.log(JSON.stringify(expenses));
-                        populateTable(expenses);
+                        var tableData = JSON.parse(response);
+                        console.log("getTableData - RETURNED FROM SERVER : " + JSON.stringify(tableData));
+                        switch(action){
+                            case "getExpensesData":
+                                buildExpensesTable(tableData);
+                                break;
+                            case "getUsersData":
+                                buildUserTable(tableData);
+                                break;
+                        }
                     },
                     error: function(){
                         console.log("Error: Ajax request unsuccessful");   
@@ -111,10 +137,42 @@ require(['jquery',
                 });
             }
 
+            /**
+             * Name: buildExpensesTable
+             * Purpose: Call datatables.js on DOM element and add data to created table.
+             * @params: tableData - JSON : data to populate table
+             */
+            function buildExpensesTable(tableData){
 
-            function populateTable(expenses){
-                console.log("you're at populate table");
-                var html;
+                $("#expensesTable").dataTable({
+                    "data" : tableData,
+                    "columns" : [
+                        {"data": "userName"},
+                        {"data": "expenseName"},
+                        {"data": "merchantName"},
+                        {"data": "expenseCost"},
+                        {"data": "expenseDate"},
+                        {"data": "expenseStatus"},
+                        {"data": "receiptImage"},
+                        {"data": "expenseComment"}
+                    ]
+                });
+            }
+
+            /**
+             * Name: buildUserTable
+             * Purpose: Call datatables.js on DOM element and add data to created table.
+             * @params: tableData - JSON : data to populate table
+             */
+            function buildUserTable(tableData){
+
+                $("#usersTable").dataTable({
+                    "data" : tableData,
+                    "columns" : [
+                        {"data": "user_name"},
+                        {"data": "user_email"}
+                    ]
+                });
             }
 
             initialiseEvents();
