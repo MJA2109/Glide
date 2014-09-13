@@ -2,6 +2,7 @@
 var app = {
     server: "http://ma.pickacab.com/test/test.php",
     map: "",
+    latLng: "",
     imageURI : "",
     initialize: function() {
         this.bindEvents();
@@ -31,6 +32,7 @@ function initializeEvents(){
 
     $("#trackJourney").on("pageshow", function(){
         resizeMap();
+        addMarker();
     });
 }
 
@@ -58,11 +60,13 @@ function getCurrentLocation(){
 function initializeMap(position){
     var lng = position.coords.longitude;
     var lat = position.coords.latitude;
-    var latLng = new google.maps.LatLng(lat, lng);
-
+    app.latLng = new google.maps.LatLng(lat, lng);
+    
+    alert("global latlng : " + app.latLng);
+    
     var mapOptions = {
-        center : latLng,
-        zoom: 16,
+        center : app.latLng,
+        zoom: 18,
         mapTypeId: google.maps.MapTypeId.ROADMAP,
         streetViewControl: false,
         zoomControl: false,
@@ -70,6 +74,20 @@ function initializeMap(position){
     };
 
     app.map = new google.maps.Map(document.getElementById("googleMap"), mapOptions);
+
+}
+
+
+/**
+ * Name: addMarker
+ * Purpose: Add marker to Google Map.
+ */
+function addMarker(){
+    var marker = new google.maps.Marker({
+        position: app.latLng,
+        map: app.map,
+        title: "You're here..."
+    });
 }
 
 /**
@@ -78,6 +96,7 @@ function initializeMap(position){
  */
 function resizeMap(){
     google.maps.event.trigger(app.map, "resize");
+    app.map.setCenter(app.latLng);
 }
 
 
