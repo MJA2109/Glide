@@ -248,6 +248,8 @@
 /Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/assets/www/js/vendor/jquery-1.10.2.min.js \
 /Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/assets/www/js/vendor/jquery.mobile-1.4.3.min.js \
 /Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/assets/www/plugins/org.apache.cordova.camera \
+/Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/assets/www/plugins/org.apache.cordova.device-motion \
+/Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/assets/www/plugins/org.apache.cordova.device-orientation \
 /Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/assets/www/plugins/org.apache.cordova.file \
 /Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/assets/www/plugins/org.apache.cordova.file-transfer \
 /Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/assets/www/plugins/org.apache.cordova.camera/www \
@@ -255,6 +257,13 @@
 /Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/assets/www/plugins/org.apache.cordova.camera/www/CameraConstants.js \
 /Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/assets/www/plugins/org.apache.cordova.camera/www/CameraPopoverHandle.js \
 /Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/assets/www/plugins/org.apache.cordova.camera/www/CameraPopoverOptions.js \
+/Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/assets/www/plugins/org.apache.cordova.device-motion/www \
+/Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/assets/www/plugins/org.apache.cordova.device-motion/www/Acceleration.js \
+/Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/assets/www/plugins/org.apache.cordova.device-motion/www/accelerometer.js \
+/Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/assets/www/plugins/org.apache.cordova.device-orientation/www \
+/Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/assets/www/plugins/org.apache.cordova.device-orientation/www/compass.js \
+/Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/assets/www/plugins/org.apache.cordova.device-orientation/www/CompassError.js \
+/Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/assets/www/plugins/org.apache.cordova.device-orientation/www/CompassHeading.js \
 /Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/assets/www/plugins/org.apache.cordova.file/www \
 /Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/assets/www/plugins/org.apache.cordova.file/www/android \
 /Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/assets/www/plugins/org.apache.cordova.file/www/DirectoryEntry.js \

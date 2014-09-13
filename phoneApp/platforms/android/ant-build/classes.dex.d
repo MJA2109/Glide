@@ -9,6 +9,10 @@
 /Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/ant-build/classes/org/apache/cordova/camera/CameraLauncher.class \
 /Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/ant-build/classes/org/apache/cordova/camera/ExifHelper.class \
 /Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/ant-build/classes/org/apache/cordova/camera/FileHelper.class \
+/Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/ant-build/classes/org/apache/cordova/devicemotion/AccelListener$1.class \
+/Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/ant-build/classes/org/apache/cordova/devicemotion/AccelListener.class \
+/Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/ant-build/classes/org/apache/cordova/deviceorientation/CompassListener$1.class \
+/Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/ant-build/classes/org/apache/cordova/deviceorientation/CompassListener.class \
 /Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/ant-build/classes/org/apache/cordova/file/ContentFilesystem.class \
 /Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/ant-build/classes/org/apache/cordova/file/DirectoryManager.class \
 /Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/ant-build/classes/org/apache/cordova/file/EncodingException.class \

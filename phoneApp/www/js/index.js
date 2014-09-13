@@ -1,6 +1,7 @@
 //Initialize application. Set global variables.
 var app = {
     server: "http://ma.pickacab.com/test/test.php",
+    map: "",
     imageURI : "",
     initialize: function() {
         this.bindEvents();
@@ -10,7 +11,8 @@ var app = {
     },
     onDeviceReady: function() {
         initializeEvents();
-    },
+        getCurrentLocation();
+    }
 };
 
 
@@ -26,6 +28,56 @@ function initializeEvents(){
     $("#btnUpload").click(function(){
         uploadExpenseForm("#uploadExpenseForm");
     });
+
+    $("#trackJourney").on("pageshow", function(){
+        resizeMap();
+    });
+}
+
+/**
+ * Name: getCurrentLocation
+ * Purpose: Using GPS get the current latitude and longitude of the device.
+ */
+function getCurrentLocation(){
+
+    navigator.geolocation.getCurrentPosition(onSuccess, onError);
+
+    function onSuccess(position){
+        initializeMap(position);
+    }
+
+    function onError(){
+        alert("Couldn't get your current location");
+    }
+}
+
+/**
+ * Name: initializeMap
+ * Purpose: Initialize Google map and append to div.
+ */
+function initializeMap(position){
+    var lng = position.coords.longitude;
+    var lat = position.coords.latitude;
+    var latLng = new google.maps.LatLng(lat, lng);
+
+    var mapOptions = {
+        center : latLng,
+        zoom: 16,
+        mapTypeId: google.maps.MapTypeId.ROADMAP,
+        streetViewControl: false,
+        zoomControl: false,
+        mapTypeControl: false
+    };
+
+    app.map = new google.maps.Map(document.getElementById("googleMap"), mapOptions);
+}
+
+/**
+ * Name: resizeMap
+ * Purpose: Bug fix : resize ensures all tiles are loaded.
+ */
+function resizeMap(){
+    google.maps.event.trigger(app.map, "resize");
 }
 
 
@@ -71,12 +123,13 @@ function uploadReceipt(){
     params.value1 = "test";
     params.value2 =  "param";
     options.params = params;
+    options.headers = {"Connection" : "close"};
 
     var fileTrans = new FileTransfer();
     fileTrans.upload(imageURI, encodeURI(app.server), uploadComplete, uploadFailed, options);
     
     function uploadFailed(error){
-        alert("upload failed " + error.target);
+        alert("Upload failed " + error.target);
     }
 
     function uploadComplete(data){

@@ -33,3 +33,14 @@ nav div div{
 #uploadedImage, #receipt{
     width:100%;
 }
+
+#googleMap, #trackJourney{
+    width:100%;
+    height:100%;
+}
+
+#mapContent{
+    padding:0;
+    width:100%;
+    height:100%;
+}

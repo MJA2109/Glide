@@ -29,7 +29,7 @@
             <div data-role = "page" id="home" class = "appPage">
                 <div data-role="content">
                     <a href="#uploadExpenses" data-role="button">Upload Expenses</a>
-                    <a href="#startJourney" data-role="button">Start Journey</a>
+                    <a href="#trackJourney" data-role="button">Track Journey</a>
                     <a href="#accountInfo" data-role="button">Account Info</a>
                     <a href="#previousExpenses" data-role="button">Previous Expenses</a>
                 </div>
@@ -80,10 +80,12 @@
                 </div>
             </div>
 
-            <!-- Start Journey Page -->
-            <div data-role = "page" id="startJourney" class = "appPage">
-                <div data-role="content">
-                    <p>Start Journey</p>
+            <!-- Track Journey Page -->
+            <div data-role = "page" id="trackJourney" class = "appPage">
+                <div data-role="content" id = "mapContent">
+                    <div id = "googleMap">
+
+                    </div>
                 </div>
             </div>
 
@@ -107,6 +109,7 @@
         <script src="js/vendor/jquery-1.10.2.min.js"></script>
         <script type="text/javascript" src = "js/vendor/jquery.mobile-1.4.3.min.js" /></script>
         <script type="text/javascript" src="js/index.js"></script>
+        <script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script> 
         <script type="text/javascript">
             app.initialize();
         </script>

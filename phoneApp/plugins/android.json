@@ -19,6 +19,14 @@
                         {
                             "xml": "<feature name=\"FileTransfer\"><param name=\"android-package\" value=\"org.apache.cordova.filetransfer.FileTransfer\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Accelerometer\"><param name=\"android-package\" value=\"org.apache.cordova.devicemotion.AccelListener\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Compass\"><param name=\"android-package\" value=\"org.apache.cordova.deviceorientation.CompassListener\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -29,6 +37,14 @@
                         {
                             "xml": "<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\" />",
                             "count": 3
+                        },
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\" />",
+                            "count": 2
+                        },
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\" />",
+                            "count": 2
                         }
                     ]
                 }
@@ -43,6 +59,15 @@
             "PACKAGE_NAME": "com.glide.phoneApp"
         },
         "org.apache.cordova.file-transfer": {
+            "PACKAGE_NAME": "com.glide.phoneApp"
+        },
+        "org.apache.cordova.device-motion": {
+            "PACKAGE_NAME": "com.glide.phoneApp"
+        },
+        "org.apache.cordova.device-orientation": {
+            "PACKAGE_NAME": "com.glide.phoneApp"
+        },
+        "org.apache.cordova.geolocation": {
             "PACKAGE_NAME": "com.glide.phoneApp"
         }
     },
