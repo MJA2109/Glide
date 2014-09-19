@@ -5,7 +5,9 @@
         <meta name="format-detection" content="telephone=no" />
         <meta name="viewport" content="initial-scale=1, maximum-scale=1">
         <meta name="msapplication-tap-highlight" content="no" />
-        <link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.4.3.min.css" />
+        <link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.4.3.min.css">
+        <link rel="stylesheet" type="text/css" href="css/glideTheme.min.css">
+        <link rel="stylesheet" type="text/css" href="css/jquery.mobile.icons.min.css" />
         <link rel="stylesheet" type="text/css" href="css/index.css" />
         <title>Glide</title>
     </head>
@@ -14,29 +16,28 @@
             
             <!-- Fix Navigation Bar -->
             <nav>
-                <div>
-                   <a href="#home" data-role="button" data-inline="true" data-mini="true">Home</a> 
+                <div id = "navLogo">
+                    <h1>glide</h1> 
                 </div>
-                <div>
-                    <h1>Glide</h1>
-                </div>
-                <div>
-                    <img src="*" alt = "*" />
+                <div id = "navGrid">
+                   <a href="#home"><img src="css/images/icons-svg/grid-white.svg"></a> 
                 </div>
             </nav>
 
             <!-- Home Page -->
-            <div data-role = "page" id="home" class = "appPage">
+            <div data-role = "page" data-transition = "flip" id="home" class = "appPage">
+                
                 <div data-role="content">
-                    <a href="#uploadExpenses" data-role="button">Upload Expenses</a>
-                    <a href="#trackJourney" data-role="button">Track Journey</a>
-                    <a href="#accountInfo" data-role="button">Account Info</a>
-                    <a href="#previousExpenses" data-role="button">Previous Expenses</a>
+                    <a href="#uploadExpenses" data-role="button" data-icon = "arrow-u" data-iconpos = "top">Upload Expenses</a>
+                    <a href="#trackJourney" data-role="button" data-icon = "forward" data-iconpos = "top">Track Journey</a>
+                    <a href="#history" data-role="button" data-icon = "star" data-iconpos = "top">History</a>
+                    <a href="#accountInfo" data-role="button" data-icon = "info" data-iconpos = "top">Account Info</a>
                 </div>
             </div>
             
             <!-- Upload Expenses Page -->
-            <div data-role = "page" id="uploadExpenses" class = "appPage">
+            <div data-role = "page" data-transition = "flip" id="uploadExpenses" data-tap-toggle="false" class = "appPage">
+                
                 <div data-role="content">
 
                     <form method = "POST" id = "uploadExpenseForm">
@@ -81,7 +82,8 @@
             </div>
 
             <!-- Track Journey Page -->
-            <div data-role = "page" id="trackJourney" class = "appPage">
+            <div data-role = "page" data-transition = "flip" id="trackJourney" data-tap-toggle="false" class = "appPage">
+
                 <div data-role="content" id = "mapContent">
                     <div id = "googleMap">
 
@@ -92,16 +94,63 @@
             </div>
 
             <!-- Account Info Page -->
-            <div data-role = "page" id="accountInfo" class = "appPage">
+            <div data-role = "page" data-transition = "flip" id="accountInfo" data-tap-toggle="false" class = "appPage">
+                
                 <div data-role="content">
-                    <p>Account Info</p>
+                    <div>
+                        <h2>Total Expenses: <span>€1054.23<span></h2>
+                    </div>
                 </div>
             </div>
 
             <!-- Previous Expenses Page -->
-            <div data-role = "page" id="previousExpenses" class = "appPage">
+            <div data-role = "page" data-transition = "flip" id="history" data-tap-toggle="false" class = "appPage">
+
                 <div data-role="content">
-                    <p>Previous Expenses</p>
+                    <ul data-role = "listview">
+                        <li>
+                            <div class = "historyDiv"><div class = "historyInfo">Date:</div> 21th Sept 2014</div>
+                            <div class = "historyDiv"><div class = "historyInfo">Type:</div> Accommodation</div>
+                            <div class = "historyDiv"><div class = "historyInfo">Merchant:</div> Clarion Hotel</div>
+                            <div class = "historyDiv"><div class = "historyInfo">Location:</div> Cork City</div>
+                            <div class = "historyDiv"><div class = "historyInfo">Cost:</div> £153.76</div>
+                        </li>
+                        <li>
+                            <div class = "historyDiv"><div class = "historyInfo">Date:</div> 21th Sept 2014</div>
+                            <div class = "historyDiv"><div class = "historyInfo">Type:</div> Accommodation</div>
+                            <div class = "historyDiv"><div class = "historyInfo">Merchant:</div> Clarion Hotel</div>
+                            <div class = "historyDiv"><div class = "historyInfo">Location:</div> Cork City</div>
+                            <div class = "historyDiv"><div class = "historyInfo">Cost:</div> £153.76</div>
+                        </li>
+                        <li>
+                            <div class = "historyDiv"><div class = "historyInfo">Date:</div> 21th Sept 2014</div>
+                            <div class = "historyDiv"><div class = "historyInfo">Type:</div> Accommodation</div>
+                            <div class = "historyDiv"><div class = "historyInfo">Merchant:</div> Clarion Hotel</div>
+                            <div class = "historyDiv"><div class = "historyInfo">Location:</div> Cork City</div>
+                            <div class = "historyDiv"><div class = "historyInfo">Cost:</div> £153.76</div>
+                        </li>
+                        <li>
+                            <div class = "historyDiv"><div class = "historyInfo">Date:</div> 21th Sept 2014</div>
+                            <div class = "historyDiv"><div class = "historyInfo">Type:</div> Accommodation</div>
+                            <div class = "historyDiv"><div class = "historyInfo">Merchant:</div> Clarion Hotel</div>
+                            <div class = "historyDiv"><div class = "historyInfo">Location:</div> Cork City</div>
+                            <div class = "historyDiv"><div class = "historyInfo">Cost:</div> £153.76</div>
+                        </li>
+                        <li>
+                            <div class = "historyDiv"><div class = "historyInfo">Date:</div> 21th Sept 2014</div>
+                            <div class = "historyDiv"><div class = "historyInfo">Type:</div> Accommodation</div>
+                            <div class = "historyDiv"><div class = "historyInfo">Merchant:</div> Clarion Hotel</div>
+                            <div class = "historyDiv"><div class = "historyInfo">Location:</div> Cork City</div>
+                            <div class = "historyDiv"><div class = "historyInfo">Cost:</div> £153.76</div>
+                        </li>
+                        <li>
+                            <div class = "historyDiv"><div class = "historyInfo">Date:</div> 21th Sept 2014</div>
+                            <div class = "historyDiv"><div class = "historyInfo">Type:</div> Accommodation</div>
+                            <div class = "historyDiv"><div class = "historyInfo">Merchant:</div> Clarion Hotel</div>
+                            <div class = "historyDiv"><div class = "historyInfo">Location:</div> Cork City</div>
+                            <div class = "historyDiv"><div class = "historyInfo">Cost:</div> £153.76</div>
+                        </li>
+                    </ul>
                 </div>
             </div>
 

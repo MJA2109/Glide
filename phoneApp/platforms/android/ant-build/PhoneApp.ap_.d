@@ -36,9 +36,11 @@
 /Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/assets/www/index.html \
 /Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/assets/www/js \
 /Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/assets/www/plugins \
+/Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/assets/www/css/glideTheme.min.css \
 /Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/assets/www/css/images \
 /Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/assets/www/css/index.css \
 /Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/assets/www/css/jquery.mobile-1.4.3.min.css \
+/Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/assets/www/css/jquery.mobile.icons.min.css \
 /Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/assets/www/css/images/ajax-loader.gif \
 /Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/assets/www/css/images/icons-png \
 /Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/assets/www/css/images/icons-svg \
@@ -242,7 +244,10 @@
 /Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/assets/www/css/images/icons-svg/user-white.svg \
 /Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/assets/www/css/images/icons-svg/video-black.svg \
 /Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/assets/www/css/images/icons-svg/video-white.svg \
+/Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/assets/www/img/glide.png \
+/Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/assets/www/img/glideLogo.png \
 /Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/assets/www/img/logo.png \
+/Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/assets/www/img/testlogo.png \
 /Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/assets/www/js/index.js \
 /Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/assets/www/js/vendor \
 /Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/assets/www/js/vendor/jquery-1.10.2.min.js \

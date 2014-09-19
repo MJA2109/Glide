@@ -195,7 +195,10 @@ function addTrackerMarker(){
     app.markerArray.push(app.trackerMarker);
 }
 
-
+/**
+ * Name: resetMap
+ * Purpose: Remove all markers and polylines from map.
+ */
 function resetMap(){
     $.each(app.markerArray, function(index, val){
         val.setMap(null);
