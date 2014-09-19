@@ -67,4 +67,6 @@
 /Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/ant-build/classes/org/apache/cordova/filetransfer/FileTransfer$TrackingInputStream.class \
 /Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/ant-build/classes/org/apache/cordova/filetransfer/FileTransfer.class \
 /Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/ant-build/classes/org/apache/cordova/filetransfer/FileUploadResult.class \
+/Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/ant-build/classes/org/apache/cordova/networkinformation/NetworkManager$1.class \
+/Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/ant-build/classes/org/apache/cordova/networkinformation/NetworkManager.class \
 /Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/ant-build/dexedLibs/classes-ec44aea08fdb0fe28a27ccc1d4b91e23.jar \

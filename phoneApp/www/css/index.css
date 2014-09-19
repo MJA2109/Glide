@@ -34,13 +34,19 @@ nav div div{
     width:100%;
 }
 
-#googleMap, #trackJourney{
+#trackJourney{
     width:100%;
     height:100%;
+}
+
+#googleMap{
+    width:100%;
+    height:80%;
 }
 
 #mapContent{
     padding:0;
     width:100%;
-    height:100%;
+    height:80%;
 }
+

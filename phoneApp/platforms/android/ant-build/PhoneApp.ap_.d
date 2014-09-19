@@ -252,6 +252,7 @@
 /Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/assets/www/plugins/org.apache.cordova.device-orientation \
 /Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/assets/www/plugins/org.apache.cordova.file \
 /Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/assets/www/plugins/org.apache.cordova.file-transfer \
+/Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/assets/www/plugins/org.apache.cordova.network-information \
 /Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/assets/www/plugins/org.apache.cordova.camera/www \
 /Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/assets/www/plugins/org.apache.cordova.camera/www/Camera.js \
 /Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/assets/www/plugins/org.apache.cordova.camera/www/CameraConstants.js \
@@ -290,4 +291,7 @@
 /Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/assets/www/plugins/org.apache.cordova.file-transfer/www \
 /Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/assets/www/plugins/org.apache.cordova.file-transfer/www/FileTransfer.js \
 /Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/assets/www/plugins/org.apache.cordova.file-transfer/www/FileTransferError.js \
+/Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/assets/www/plugins/org.apache.cordova.network-information/www \
+/Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/assets/www/plugins/org.apache.cordova.network-information/www/Connection.js \
+/Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/assets/www/plugins/org.apache.cordova.network-information/www/network.js \
 /Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/ant-build/AndroidManifest.xml \
