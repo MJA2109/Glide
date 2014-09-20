@@ -38,14 +38,9 @@ nav{
 
 #navLogo{
     margin:auto;
-    width:20px;
-    height:50px;
-    padding-top:8px;
-}
-
-#navLogo{
     width:60px;
     height:50px;
+    padding-top:8px;
 }
 
 
@@ -55,35 +50,41 @@ nav{
     margin-bottom:20px;
 }
 
-
-
-
-
-
-
-.appPage{
-	margin-top:50px;
-}
+/*** UPLOAD EXPENSES ***/
 
 #uploadedImage, #receipt{
     width:100%;
 }
+
+
+/*** TRACK JOURNEY ***/
 
 #trackJourney{
     width:100%;
     height:100%;
 }
 
-#googleMap{
+.navSpace{
     width:100%;
-    height:80%;
+    height:50px;
 }
 
-#mapContent{
-    padding:0;
+#googleMap{
+    position:relative;
     width:100%;
-    height:80%;
+    height:100%;
+    z-index:50;
 }
+
+#googleMapControl{
+    width:100%;
+    position:absolute;
+    bottom:8px; 
+    z-index:80;   
+}
+
+
+/*** HISTORY ***/
 
 .historyInfo{
     font-size: 0.8em;

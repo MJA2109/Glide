@@ -104,9 +104,8 @@ function startJourney(){
         },
 
         options = {
-            enableHighAccuracy: false,
-            frequency: 10 * 15
-
+            enableHighAccuracy: true,
+            frequency: 10 * 5
         }
     );
 }

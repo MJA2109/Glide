@@ -88,7 +88,7 @@ function startJourney(){
                 map: app.map,
                 path: app.journeyData,
                 strokeColor: '#4F758A',
-                strokeOpacity: 1,
+                strokeOpacity: 0.5,
                 strokeWeight: 3
             });
 
@@ -104,9 +104,8 @@ function startJourney(){
         },
 
         options = {
-            enableHighAccuracy: false,
-            frequency: 10 * 15
-
+            enableHighAccuracy: true,
+            frequency: 10 * 8
         }
     );
 }

@@ -25,8 +25,8 @@
             </nav>
 
             <!-- Home Page -->
-            <div data-role = "page" data-transition = "flip" id="home" class = "appPage">
-                
+            <div data-role = "page" data-transition = "flip" id="home">
+                <div class = "navSpace"></div>
                 <div data-role="content">
                     <a href="#uploadExpenses" data-role="button" data-icon = "arrow-u" data-iconpos = "top">Upload Expenses</a>
                     <a href="#trackJourney" data-role="button" data-icon = "forward" data-iconpos = "top">Track Journey</a>
@@ -36,8 +36,8 @@
             </div>
             
             <!-- Upload Expenses Page -->
-            <div data-role = "page" data-transition = "flip" id="uploadExpenses" data-tap-toggle="false" class = "appPage">
-                
+            <div data-role = "page" data-transition = "flip" id="uploadExpenses" data-tap-toggle="false">
+                <div class = "navSpace"></div>
                 <div data-role="content">
 
                     <form method = "POST" id = "uploadExpenseForm">
@@ -82,20 +82,20 @@
             </div>
 
             <!-- Track Journey Page -->
-            <div data-role = "page" data-transition = "flip" id="trackJourney" data-tap-toggle="false" class = "appPage">
-
-                <div data-role="content" id = "mapContent">
-                    <div id = "googleMap">
-
-                    </div>
+            <div data-role = "page" data-transition = "flip" id="trackJourney" data-tap-toggle="false">
+                <div id = "googleMap">
+                    
+                    
                 </div>
-                <input type = "button" value = "Start" id = "btnStartJourney" />
-                <input type = "button" value = "Finish" id = "btnFinishJourney" /> 
+                <div id = "googleMapControl">
+                    <input type = "button" value = "Start" id = "btnStartJourney" />
+                    <input type = "button" value = "Finish" id = "btnFinishJourney" />
+                </div>     
             </div>
 
             <!-- Account Info Page -->
-            <div data-role = "page" data-transition = "flip" id="accountInfo" data-tap-toggle="false" class = "appPage">
-                
+            <div data-role = "page" data-transition = "flip" id="accountInfo" data-tap-toggle="false">
+                <div class = "navSpace"></div>
                 <div data-role="content">
                     <div>
                         <h2>Total Expenses: <span>€1054.23<span></h2>
@@ -104,8 +104,8 @@
             </div>
 
             <!-- Previous Expenses Page -->
-            <div data-role = "page" data-transition = "flip" id="history" data-tap-toggle="false" class = "appPage">
-
+            <div data-role = "page" data-transition = "flip" id="history" data-tap-toggle="false">
+                <div class = "navSpace"></div>
                 <div data-role="content">
                     <ul data-role = "listview">
                         <li>
