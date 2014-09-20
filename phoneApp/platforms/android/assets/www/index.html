@@ -42,7 +42,7 @@
 
                     <form method = "POST" id = "uploadExpenseForm">
                         <div>
-                            <input type = "button" value = "Capture Receipt" id = "btnCaptureReceipt" />
+                            <input type = "button" value = "Capture Receipt" id = "btnCaptureReceipt" data-icon = "camera"/>
                             <div id = "uploadedImage">
                                 
                             </div>
@@ -51,7 +51,7 @@
                             <label for="uploadCategory" class="select">
                                 Category:
                             </label>
-                            <select name = "uploadCategory" id="uploadCategory">
+                            <select name = "uploadCategory" id="uploadCategory" data-iconpos = "left">
                                 <option value = "accommodation">Accommodation</option>
                                 <option value = "travel">Travel</option>
                                 <option value = "food">Food</option>
@@ -75,7 +75,7 @@
                             <textarea name = "uploadComment" id = "uploadComment"></textarea>
                         </div>
                         <div>
-                            <input type = "button" value = "Upload" id = "btnUpload"/>
+                            <input type = "button" value = "Upload" id = "btnUpload" data-icon = "arrow-u"/>
                         </div>
                     </form><!-- end of form  -->
                 </div>
@@ -83,14 +83,15 @@
 
             <!-- Track Journey Page -->
             <div data-role = "page" data-transition = "flip" id="trackJourney" data-tap-toggle="false">
-                <div id = "googleMap">
-                    
-                    
-                </div>
-                <div id = "googleMapControl">
-                    <input type = "button" value = "Start" id = "btnStartJourney" />
-                    <input type = "button" value = "Finish" id = "btnFinishJourney" />
-                </div>     
+                    <div id = "googleMap">
+                        
+                        
+                    </div>
+                    <div id = "googleMapControl">
+                        <input type = "button" value = "Start" id = "btnStartJourney" data-icon = "navigation"/>
+                        <input type = "button" value = "Finish" id = "btnFinishJourney" data-icon = "action"/>
+                    </div>
+        
             </div>
 
             <!-- Account Info Page -->
@@ -153,6 +154,47 @@
                     </ul>
                 </div>
             </div>
+
+            <!-- Upload Journey Data -->
+            <div data-role = "page" id="uploadJourneyData" data-tap-toggle="false">
+                <div class = "navSpace"></div>
+                <div data-role="content">
+                    <form method = "POST" id = "uploadJourneyDataForm">
+                        <div>
+                            <label for = "uploadJourneyData">Journey:</label>
+                            <input type = "text" name = "uploadJourneyData" id = "uploadJourneyData" />
+                        </div>
+                        <div>
+                            <label for = "uploadOrigin">Origin:</label>
+                            <input type = "text" name = "uploadOrigin" id = "uploadOrigin" />
+                        </div>
+                        <div>
+                            <label for = "uploadDestination">Destination:</label>
+                            <input type = "text" name = "uploadDestination" id = "uploadDestination" />
+                        </div>
+                        <div>
+                            <label for = "uploadDistance">Distance:</label>
+                            <input type = "text" name = "uploadDistance" id = "uploadDistance" />
+                        </div>
+                        <div>
+                            <label for = "uploadTime">Time:</label>
+                            <input type = "text" name = "uploadTime" id = "uploadTime" />
+                        </div>
+                        <div>
+                            <label for = "uploadDate">Date:</label>
+                            <input type = "text" name = "uploadDate" id = "uploadDate" />
+                        </div>
+                        <div>
+                            <label for = "uploadJourneyComment">Comment:</label>
+                            <input type = "text" name = "uploadJourneyComment" id = "uploadJourneyComment" />
+                        </div>
+                        <div>
+                            <input type = "button" value = "Upload" id = "btnUploadJourneyData" data-icon = "arrow-u"/>
+                        </div>
+                    </form> 
+                </div> 
+            </div>
+
 
         </div><!-- end of app -->
 

@@ -84,15 +84,15 @@ function startJourney(){
             app.journeyData.push(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
             moveTrackerMarker(app.map, app.trackerMarker, position.coords.latitude, position.coords.longitude);
             
-            var polyline = new google.maps.Polyline({
-                map: app.map,
-                path: app.journeyData,
-                strokeColor: '#4F758A',
-                strokeOpacity: 0.5,
-                strokeWeight: 3
-            });
+            // var polyline = new google.maps.Polyline({
+            //     map: app.map,
+            //     path: app.journeyData,
+            //     strokeColor: '#4F758A',
+            //     strokeOpacity: 0.5,
+            //     strokeWeight: 3
+            // });
 
-            app.markerArray.push(polyline);
+            // app.markerArray.push(polyline);
         },
 
         function(error){
@@ -121,6 +121,7 @@ function finishJourney(){
     window.localStorage.setItem("journeyData", JSON.stringify(app.journeyData));
     var data = window.localStorage.getItem("journeyData");
     alert("Local stored data: " + data);
+    $.mobile.changePage("#uploadJourneyData", "slide");
     app.watchId = null;
     app.journeyData = null;
     resetMap();
