@@ -7,6 +7,7 @@ var app = {
     latLng: "",
     watchId: null,
     journeyData: [],
+    totalDistance: null,
     imageURI: "",
     initialize: function() {
         this.bindEvents();
@@ -83,6 +84,8 @@ function startJourney(){
         function(position){
             app.journeyData.push(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
             moveTrackerMarker(app.map, app.trackerMarker, position.coords.latitude, position.coords.longitude);
+
+
             
             // var polyline = new google.maps.Polyline({
             //     map: app.map,
@@ -113,19 +116,138 @@ function startJourney(){
 
 /**
  * Name: finishJourney
- * Purpose: Clear geolocation hook. Save Geo Data and reset associated variables.
+ * Purpose: Clear geolocation hook. Save Geo Data and reset associated variables. Set upload form.
  */
 function finishJourney(){
 
     navigator.geolocation.clearWatch(app.watchId);
     window.localStorage.setItem("journeyData", JSON.stringify(app.journeyData));
-    var data = window.localStorage.getItem("journeyData");
-    alert("Local stored data: " + data);
+    var geoData = window.localStorage.getItem("journeyData");
+    var jsonGeoData = JSON.parse(geoData);
+    
+    setOrigin(jsonGeoData);
+    setDestination(jsonGeoData);
+    setTotalDistance(jsonGeoData);
+    setCurrentDateTime();
+    
     $.mobile.changePage("#uploadJourneyData", "slide");
     app.watchId = null;
     app.journeyData = null;
     resetMap();
 }
+
+/**
+ * Name: setOrigin
+ * Purpose: Send Ajax request to google geo data server to retrieve the origin of journey.
+ * @param geoData - JSON : contains geo coordinates of journey
+ */
+function setOrigin(geoData){
+
+    var originUrl = "https://maps.googleapis.com/maps/api/geocode/json?latlng=";
+    var originLat = geoData[Object.keys(geoData)[0]].k;
+    var originLng = geoData[Object.keys(geoData)[0]].B;
+    originUrl = originUrl + originLat + "," + originLng;
+
+    //reverse geocoding looking up request
+    $.ajax({
+        type: "post",
+        url: originUrl,
+        success: function(data){
+            $("#uploadOrigin").val(data.results[0].formatted_address);
+        },
+        errror: function(){
+            alert("setOrigin Ajax failed");
+        }
+
+    });
+}
+
+
+/**
+ * Name: setDestination
+ * Purpose: Send Ajax request to google geo data server to retrieve the destination of journey.
+ * @param geoData - JSON : contains geo coordinates of journey
+ */
+function setDestination(geoData){
+
+    var originUrl = "https://maps.googleapis.com/maps/api/geocode/json?latlng=";
+
+    //get length of json object
+    var objectKeys = Object.keys(geoData);
+    var lastKey = objectKeys[objectKeys.length-1];
+
+    var originLat = geoData[Object.keys(geoData)[lastKey]].k;
+    var originLng = geoData[Object.keys(geoData)[lastKey]].B;
+    originUrl = originUrl + originLat + "," + originLng;
+    alert("Length of json object : " + originLat + " : " + originLng);
+
+    $.ajax({
+        type: "post",
+        url: originUrl,
+        success: function(data){
+            $("#uploadDestination").val(data.results[0].formatted_address);
+        },
+        errror: function(){
+            alert("set Destination Ajax failed");
+        }
+
+    });
+}
+
+/**
+ * Name: setTotalDistance
+ * Purpose: Calculate total distance and set val of textbox
+ * @param jsonGeoData - JSON : contains geo coordinates of journey
+ */
+function setTotalDistance(jsonGeoData){
+    
+    var totalDistance = 0;
+
+    for(var i = 0; i < jsonGeoData.length; i++){
+        if(i == (jsonGeoData.length - 1)){
+            break;
+        }
+        totalDistance += gpsDistance(jsonGeoData[i].k,
+                                     jsonGeoData[i].B,
+                                     jsonGeoData[i+1].k,
+                                     jsonGeoData[i+1].B);
+    }
+
+    $("#uploadDistance").val(totalDistance.toFixed(2));
+}
+
+/**
+ * Name: setCurrentDateTime
+ * Purpose: Set date and time of journey
+ */
+function setCurrentDateTime(){
+    var currentDateTime = moment().format('MMMM Do YYYY, h:mm:ss a');
+    $("#uploadDateTime").val(currentDateTime);
+}
+
+/**
+ * Name: gpsDistance
+ * Purpose: Calculate the distance between to gps points
+ * @param lat1 - int : latitude of gps coordinate
+ * @param lng1 - int : longitude of gps coordinate
+ * @param lat2 - int : latitude of gps coordinate
+ * @param lng2 - int : longitude of gps coordinate
+ * @return distance - float : distance in kilometers between the two given coordinates
+ */
+function gpsDistance(lat1, lng1, lat2, lng2){
+
+    var R = 6371;
+    var dLat = (lat2-lat1) * (Math.PI / 180);
+    var dLng = (lng2-lng1) * (Math.PI / 180);
+    var lat1 = lat1 * (Math.PI / 180);
+    var lat2 = lat2 * (Math.PI / 180);
+    var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+            Math.sin(dLng/2) * Math.sin(dLng/2) * Math.cos(lat1);
+    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    var distance = R * c;
+    return distance;
+}
+
 
 /**
  * Name: moveTrackerMarker

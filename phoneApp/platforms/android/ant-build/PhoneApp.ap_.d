@@ -252,6 +252,7 @@
 /Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/assets/www/js/vendor \
 /Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/assets/www/js/vendor/jquery-1.10.2.min.js \
 /Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/assets/www/js/vendor/jquery.mobile-1.4.3.min.js \
+/Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/assets/www/js/vendor/moment.js \
 /Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/assets/www/plugins/org.apache.cordova.camera \
 /Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/assets/www/plugins/org.apache.cordova.device-motion \
 /Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/assets/www/plugins/org.apache.cordova.device-orientation \
