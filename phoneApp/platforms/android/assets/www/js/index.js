@@ -79,23 +79,26 @@ function getCurrentLocation(){
  */
 function startJourney(){
 
+    var minimumAccuracy = 20;
+
     app.watchId = navigator.geolocation.watchPosition(
         
         function(position){
-            app.journeyData.push(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
-            moveTrackerMarker(app.map, app.trackerMarker, position.coords.latitude, position.coords.longitude);
+            if(position.coords.accuracy < minimumAccuracy){
+                app.journeyData.push(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
+                moveTrackerMarker(app.map, app.trackerMarker, position.coords.latitude, position.coords.longitude);
+                // var polyline = new google.maps.Polyline({
+                //     map: app.map,
+                //     path: app.journeyData,
+                //     strokeColor: '#4F758A',
+                //     strokeOpacity: 0.5,
+                //     strokeWeight: 3
+                // });
 
-
-            
-            // var polyline = new google.maps.Polyline({
-            //     map: app.map,
-            //     path: app.journeyData,
-            //     strokeColor: '#4F758A',
-            //     strokeOpacity: 0.5,
-            //     strokeWeight: 3
-            // });
-
-            // app.markerArray.push(polyline);
+                // app.markerArray.push(polyline);
+            }else{
+                alert("Incorrect coordinate received !!");
+            }
         },
 
         function(error){
@@ -108,7 +111,7 @@ function startJourney(){
 
         options = {
             enableHighAccuracy: true,
-            frequency: 10 * 8
+            maximumAge: 0
         }
     );
 }
@@ -124,6 +127,7 @@ function finishJourney(){
     window.localStorage.setItem("journeyData", JSON.stringify(app.journeyData));
     var geoData = window.localStorage.getItem("journeyData");
     var jsonGeoData = JSON.parse(geoData);
+
     
     setOrigin(jsonGeoData);
     setDestination(jsonGeoData);
