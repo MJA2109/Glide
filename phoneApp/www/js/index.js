@@ -9,6 +9,7 @@ var app = {
     journeyData: [],
     totalDistance: null,
     imageURI: "",
+    timestamp: [],
     initialize: function() {
         this.bindEvents();
     },
@@ -85,17 +86,9 @@ function startJourney(){
         
         function(position){
             if(position.coords.accuracy < minimumAccuracy){
+                app.timestamp.push(position.timestamp);
                 app.journeyData.push(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
                 moveTrackerMarker(app.map, app.trackerMarker, position.coords.latitude, position.coords.longitude);
-                // var polyline = new google.maps.Polyline({
-                //     map: app.map,
-                //     path: app.journeyData,
-                //     strokeColor: '#4F758A',
-                //     strokeOpacity: 0.5,
-                //     strokeWeight: 3
-                // });
-
-                // app.markerArray.push(polyline);
             }else{
                 //do nothing
             }
@@ -127,11 +120,11 @@ function finishJourney(){
     window.localStorage.setItem("journeyData", JSON.stringify(app.journeyData));
     var geoData = window.localStorage.getItem("journeyData");
     var jsonGeoData = JSON.parse(geoData);
-
     
     setOrigin(jsonGeoData);
     setDestination(jsonGeoData);
     setTotalDistance(jsonGeoData);
+    setJourneyTime(getJourneyTime());
     setCurrentDateTime();
     
     $.mobile.changePage("#uploadJourneyData", "slide");
@@ -139,6 +132,32 @@ function finishJourney(){
     app.journeyData = null;
     resetMap();
 }
+
+/**
+ * Name: getJourneyTime
+ * Purpose: Calculate the journey time.
+ * @return: string : formatted journey time
+ */
+function getJourneyTime(){
+
+    var startTime;
+    var finishTime;
+    var totalJourneyTime;
+
+    startTime = new Date(app.timestamp[0]).getTime();
+    finishTime = new Date(app.timestamp[app.timestamp.length - 1]).getTime();
+    totalJourneyTime = finishTime - startTime;
+    return moment.utc(totalJourneyTime).format("HH:mm:ss");
+}
+
+/**
+ * Name: setJourneyTime
+ * Purpose: Set val of journey time text box.
+ */
+function setJourneyTime(journeyTime){
+    $("#uploadJourneyTime").val(journeyTime);
+}
+
 
 /**
  * Name: setOrigin
