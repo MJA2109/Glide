@@ -1,15 +1,15 @@
 //Initialize application. Set global variables.
 var app = {
-    server: "http://ma.pickacab.com/test/test.php",
-    map: "",
-    trackerMarker: "",
-    markerArray: [],
-    latLng: "",
-    watchId: null,
-    journeyData: [],
+    server: "http://ma.pickacab.com/test/test.php", 
+    map: "",             //google map object
+    trackerMarker: "",   //contains tracker marker
+    markerArray: [],     //array of map markers
+    latLng: "",          //lat lng for initialising map 
+    watchId: null,       //the geo id of each journey
+    journeyData: [],     //google formatted geo data
     totalDistance: null,
-    imageURI: "",
-    timestamp: [],
+    imageURI: "",        //path to captured image
+    timestamp: [],       //timestamp for each geo location
     initialize: function() {
         this.bindEvents();
     },
@@ -32,6 +32,7 @@ var app = {
  * Purpose: Initialize each event before use.
  */
 function initializeEvents(){
+    
     $("#btnCaptureReceipt").click(function(){
         captureReceipt();
     });
@@ -53,6 +54,11 @@ function initializeEvents(){
 
     $("#btnFinishJourney").click(function(){
         finishJourney();
+    });
+
+    $("#btnCancelUploadJourneyData").click(function(){
+        resetUploadJourneyData();
+        $.mobile.changePage("#home");
     });
 }
 
@@ -89,15 +95,6 @@ function startJourney(){
                 app.timestamp.push(position.timestamp);
                 app.journeyData.push(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
                 moveTrackerMarker(app.map, app.trackerMarker, position.coords.latitude, position.coords.longitude);
-                // var polyline = new google.maps.Polyline({
-                //     map: app.map,
-                //     path: app.journeyData,
-                //     strokeColor: '#4F758A',
-                //     strokeOpacity: 0.5,
-                //     strokeWeight: 3
-                // });
-
-                // app.markerArray.push(polyline);
             }else{
                 //do nothing
             }
@@ -136,13 +133,17 @@ function finishJourney(){
     setJourneyTime(getJourneyTime());
     setCurrentDateTime();
     
-    $.mobile.changePage("#uploadJourneyData", "slide");
+    $.mobile.changePage("#uploadJourneyData");
     app.watchId = null;
     app.journeyData = null;
     resetMap();
 }
 
-
+/**
+ * Name: getJourneyTime
+ * Purpose: Calculate the journey time.
+ * @return: string : formatted journey time
+ */
 function getJourneyTime(){
 
     var startTime;
@@ -155,11 +156,14 @@ function getJourneyTime(){
     return moment.utc(totalJourneyTime).format("HH:mm:ss");
 }
 
-
-
+/**
+ * Name: setJourneyTime
+ * Purpose: Set val of journey time text box.
+ */
 function setJourneyTime(journeyTime){
     $("#uploadJourneyTime").val(journeyTime);
 }
+
 
 /**
  * Name: setOrigin
@@ -454,6 +458,14 @@ function uploadExpenseForm(form){
 function resetUploadExpenseForm(){
     $("#uploadMerchant, #uploadDate, #uploadCost, #uploadComment").val("");
     $("#receipt").remove();
+}
+
+/**
+ * Name: resetUploadJourneyData
+ * Purpose: Reset form fields
+ */
+function resetUploadJourneyData(){
+    $("#uploadJourneyData, #uploadOrigin, #uploadDestination, #uploadDistance, #uploadJourneyTime, #uploadDateTime, #uploadJourneyComment").val("");
 }
 
 
