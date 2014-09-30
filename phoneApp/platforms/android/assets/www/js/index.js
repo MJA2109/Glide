@@ -376,7 +376,7 @@ function resizeMap(){
  */
 function captureReceipt(){
     navigator.camera.getPicture(onSuccess, onFail, { quality: 50, 
-                    destinationType: Camera.DestinationType.FILE_URI, correctOrientation: false });
+                    destinationType: Camera.DestinationType.FILE_URI, correctOrientation: true, targetWidth: 800, targetHeight: 800 });
     
     function onSuccess(imageURI) {
         $("<img id = 'receipt' src = ''>").appendTo("#uploadedImage");

@@ -52,8 +52,18 @@ nav{
 
 /*** UPLOAD EXPENSES ***/
 
+#uploadedImage{
+    margin: 20px 0px 20px 0px;
+}
+
 #uploadedImage, #receipt{
     width:100%;
+}
+
+#uploadedImage img{
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    border-radius: 20px;
 }
 
 
