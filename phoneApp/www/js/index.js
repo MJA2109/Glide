@@ -38,7 +38,7 @@ function initializeEvents(){
     });
 
     $("#btnUpload").click(function(){
-        uploadExpenseForm("#uploadExpenseForm");
+        uploadForm("#uploadExpenseForm");
     });
 
     $("#trackJourney").on("pageshow", function(){
@@ -60,6 +60,10 @@ function initializeEvents(){
         resetUploadJourneyData();
         clearGeoDataArrays();
         $.mobile.changePage("#home");
+    });
+
+    $("#btnUploadJourneyData").click(function(){
+        uploadForm("#uploadJourneyDataForm");
     });
 }
 
@@ -425,11 +429,11 @@ function uploadReceipt(){
 
 
 /**
- * Name: uploadExpenseForm
+ * Name: uploadForm
  * Purpose: Get data from form and send to Glide server.
  * @param form - string : form to be processed.
  */
-function uploadExpenseForm(form){
+function uploadForm(form){
     var frm = $(form);
     var data = frm.serialize();
     $.ajax({
@@ -437,13 +441,26 @@ function uploadExpenseForm(form){
         url: app.server,
         data: data,
         beforeSend: function() {
-            uploadReceipt(); 
+            if(form == "#uploadExpenseForm"){
+                uploadReceipt();
+            }
+            if(form == "#uploadJourneyDataForm"){
+                $.mobile.loading("show", {
+                    text: "Uploading data...",
+                    textVisible: true,
+                    theme: "z"
+                });
+            } 
         },
         complete: function(){
         
         }, 
-        success: function(data){
-
+        success: function(){
+            if(form == "#uploadJourneyDataForm"){
+                clearGeoDataArrays();
+                $.mobile.loading("hide");
+                $.mobile.changePage("#home");
+            }  
         },
         error: function(data){
             alert("Ajax Error " + data);
