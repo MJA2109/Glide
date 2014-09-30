@@ -58,6 +58,7 @@ function initializeEvents(){
 
     $("#btnCancelUploadJourneyData").click(function(){
         resetUploadJourneyData();
+        clearGeoDataArrays();
         $.mobile.changePage("#home");
     });
 }
@@ -135,7 +136,6 @@ function finishJourney(){
     
     $.mobile.changePage("#uploadJourneyData");
     app.watchId = null;
-    app.journeyData = null;
     resetMap();
 }
 
@@ -466,6 +466,15 @@ function resetUploadExpenseForm(){
  */
 function resetUploadJourneyData(){
     $("#uploadJourneyData, #uploadOrigin, #uploadDestination, #uploadDistance, #uploadJourneyTime, #uploadDateTime, #uploadJourneyComment").val("");
+}
+
+/**
+ * Name: clearGeoDataArray
+ * Purpose: clear arrays.
+ */
+function clearGeoDataArrays(){
+    app.journeyData.length = 0;
+    app.timestamp.length = 0;
 }
 
 
