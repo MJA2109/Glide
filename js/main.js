@@ -98,6 +98,7 @@ require(['jquery',
             function initialiseEvents(){
                 getTableData("getExpensesData");
                 getTableData("getUsersData");
+                getTableData("getJourneysData");
                 submitForm('#signUpForm');
                 submitForm('#signInForm');
                 $("#btnSignOut").on("click", function(){
@@ -129,6 +130,9 @@ require(['jquery',
                             case "getUsersData":
                                 buildUserTable(tableData);
                                 break;
+                            case "getJourneysData":
+                                buildJourneysTable(tableData);
+                                break;
                         }
                     },
                     error: function(){
@@ -147,14 +151,14 @@ require(['jquery',
                 $("#expensesTable").dataTable({
                     "data" : tableData,
                     "columns" : [
-                        {"data": "userName"},
-                        {"data": "expenseName"},
-                        {"data": "merchantName"},
-                        {"data": "expenseCost"},
-                        {"data": "expenseDate"},
-                        {"data": "expenseStatus"},
-                        {"data": "receiptImage"},
-                        {"data": "expenseComment"}
+                        {"data": "user_name"},
+                        {"data": "expense_name"},
+                        {"data": "merchant_name"},
+                        {"data": "expense_cost"},
+                        {"data": "receipt_image"},
+                        {"data": "expense_date"},
+                        {"data": "expense_status"},
+                        {"data": "expense_comment"}
                     ]
                 });
             }
@@ -171,6 +175,23 @@ require(['jquery',
                     "columns" : [
                         {"data": "user_name"},
                         {"data": "user_email"}
+                    ]
+                });
+            }
+
+
+            function buildJourneysTable(tableData){
+                
+                $("#journeysTable").dataTable({
+                    "data" : tableData,
+                    "columns" : [
+                        {"data": "user_name"},
+                        {"data": "origin"},
+                        {"data": "destination"},
+                        {"data": "distance"},
+                        {"data": "journey_time"},
+                        {"data": "date"},
+                        {"data": "comment"}
                     ]
                 });
             }

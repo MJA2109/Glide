@@ -17,6 +17,8 @@ if(isset($_POST["action"])){
         break;
         case "getUsersData" : getUsersData();
         break;
+        case "getJourneysData" : getJourneysData();
+        break;
     }
 }
 
@@ -238,14 +240,14 @@ function getExpensesData(){
                                           AND expenses.merchant_id = merchants.merchant_id")->fetchAll();
         foreach($expensesData as $data){
             $expense[$index] = array();
-            $expense[$index]["userName"] = $data["user_name"];
-            $expense[$index]["expenseName"] = $data["expense_name"];
-            $expense[$index]["merchantName"] = $data["merchant_name"];
-            $expense[$index]["expenseCost"] = $data["expense_cost"];
-            $expense[$index]["expenseDate"] = $data["expense_date"];
-            $expense[$index]["expenseStatus"] = $data["expense_status"];
-            $expense[$index]["receiptImage"] = $data["receipt_image"];
-            $expense[$index]["expenseComment"] = $data["expense_comment"];
+            $expense[$index]["user_name"] = $data["user_name"];
+            $expense[$index]["expense_name"] = $data["expense_name"];
+            $expense[$index]["merchant_name"] = $data["merchant_name"];
+            $expense[$index]["expense_cost"] = $data["expense_cost"];
+            $expense[$index]["receipt_image"] = $data["receipt_image"];
+            $expense[$index]["expense_status"] = $data["expense_status"];
+            $expense[$index]["expense_date"] = $data["expense_date"];
+            $expense[$index]["expense_comment"] = $data["expense_comment"];
             $index++;
         }
 
@@ -281,6 +283,49 @@ function getUsersData(){
 
         echo json_encode($userData);
 
+    }else{
+        echo json_encode(array("error" => "Admin ID not set"));
+    }
+}
+
+
+
+
+
+function getJourneysData(){
+    session_start();
+    
+    if(isset($_SESSION["adminId"])){
+
+        $journey = array();
+        $index = 0;
+        $journeysData;
+        $adminId;
+        $error;
+        $database = connectDB();
+        
+        $adminId = $_SESSION["adminId"];
+        
+        //use query function for more complex database queries
+        $journeysData = $database->query("SELECT user_name, origin, destination, distance, journey_time, date, comment
+                                          FROM users, journeys
+                                          WHERE ".$adminId." = journeys.admin_id
+                                          AND journeys.user_id = users.user_id")->fetchAll();
+                     
+
+        foreach($journeysData as $data){
+            $journey[$index] = array();
+            $journey[$index]["user_name"] = $data["user_name"];
+            $journey[$index]["origin"] = $data["origin"];
+            $journey[$index]["destination"] = $data["destination"];
+            $journey[$index]["distance"] = $data["distance"];
+            $journey[$index]["journey_time"] = $data["journey_time"];
+            $journey[$index]["date"] = $data["date"];
+            $journey[$index]["comment"] = $data["comment"];
+            $index++;
+        }
+
+        echo json_encode($journey);
     }else{
         echo json_encode(array("error" => "Admin ID not set"));
     }

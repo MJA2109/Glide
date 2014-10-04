@@ -5,26 +5,26 @@
 	}else{
 		require("../templates/head.php");
 		require("../templates/navigation.php");
-		echo "EXPENSES";
-		echo "Congatulations you're in " . $_SESSION["adminEmail"] . $_SESSION["adminId"];
+		echo "Journeys page";
+		echo "Congatulations you're in " . $_SESSION["adminEmail"];
 ?>
-		<table id = "expensesTable">
+		<table id = "journeysTable">
 			<thead>
 				<tr>
-					<th>User Name</th>
-					<th>Category</th>
-					<th>Merchant</th>
-					<th>Cost</th>
-					<th>Receipt</th>
+					<th>User</th>
+					<th>Origin</th>
+					<th>Destination</th>
+					<th>Distance</th>
+					<th>Journey Time</th>
 					<th>Date</th>
-					<th>Status</th>
 					<th>Comment</th>
 				</tr>
 			</thead>
-			<tbody id = "expensesData">
-				<!-- call data here -->
+			<tbody>
+				<!-- journey data goes here -->
 			</tbody>
 		</table>
+
 
 
 <?php
