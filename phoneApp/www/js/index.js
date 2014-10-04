@@ -21,7 +21,6 @@ var app = {
             alert("No Network Connection detected");   
         }else{
             initializeEvents();
-            getCurrentLocation();
         }
     }
 };
@@ -42,9 +41,7 @@ function initializeEvents(){
     });
 
     $("#trackJourney").on("pageshow", function(){
-        resizeMap();
-        addLocationMarker();
-        addTrackerMarker();
+        getCurrentLocation();
     });
 
     $("#btnStartJourney").click(function(){
@@ -72,15 +69,24 @@ function initializeEvents(){
  * Purpose: Using GPS get the current latitude and longitude of the device.
  */
 function getCurrentLocation(){
+    
+    var options = {
+        enableHighAccuracy: true,
+        timeout: 100000,
+        maximumAge: 0
+    }
 
-    navigator.geolocation.getCurrentPosition(onSuccess, onError);
+    navigator.geolocation.getCurrentPosition(onSuccess, onError, options);
 
     function onSuccess(position){
         initializeMap(position);
+        resizeMap();
+        addLocationMarker();
+        addTrackerMarker();
     }
 
-    function onError(){
-        alert("Couldn't get your current location");
+    function onError(error){
+        alert("Unable to retrieve GPS position.");
     }
 }
 
@@ -212,7 +218,6 @@ function setDestination(geoData){
     var originLat = geoData[Object.keys(geoData)[lastKey]].k;
     var originLng = geoData[Object.keys(geoData)[lastKey]].B;
     originUrl = originUrl + originLat + "," + originLng;
-    alert("Length of json object : " + originLat + " : " + originLng);
 
     $.ajax({
         type: "post",
@@ -300,11 +305,10 @@ function moveTrackerMarker(map, marker, lat, lng){
  * Purpose: Initialize Google map and append to div.
  */
 function initializeMap(position){
+
     var lng = position.coords.longitude;
     var lat = position.coords.latitude;
     app.latLng = new google.maps.LatLng(lat, lng);
-    
-    alert("global latlng : " + app.latLng);
     
     var mapOptions = {
         center : app.latLng,
@@ -316,7 +320,6 @@ function initializeMap(position){
     };
 
     app.map = new google.maps.Map(document.getElementById("googleMap"), mapOptions);
-
 }
 
 
