@@ -40,12 +40,13 @@
 	<table id = "journeysTable">
 		<thead>
 			<tr>
-				<th>User</th>
+				<th>User Name</th>
 				<th>Origin</th>
 				<th>Destination</th>
 				<th>Distance</th>
 				<th>Journey Time</th>
 				<th>Date</th>
+				<th>Status</th>
 				<th>Comment</th>
 			</tr>
 		</thead>

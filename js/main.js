@@ -189,7 +189,7 @@ require(['jquery',
                     "data" : tableData,
                     "columns" : [
                         {"data": "user_name"},
-                        {"data": "expense_name"},
+                        {"data": "expense_category"},
                         {"data": "merchant_name"},
                         {"data": "expense_cost"},
                         {"data": "receipt_image"},
@@ -228,6 +228,7 @@ require(['jquery',
                         {"data": "distance"},
                         {"data": "journey_time"},
                         {"data": "date"},
+                        {"data": "status"},
                         {"data": "comment"}
                     ]
                 });

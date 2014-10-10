@@ -232,7 +232,7 @@ function getExpensesData(){
         $adminId = $_SESSION["adminId"];
         
         //use query function for more complex database queries
-        $expensesData = $database->query("SELECT user_name, expense_name, merchant_name, expense_cost, expense_date, expense_status, receipt_image, expense_comment
+        $expensesData = $database->query("SELECT user_name, expense_category, merchant_name, expense_cost, expense_date, expense_status, receipt_image, expense_comment
                                           FROM users, expenses, merchants, receipts
                                           WHERE ".$adminId." = expenses.admin_id
                                           AND expenses.user_id = users.user_id
@@ -241,7 +241,7 @@ function getExpensesData(){
         foreach($expensesData as $data){
             $expense[$index] = array();
             $expense[$index]["user_name"] = $data["user_name"];
-            $expense[$index]["expense_name"] = $data["expense_name"];
+            $expense[$index]["expense_category"] = $data["expense_category"];
             $expense[$index]["merchant_name"] = $data["merchant_name"];
             $expense[$index]["expense_cost"] = $data["expense_cost"];
             $expense[$index]["receipt_image"] = $data["receipt_image"];
@@ -307,7 +307,7 @@ function getJourneysData(){
         $adminId = $_SESSION["adminId"];
         
         //use query function for more complex database queries
-        $journeysData = $database->query("SELECT user_name, origin, destination, distance, journey_time, date, comment
+        $journeysData = $database->query("SELECT user_name, origin, destination, distance, journey_time, date, status, comment
                                           FROM users, journeys
                                           WHERE ".$adminId." = journeys.admin_id
                                           AND journeys.user_id = users.user_id")->fetchAll();
@@ -321,6 +321,7 @@ function getJourneysData(){
             $journey[$index]["distance"] = $data["distance"];
             $journey[$index]["journey_time"] = $data["journey_time"];
             $journey[$index]["date"] = $data["date"];
+            $journey[$index]["status"] = $data["status"];
             $journey[$index]["comment"] = $data["comment"];
             $index++;
         }

@@ -1,5 +1,7 @@
 <?php
-echo "<div id = 'navHeader'>
+echo "
+	<div id = 'strip'></div>
+	<div id = 'navHeader'>
 		<div id = 'navHeaderFix'>
 			<div id = 'logo'>
 				<img src = '../img/logo.png' />
