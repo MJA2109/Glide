@@ -8,11 +8,13 @@ requirejs.config({
         'analytics' : ['../../js/analytics'],
         'bootstrap': ['//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min', 'vendor/boostrap.min'],
         'cssLess' : ['//cdnjs.cloudflare.com/ajax/libs/less.js/1.7.3/less.min', 'vendor/less-1.7.3.min'],
-        'datatables' : ['//cdn.datatables.net/1.10.1/js/jquery.dataTables', '../../../Glide/js/vendor/datatables']
+        'datatables' : ['//cdn.datatables.net/1.10.1/js/jquery.dataTables', '../../../Glide/js/vendor/datatables'],
+        'modal' : ['../../js/vendor/jquery.simplemodal.1.4.4.min']
     },
     shim:{
     	'bootstrap': ['jquery'],
-        'datatables': ['jquery']
+        'datatables': ['jquery'],
+        'modal': ['jquery']
     }
 });
 
@@ -22,7 +24,8 @@ require(['jquery',
 		 'analytics',
 		 'bootstrap',
 		 'cssLess',
-         'datatables'], function($) {
+         'datatables',
+         'modal'], function($) {
 
             
             //Contains global variables
@@ -109,47 +112,17 @@ require(['jquery',
                 });  
             }
 
-            /**
-             * Name: initialiseEvents
-             * Purpose: Initialise application events
-             */
-            function initialiseEvents(){
-                submitForm('#signUpForm');
-                submitForm('#signInForm');
-                $("#btnSignOut").on("click", function(){
-                    signOut();
-                });
-                $("#navHome").click(function(){
-                    setLinkColour();
-                    getPage("../root/overview.php", "standard");
-                });
-                $("#navExpenses").click(function(){
-                    setLinkColour();
-                    getPage("../root/expenses.php", "getExpensesData", "datatable");
-                });
-                $("#navJourneys").click(function(){
-                    setLinkColour();
-                    getPage("../root/journeys.php", "getJourneysData", "datatable");
-                });
-                $("#navUsers").click(function(){
-                    setLinkColour();
-                    getPage("../root/users.php", "getUsersData", "datatable");
-                });
-                $("#navAdmin").click(function(){
-                    setLinkColour();
-                    getPage("../root/admin.php", "standard");
-                });
-            }
-
 
             /**
              * Name: setLinkColour
              * Purpose: Set link to active colour.
              */
-            function setLinkColour(){
+            function setLinkColour(link){
                 $("nav a").css("background-color", "#7290a1");
-                $(this).css("background-color", "#1f2e37");
+                $(link).css("background-color", "#1f2e37");
             }
+
+
 
             /**
              * Name: getTableData
@@ -249,9 +222,61 @@ require(['jquery',
                 });
             }
 
+            /**
+             * Name: initialiseEvents
+             * Purpose: Initialise application events
+             */
+            function initialiseEvents(){
+                
+                submitForm('#signUpForm');
+                submitForm('#signInForm');
+
+                $("#btnSignOut").on("click", function(){
+                    signOut();
+                });
+                $("#navHome").click(function(){
+                    setLinkColour(this);
+                    getPage("../root/overview.php", "standard");
+                });
+                $("#navExpenses").click(function(){
+                    setLinkColour(this);
+                    getPage("../root/expenses.php", "getExpensesData", "datatable");
+                });
+                $("#navJourneys").click(function(){
+                    setLinkColour(this);
+                    getPage("../root/journeys.php", "getJourneysData", "datatable");
+                });
+                $("#navUsers").click(function(){
+                    setLinkColour(this);
+                    getPage("../root/users.php", "getUsersData", "datatable");
+                });
+                $("#navAdmin").click(function(){
+                    setLinkColour(this);
+                    getPage("../root/admin.php", "standard");
+                });
+
+                // modal events
+                var options = {
+                        opacity:50,
+                        overlayCss: {backgroundColor:"#000"}
+                    }
+
+                $("#ajaxContent").delegate("#btnAddExpense", "click", function(){
+                    $("#modalAddExpense").modal(options);    
+                });
+
+                $("#ajaxContent").delegate("#btnAddJourney", "click", function(){
+                    $("#modalAddJourney").modal(options);    
+                });
+
+                $("#ajaxContent").delegate("#btnAddUser", "click", function(){
+                    $("#modalAddUser").modal(options);    
+                });
+            }
+
             initialiseEvents();
      
-        
+            
 });
 
 

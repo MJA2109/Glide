@@ -9,10 +9,10 @@
 		<div id = "subHeaderSec2">
 			<div>
 				<div>
-					<button class = "btn btn-default"><span class="glyphicon glyphicon-plus"></span></button>
+					<button id = "btnAddExpense" class = "btn btn-default"><span class="glyphicon glyphicon-plus"></span></button>
 				</div>
 				<div>
-					<button class = "btn btn-default"><span class="glyphicon glyphicon-trash"></span></button>
+					<button id = "btnDeleteExpense" class = "btn btn-default"><span class="glyphicon glyphicon-trash"></span></button>
 				</div>
 			</div>
 		</div>
@@ -80,4 +80,8 @@
 	</div>
 </div>
 
+<div id = "modalAddExpense" class = "modalStyle">
+	<h1>Add Expense</h1>
+	<p>here is more data....</p>
+</div>
 

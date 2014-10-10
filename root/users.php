@@ -9,10 +9,10 @@
 		<div id = "subHeaderSec2">
 			<div>
 				<div>
-					<button class = "btn btn-default"><span class="glyphicon glyphicon-plus"></span></button>
+					<button id = "btnAddUser" class = "btn btn-default"><span class="glyphicon glyphicon-plus"></span></button>
 				</div>
 				<div>
-					<button class = "btn btn-default"><span class="glyphicon glyphicon-trash"></span></button>
+					<button id = "btnDeleteUser" class = "btn btn-default"><span class="glyphicon glyphicon-trash"></span></button>
 				</div>
 			</div>
 		</div>
@@ -26,7 +26,7 @@
 				<input type = "text" name = "userName" placeholder = "User Name" class = "form-control"/>
 			</div>
 			<div class = "searchInput">
-				<button class = "btn btn-default">Search</button>
+				<button class = "btn btn-default"><span class="glyphicon glyphicon-search"></span>Search</button>
 			</div>
 		</form>
 	</div>
@@ -48,5 +48,9 @@
 	</div>
 </div>
 
+<div id = "modalAddUser" class = "modalStyle">
+	<h1>Add User</h1>
+	<p>here is more data....</p>
+</div>
 
 

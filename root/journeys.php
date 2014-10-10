@@ -9,10 +9,10 @@
 		<div id = "subHeaderSec2">
 			<div>
 				<div>
-					<button class = "btn btn-default"><span class="glyphicon glyphicon-plus"></span></button>
+					<button id = "btnAddJourney" class = "btn btn-default"><span class="glyphicon glyphicon-plus"></span></button>
 				</div>
 				<div>
-					<button class = "btn btn-default"><span class="glyphicon glyphicon-trash"></span></button>
+					<button id = "btnDeleteJourney" class = "btn btn-default"><span class="glyphicon glyphicon-trash"></span></button>
 				</div>
 			</div>
 		</div>
@@ -21,40 +21,45 @@
 
 <div id = "flexfix">
 	<div id = "search">
-	<form action = "POST" id = "searchJourneyForm">
-		<div class = "searchInput">
-			<input type = "text" name = "userName" placeholder = "User Name" class = "form-control"/>
+		<form action = "POST" id = "searchJourneyForm">
+			<div class = "searchInput">
+				<input type = "text" name = "userName" placeholder = "User Name" class = "form-control"/>
+			</div>
+			<div class = "searchInput">
+				<input type = "text" name = "date" placeholder = "Date" class = "form-control"/>
+			</div>
+			<div class = "searchInput">
+				<button type = "button" class = "btn btn-default"><span class="glyphicon glyphicon-search"></span>Search</button>
+			</div>	
+		</form>
+		<div id = "views">
 		</div>
-		<div class = "searchInput">
-			<input type = "text" name = "date" placeholder = "Date" class = "form-control"/>
-		</div>
-		<div class = "searchInput">
-			<button type = "button" class = "btn btn-default" >Search</button>
-		</div>	
-	</form>
-	<div id = "views">
+	</div>
+
+	<div id = "mainView">
+		<table id = "journeysTable">
+			<thead>
+				<tr>
+					<th>User Name</th>
+					<th>Origin</th>
+					<th>Destination</th>
+					<th>Distance</th>
+					<th>Journey Time</th>
+					<th>Date</th>
+					<th>Status</th>
+					<th>Comment</th>
+				</tr>
+			</thead>
+			<tbody>
+				<!-- journey data goes here -->
+			</tbody>
+		</table>
 	</div>
 </div>
 
-<div id = "mainView">
-	<table id = "journeysTable">
-		<thead>
-			<tr>
-				<th>User Name</th>
-				<th>Origin</th>
-				<th>Destination</th>
-				<th>Distance</th>
-				<th>Journey Time</th>
-				<th>Date</th>
-				<th>Status</th>
-				<th>Comment</th>
-			</tr>
-		</thead>
-		<tbody>
-			<!-- journey data goes here -->
-		</tbody>
-	</table>
-</div>
+<div id = "modalAddJourney" class = "modalStyle">
+	<h1>Add Journey</h1>
+	<p>here is more data....</p>
 </div>
 
 
