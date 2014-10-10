@@ -21,6 +21,7 @@ textarea {
 html {
     font-size: 1em;
     line-height: 1.4;
+    height:100%;
 }
 
 /*
@@ -104,10 +105,149 @@ button{
 /* ==========================================================================
    Author's custom styles
    ========================================================================== */
-
-#search{
-    background-color:#4F758A;
+body{
+    height:100%;
+    color:#555;
+    background-color:#edf1f3;
 }
+
+/* 
+ *   Variables
+ */
+
+ @mainBody: #edf1f3;
+ @navigation: #7290a1;
+ @logo: #4f758a;
+ @subHeader: #dbe3e7;
+ @border: #839ead;
+ @textA: #fff;
+
+
+#navHeader{
+    
+    width:100%;
+    height:60px;
+    background-color: @navigation;
+
+    #navHeaderFix{
+        
+        width:1200px;
+        height:60px;
+
+        #logo{
+            width:270px;
+            height:60px;
+            background-color:@logo;
+            float:left;
+
+            img{
+                margin-left:65px;
+                margin-top:10px;
+            }
+        }
+
+        nav{
+            width:800px;
+            height:60px;
+            float:left;
+
+            ul{
+                list-style: none;
+                margin:0;
+                padding:0;
+
+                li{
+                    display: inline;
+
+                    a{
+                        display: block;
+                        width:100px;
+                        height:60px;
+                        float:left;
+                        text-align: center;
+                        padding-top:20px;
+                        color:@textA;
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+#subHeader{
+
+    width:100%;
+    height:80px;
+    background-color:@subHeader;
+
+    #subHeaderFix{
+        width:570px;
+        height:80px;
+
+        #subHeaderSec1{
+            width:270px;
+            height:80px;
+            float:left;
+            border-right:1px solid @border;
+        }
+
+        #subHeaderSec2{
+            width:200px;
+            height:80px;
+            float:left;
+
+            button{
+                margin-left:30px;
+                margin-top:30px;
+                float:left;
+            }
+        }
+    }
+}
+
+#flexfix{
+
+    min-width: 1380px;
+    height:100%;
+
+    #search{
+
+        width:270px;
+        height:100%;
+        border-top: 1px solid @border;
+        border-right: 1px solid @border;
+        background-color:@subHeader;
+        float:left;
+
+        form{
+            width:230px;
+            padding-left: 25px
+        }
+
+        .searchInput{
+            margin-top:30px;
+        }
+    }
+
+
+    #mainView{
+        width:80%;
+        float:left;
+        background-color:@mainBody;
+        padding-left:20px;
+        padding-top:20px;
+
+        #expensesTable tr:nth-child(odd), #journeysTable tr:nth-child(odd), #usersTable tr:nth-child(odd){
+            background-color:@mainBody;    
+        }
+
+    }
+
+}
+
+
+
 
 
 

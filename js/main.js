@@ -141,6 +141,12 @@ require(['jquery',
                 });
             }
 
+
+            $.extend( $.fn.dataTable.defaults, {
+                searching: false
+            });
+
+
             /**
              * Name: buildExpensesTable
              * Purpose: Call datatables.js on DOM element and add data to created table.
