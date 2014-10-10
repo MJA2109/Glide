@@ -120,20 +120,35 @@ require(['jquery',
                     signOut();
                 });
                 $("#navHome").click(function(){
+                    setLinkColour();
                     getPage("../root/overview.php", "standard");
                 });
                 $("#navExpenses").click(function(){
+                    setLinkColour();
                     getPage("../root/expenses.php", "getExpensesData", "datatable");
                 });
                 $("#navJourneys").click(function(){
+                    setLinkColour();
                     getPage("../root/journeys.php", "getJourneysData", "datatable");
                 });
                 $("#navUsers").click(function(){
+                    setLinkColour();
                     getPage("../root/users.php", "getUsersData", "datatable");
                 });
                 $("#navAdmin").click(function(){
+                    setLinkColour();
                     getPage("../root/admin.php", "standard");
                 });
+            }
+
+
+            /**
+             * Name: setLinkColour
+             * Purpose: Set link to active colour.
+             */
+            function setLinkColour(){
+                $("nav a").css("background-color", "#7290a1");
+                $(this).css("background-color", "#1f2e37");
             }
 
             /**
