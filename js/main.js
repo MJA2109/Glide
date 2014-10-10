@@ -32,7 +32,6 @@ require(['jquery',
             }
 
             
-
             /**
              * Name: submitFrom
              * Purpose: Submits form using ajax. Redirection based on return Ajax values.
@@ -91,18 +90,49 @@ require(['jquery',
                 });
             }
 
+
+            /**
+             * Name: getPage
+             * Purpose: loads page at 'url' via ajax call
+             * @params: url - string : url of content
+             * @params: action - string : function to be called on server
+             * @params: pageType - string : identifies weather or not page contains datatables.
+             */
+            function getPage(url, action, pageType){
+
+                var loader = "<div = id = 'loaderGif'><img src = '../img/gifLoader.gif' alt = 'loading...' /></div>";
+                
+                $("#ajaxContent").html(loader).load(url, function(){
+                    if(pageType == "datatable"){
+                        getTableData(action);
+                    }
+                });  
+            }
+
             /**
              * Name: initialiseEvents
              * Purpose: Initialise application events
              */
             function initialiseEvents(){
-                getTableData("getExpensesData");
-                getTableData("getUsersData");
-                getTableData("getJourneysData");
                 submitForm('#signUpForm');
                 submitForm('#signInForm');
                 $("#btnSignOut").on("click", function(){
                     signOut();
+                });
+                $("#navHome").click(function(){
+                    getPage("../root/overview.php", "standard");
+                });
+                $("#navExpenses").click(function(){
+                    getPage("../root/expenses.php", "getExpensesData", "datatable");
+                });
+                $("#navJourneys").click(function(){
+                    getPage("../root/journeys.php", "getJourneysData", "datatable");
+                });
+                $("#navUsers").click(function(){
+                    getPage("../root/users.php", "getUsersData", "datatable");
+                });
+                $("#navAdmin").click(function(){
+                    getPage("../root/admin.php", "standard");
                 });
             }
 
@@ -142,6 +172,7 @@ require(['jquery',
             }
 
 
+            //Set global options for datatables.js
             $.extend( $.fn.dataTable.defaults, {
                 searching: false
             });
