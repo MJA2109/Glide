@@ -254,6 +254,10 @@ require(['jquery',
              */
             function initialiseEvents(){
                 
+                //load home page
+                setLinkColour("#navHome");
+                getPage("../root/overview.php", "standard");
+
                 submitForm('#signUpForm');
                 submitForm('#signInForm');
 
