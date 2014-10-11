@@ -81,7 +81,35 @@
 </div>
 
 <div id = "modalAddExpense" class = "modalStyle">
-	<h1>Add Expense</h1>
-	<p>here is more data....</p>
+	<form id = "modalExpenseForm" action = "POST" class = "modalForm">
+		<div class = "modalCloseIm"></div>
+		<h4><span class="glyphicon glyphicon-envelope"></span>Add Expense</h4>
+		<div class = "modalInput">
+			<input type = "text" name = "userName" placeholder = "User Name" class = "form-control"/>	
+		</div>
+		<div class = "modalInput">
+			<select class = "form-control">
+				<option value = "allCategories">All Categories</option>
+				<option value = "accommodation">Accommodation</option>
+				<option value = "Food">Food</option>
+				<option value = "Entertainment">Entertainment</option>
+				<option value = "Phone">Phone</option>
+				<option value = "Travel">Travel</option>
+			</select>
+		</div>
+		<div class = "modalInput">
+			<input type = "text" name = "merchant" placeholder = "Merchant" class = "form-control"/>	
+		</div>
+		<div class = "modalInput">
+			<input type = "text" name = "cost" placeholder = "Cost" class = "form-control"/>	
+		</div>
+		<div class = "modalInput">
+			<input type = "text" name = "comment" placeholder = "Comment" class = "form-control"/>	
+		</div>
+		<div class = "modalInput">
+			<button class = "btn btn-default"><span class="glyphicon glyphicon-arrow-up"></span>Submit</button>
+		</div>
+		<div class = "clear"></div>
+	</form>
 </div>
 

@@ -49,8 +49,20 @@
 </div>
 
 <div id = "modalAddUser" class = "modalStyle">
-	<h1>Add User</h1>
-	<p>here is more data....</p>
+	<form id = "modalExpenseForm" action = "POST" class = "modalForm">
+		<div class = "modalCloseIm"></div>
+		<h4><span class="glyphicon glyphicon-user"></span>Add User</h4>
+		<div class = "modalInput">
+			<input type = "text" name = "userName" placeholder = "User Name" class = "form-control"/>	
+		</div>
+		<div class = "modalInput">
+			<input type = "text" name = "userEmail" placeholder = "Email" class = "form-control"/>	
+		</div>
+				<div class = "modalInput">
+			<button class = "btn btn-default"><span class="glyphicon glyphicon-arrow-up"></span>Submit</button>
+		</div>
+		<div class = "clear"></div>
+	</form>
 </div>
 
 

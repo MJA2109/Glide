@@ -296,12 +296,51 @@ body{
 
 .modalStyle{
     display:none;
+    position:relative;
     width:400px;
-    height:440px;
     -webkit-border-radius: 20px;
     -moz-border-radius: 20px;
     border-radius: 20px;
     background-color:@mainBody;
+    border-top: 1px solid #fff;
+
+    .modalForm{
+        display: block;
+        width:300px;
+        margin:auto;
+    }
+    .modalInput{
+        margin-top:20px;
+    }
+
+    h4{
+        width:300px;
+        margin:auto;
+        text-align: center;
+        padding-top:20px;
+        padding-bottom:20px;
+    }
+
+    .modalInput button{
+        float:right;
+    }
+
+    .clear{
+        clear:both;
+        margin-bottom:35px;
+    }
+}
+
+
+.modalCloseImg{
+    width:25px;
+    height:30px;
+    position:absolute;
+    top:-8px;
+    right:2px;
+    background-image: url("../img/x.png");
+    background-repeat: no-repeat;
+    z-index: 500;
 }
 
 

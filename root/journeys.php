@@ -58,8 +58,35 @@
 </div>
 
 <div id = "modalAddJourney" class = "modalStyle">
-	<h1>Add Journey</h1>
-	<p>here is more data....</p>
+	<form id = "modalJourneyForm" action = "POST" class = "modalForm">
+		<div class = "modalCloseIm"></div>
+		<h4><span class="glyphicon glyphicon-road"></span>Add Journey</h4>
+		<div class = "modalInput">
+			<input type = "text" name = "userName" placeholder = "User Name" class = "form-control"/>	
+		</div>
+		<div class = "modalInput">
+			<input type = "text" name = "origin" placeholder = "Origin" class = "form-control"/>	
+		</div>
+		<div class = "modalInput">
+			<input type = "text" name = "destination" placeholder = "Destination" class = "form-control"/>	
+		</div>
+		<div class = "modalInput">
+			<input type = "text" name = "distance" placeholder = "Distance" class = "form-control"/>	
+		</div>
+		<div class = "modalInput">
+			<input type = "text" name = "journeyTime" placeholder = "Journey Time" class = "form-control"/>	
+		</div>
+		<div class = "modalInput">
+			<input type = "text" name = "date" placeholder = "Date" class = "form-control"/>	
+		</div>
+		<div class = "modalInput">
+			<input type = "text" name = "comment" placeholder = "Comment" class = "form-control"/>	
+		</div>
+		<div class = "modalInput">
+			<button class = "btn btn-default"><span class="glyphicon glyphicon-arrow-up"></span>Submit</button>
+		</div>
+		<div class = "clear"></div>
+	</form>
 </div>
 
 

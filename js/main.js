@@ -205,6 +205,11 @@ require(['jquery',
             }
 
 
+            /**
+             * Name: buildJourneyTable
+             * Purpose: Call datatables.js on DOM element and add data to created table.
+             * @params: tableData - JSON : data to populate table
+             */
             function buildJourneysTable(tableData){
                 
                 $("#journeysTable").dataTable({
@@ -220,6 +225,27 @@ require(['jquery',
                         {"data": "comment"}
                     ]
                 });
+            }
+
+            
+
+            /**
+             * Name: displayModal
+             * Purpose: Take div, add options and display as modal.
+             * @params: div - String : div to process
+             */
+            function displayModal(div){
+                $(div).modal({
+                    opacity:50,
+                    overlayCss: {backgroundColor:"#000"},
+                    onOpen: function(dialog){
+                        dialog.overlay.fadeIn('slow', function(){
+                            dialog.data.fadeIn(50, function() {
+                                dialog.container.fadeIn(500);
+                            });
+                        });
+                    }
+                });   
             }
 
             /**
@@ -255,28 +281,22 @@ require(['jquery',
                     getPage("../root/admin.php", "standard");
                 });
 
-                // modal events
-                var options = {
-                        opacity:50,
-                        overlayCss: {backgroundColor:"#000"}
-                    }
 
                 $("#ajaxContent").delegate("#btnAddExpense", "click", function(){
-                    $("#modalAddExpense").modal(options);    
+                    displayModal("#modalAddExpense");    
                 });
 
                 $("#ajaxContent").delegate("#btnAddJourney", "click", function(){
-                    $("#modalAddJourney").modal(options);    
+                    displayModal("#modalAddJourney");    
                 });
 
                 $("#ajaxContent").delegate("#btnAddUser", "click", function(){
-                    $("#modalAddUser").modal(options);    
+                    displayModal("#modalAddUser");   
                 });
             }
 
             initialiseEvents();
-     
-            
+               
 });
 
 
