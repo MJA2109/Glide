@@ -66,6 +66,9 @@
 			<input type = "text" name = "userName" placeholder = "User Name" class = "form-control"/>	
 		</div>
 		<div class = "modalInput">
+			<input type = "text" name = "userId" placeholder = "User ID" class = "form-control"/>	
+		</div>
+		<div class = "modalInput">
 			<input type = "text" name = "origin" placeholder = "Origin" class = "form-control"/>	
 		</div>
 		<div class = "modalInput">
