@@ -49,7 +49,8 @@
 </div>
 
 <div id = "modalAddUser" class = "modalStyle">
-	<form id = "modalExpenseForm" action = "POST" class = "modalForm">
+	<form id = "modalUserForm" method = "POST" class = "modalForm">
+		<input type = 'hidden' name = 'action' value = 'addUser' />
 		<div class = "modalCloseIm"></div>
 		<h4><span class="glyphicon glyphicon-user"></span>Add User</h4>
 		<div class = "modalInput">
@@ -58,8 +59,8 @@
 		<div class = "modalInput">
 			<input type = "text" name = "userEmail" placeholder = "Email" class = "form-control"/>	
 		</div>
-				<div class = "modalInput">
-			<button class = "btn btn-default"><span class="glyphicon glyphicon-arrow-up"></span>Submit</button>
+		<div class = "modalInput">
+			<input type = 'submit' value = 'Submit' class = "btn btn-default" id = "btnSubmitUser"/>
 		</div>
 		<div class = "clear"></div>
 	</form>

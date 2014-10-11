@@ -2,6 +2,7 @@
 require "classes/medoo.php";
 require "classes/Util.php";
 
+//echo json_encode($_POST);
 
 //Call function based on posted action
 if(isset($_POST["action"])){
@@ -18,6 +19,12 @@ if(isset($_POST["action"])){
         case "getUsersData" : getUsersData();
         break;
         case "getJourneysData" : getJourneysData();
+        break;
+        case "addExpense" : addExpense();
+        break;
+        case "addJourney" : addJourney();
+        break;
+        case "addUser" : addUser();
         break;
     }
 }
@@ -202,7 +209,7 @@ function signIn(){
 
 /**
  * Name: signOut
- * Purpose: Destroys session and allows users to sign out of system
+ * Purpose: Destroys session and allow users to sign out of system
  */
 function signOut(){
     session_start();
@@ -331,6 +338,33 @@ function getJourneysData(){
         echo json_encode(array("error" => "Admin ID not set"));
     }
 }
+
+
+function addExpense(){
+
+    $test = ["expense" => "working"];
+    echo json_encode($test);
+
+}
+
+
+function addJourney(){
+
+    $test = ["journey" => "working"];
+    echo json_encode($test);
+
+}
+
+
+function addUser(){
+
+    $test = ["User" => "working"];
+    echo json_encode($test);
+
+}
+
+
+
 
 
 

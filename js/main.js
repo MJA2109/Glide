@@ -123,10 +123,36 @@ require(['jquery',
             }
 
 
+            /**
+             * Name: submitModalForm
+             * Purpose: Submit modal form using Ajax.
+             * @param : form - String : form to send
+             */
+            function submitModalForm(form){
+                var frm = $(form);
+                frm.submit(function (ev) {
+                    ev.preventDefault();
+                    var data = frm.serialize();
+                    console.log("Data for server : " + data);
+                    $.ajax({
+                        type: frm.attr('method'),
+                        url: appData.api,
+                        data: data,
+                        success: function (data) {
+                            console.log("Ajax success");
+                            console.log(data);
+                        },
+                        error: function(){
+                            console.log("Error: Ajax request unsuccessful");
+                        }
+                    });
+                });
+            }
+
 
             /**
              * Name: getTableData
-             * Purpose: Query database for specific data
+             * Purpose: Query database.
              * @params: action - string : function to be called on server
              */
             function getTableData(action){
@@ -261,6 +287,8 @@ require(['jquery',
                 submitForm('#signUpForm');
                 submitForm('#signInForm');
 
+                
+                // navbar events
                 $("#btnSignOut").on("click", function(){
                     signOut();
                 });
@@ -285,18 +313,33 @@ require(['jquery',
                     getPage("../root/admin.php", "standard");
                 });
 
-
-                $("#ajaxContent").delegate("#btnAddExpense", "click", function(){
+                //modal events
+                $("body").delegate("#btnAddExpense", "click", function(){
                     displayModal("#modalAddExpense");    
                 });
 
-                $("#ajaxContent").delegate("#btnAddJourney", "click", function(){
+                $("body").delegate("#btnAddJourney", "click", function(){
                     displayModal("#modalAddJourney");    
                 });
 
-                $("#ajaxContent").delegate("#btnAddUser", "click", function(){
+                $("body").delegate("#btnAddUser", "click", function(){
                     displayModal("#modalAddUser");   
                 });
+
+
+                //submit modal forms
+                $("body").delegate("#btnSubmitExpense", "click", function(){
+                    submitModalForm("#modalExpenseForm");
+                });
+
+                $("body").delegate("#btnSubmitJourney", "click", function(){
+                    submitModalForm("#modalJourneyForm");
+                });
+
+                $("body").delegate("#btnSubmitUser", "click", function(){
+                    submitModalForm("#modalUserForm");
+                });
+
             }
 
             initialiseEvents();

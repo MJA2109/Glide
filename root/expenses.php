@@ -81,7 +81,8 @@
 </div>
 
 <div id = "modalAddExpense" class = "modalStyle">
-	<form id = "modalExpenseForm" action = "POST" class = "modalForm">
+	<form id = "modalExpenseForm" method = "POST" class = "modalForm">
+		<input type = 'hidden' name = 'action' value = 'addExpense' />
 		<div class = "modalCloseIm"></div>
 		<h4><span class="glyphicon glyphicon-envelope"></span>Add Expense</h4>
 		<div class = "modalInput">
@@ -107,7 +108,7 @@
 			<input type = "text" name = "comment" placeholder = "Comment" class = "form-control"/>	
 		</div>
 		<div class = "modalInput">
-			<button class = "btn btn-default"><span class="glyphicon glyphicon-arrow-up"></span>Submit</button>
+			<input type = 'submit' value = 'Submit' class = "btn btn-default" id = "btnSubmitExpense"/>
 		</div>
 		<div class = "clear"></div>
 	</form>

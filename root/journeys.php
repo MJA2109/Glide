@@ -58,7 +58,8 @@
 </div>
 
 <div id = "modalAddJourney" class = "modalStyle">
-	<form id = "modalJourneyForm" action = "POST" class = "modalForm">
+	<form id = "modalJourneyForm" method = "POST" class = "modalForm">
+		<input type = 'hidden' name = 'action' value = 'addJourney' />
 		<div class = "modalCloseIm"></div>
 		<h4><span class="glyphicon glyphicon-road"></span>Add Journey</h4>
 		<div class = "modalInput">
@@ -83,7 +84,7 @@
 			<input type = "text" name = "comment" placeholder = "Comment" class = "form-control"/>	
 		</div>
 		<div class = "modalInput">
-			<button class = "btn btn-default"><span class="glyphicon glyphicon-arrow-up"></span>Submit</button>
+			<input type = 'submit' value = 'Submit' class = "btn btn-default" id = "btnSubmitJourney"/>
 		</div>
 		<div class = "clear"></div>
 	</form>
