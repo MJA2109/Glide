@@ -239,7 +239,8 @@ function getExpensesData(){
         $adminId = $_SESSION["adminId"];
         
         //use query function for more complex database queries
-        $expensesData = $database->query("SELECT 
+        $expensesData = $database->query("SELECT
+                                            ex.expense_id,
                                             u.user_name, 
                                             ex.expense_category, 
                                             mer.merchant_name, 
@@ -256,6 +257,7 @@ function getExpensesData(){
                                             ex.admin_id = '$adminId'")->fetchAll();
         foreach($expensesData as $data){
             $expense[$index] = array();
+            $expense[$index]["DT_RowId"] = $data["expense_id"];
             $expense[$index]["user_name"] = $data["user_name"];
             $expense[$index]["expense_category"] = $data["expense_category"];
             $expense[$index]["merchant_name"] = $data["merchant_name"];
@@ -293,12 +295,14 @@ function getUsersData(){
         $adminId = $_SESSION["adminId"];
 
         $userData = $database->select("users", [
-            "user_id",
+            "user_id(DT_RowId)",
             "user_name",
             "user_email",
             ],[
             "admin_id" => $adminId
         ]);
+
+
 
         echo json_encode($userData);
 
@@ -330,7 +334,7 @@ function getJourneysData(){
         $adminId = $_SESSION["adminId"];
         
         //use query function for more complex database queries
-        $journeysData = $database->query("SELECT user_name, origin, destination, distance, journey_time, date, status, comment
+        $journeysData = $database->query("SELECT id, user_name, origin, destination, distance, journey_time, date, status, comment
                                           FROM users, journeys
                                           WHERE ".$adminId." = journeys.admin_id
                                           AND journeys.user_id = users.user_id")->fetchAll();
@@ -338,6 +342,7 @@ function getJourneysData(){
 
         foreach($journeysData as $data){
             $journey[$index] = array();
+            $journey[$index]["DT_RowId"] = $data["id"];
             $journey[$index]["user_name"] = $data["user_name"];
             $journey[$index]["origin"] = $data["origin"];
             $journey[$index]["destination"] = $data["destination"];

@@ -225,7 +225,7 @@ require(['jquery',
                 $("#usersTable").dataTable({
                     "data" : tableData,
                     "columns" : [
-                        {"data": "user_id"},
+                        {"data": "DT_RowId"},
                         {"data": "user_name"},
                         {"data": "user_email"}
                     ]
