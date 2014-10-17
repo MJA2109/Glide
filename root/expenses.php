@@ -35,14 +35,14 @@
 				<input type = "text" name = "searchDate" placeholder = "Date" class = "form-control"/>
 			</div>
 			<div class = "searchInput">
-				<select class = "form-control">
+				<select class = "form-control" name = "status">
 					<option value = "All Expenses">All Expenses</option>
 					<option value = "Processed">Processed</option>
 					<option value = "Unprocessed">Unprocessed</option>
 				</select>
 			</div>
 			<div class = "searchInput">
-				<select class = "form-control">
+				<select class = "form-control" name = "category">
 					<option value = "allCategories">All Categories</option>
 					<option value = "accommodation">Accommodation</option>
 					<option value = "Food">Food</option>
@@ -92,7 +92,7 @@
 			<input type = "text" name = "userId" placeholder = "User ID" class = "form-control"/>	
 		</div>
 		<div class = "modalInput">
-			<select class = "form-control">
+			<select class = "form-control" name = "category">
 				<option value = "allCategories">All Categories</option>
 				<option value = "accommodation">Accommodation</option>
 				<option value = "Food">Food</option>

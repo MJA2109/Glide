@@ -188,7 +188,8 @@ require(['jquery',
 
             //Set global options for datatables.js
             $.extend( $.fn.dataTable.defaults, {
-                searching: false
+                "searching": false,
+                "ordering": false
             });
 
 

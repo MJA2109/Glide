@@ -239,12 +239,21 @@ function getExpensesData(){
         $adminId = $_SESSION["adminId"];
         
         //use query function for more complex database queries
-        $expensesData = $database->query("SELECT user_name, expense_category, merchant_name, expense_cost, expense_date, expense_status, receipt_image, expense_comment
-                                          FROM users, expenses, merchants, receipts
-                                          WHERE ".$adminId." = expenses.admin_id
-                                          AND expenses.user_id = users.user_id
-                                          AND expenses.receipt_id = receipts.receipt_id
-                                          AND expenses.merchant_id = merchants.merchant_id")->fetchAll();
+        $expensesData = $database->query("SELECT 
+                                            u.user_name, 
+                                            ex.expense_category, 
+                                            mer.merchant_name, 
+                                            ex.expense_cost, 
+                                            ex.expense_date, 
+                                            ex.expense_status,
+                                            re.receipt_image, 
+                                            ex.expense_comment
+                                            FROM users u
+                                            JOIN expenses ex on ex.user_id = u.user_id
+                                            JOIN merchants mer on mer.merchant_id = ex.merchant_id
+                                            LEFT JOIN receipts re on re.receipt_id = ex.receipt_id
+                                            where
+                                            ex.admin_id = '$adminId'")->fetchAll();
         foreach($expensesData as $data){
             $expense[$index] = array();
             $expense[$index]["user_name"] = $data["user_name"];
@@ -264,6 +273,8 @@ function getExpensesData(){
     }
     
 }
+
+
 
 /**
  * Name: getUsersData
@@ -298,7 +309,11 @@ function getUsersData(){
 
 
 
-
+/**
+ * Name: getJourneyData
+ * Purpose: Retrieve journey data from journeys table
+ * @return $journeyData or $error - JSON : JSON: Contains rows for each journey related to that specific instance.
+ */
 function getJourneysData(){
     session_start();
     
@@ -340,12 +355,97 @@ function getJourneysData(){
 }
 
 
+/**
+ * Name: processMerchant
+ * Purpose: Get merchant id or add new merchant then get id
+ * @param $marchantName - String : Contains merchant name.
+ * @return $merchantId - Int : Contains merchant id.
+ */
+function processMerchant($merchantName){
+    session_start();
+    
+    if(isset($_SESSION["adminId"])){
+        $adminId = $_SESSION["adminId"];
+        $database = connectDB();
+        
+        $merchantId = $database->select("merchants", [ "merchant_id"],[
+            "merchant_name" => $merchantName
+        ]);
+
+        if(empty($merchantId)){
+            $merchantId = $database->insert("merchants", [
+                "merchant_name" => $merchantName,
+                "admin_id" => $adminId
+            ]);
+        }
+    }else{
+        echo json_encode(array("error" => "Admin ID not set"));
+    }
+
+    return $merchantId;
+}
+
+
+/**
+ * Name: addExpense
+ * Purpose: Add expense to expense table
+ * @return $journeyData or $error - JSON : JSON: Contains rows for each journey related to that specific instance.
+ */
 function addExpense(){
 
-    $test = ["expense" => "working"];
-    echo json_encode($test);
+    session_start();
+    
+    if(isset($_SESSION["adminId"])){
 
+        $userName = Util::get("userName");
+        $userId = Util::get("userId");
+        $category = Util::get("category");
+        $merchant = Util::get("merchant");
+        $cost = Util::get("cost");
+        $comment = Util::get("comment");
+        $log = array();
+        $log["type"] = "addExpense";
+        $log["errors"] = array();
+        $database = connectDB();
+        
+        $adminId = $_SESSION["adminId"];
+
+        $userExists = $database->count("users", [
+            "AND" => [
+                "user_id" => $userId,
+                "user_name" => $userName,
+                "admin_id" => $adminId
+            ]
+        ]);
+
+        if($userExists == 0){
+            $log["errors"]["user"] = "User doesn't exist";
+            echo json_encode($log);
+        }else{
+            
+            //get merchant id or add new merchant
+            $merchantId = processMerchant($merchant);
+            
+            $lastExpenseId = $database->insert("expenses", [
+                "admin_id" => intval($adminId),
+                "user_id" => intval($userId),
+                "merchant_id" => $merchantId,
+                "expense_category" => $category,
+                "expense_cost" => $cost,
+                "expense_comment" => $comment,
+                
+            ]);
+            echo json_encode(array("status" => "New expense added..."));  
+        }
+
+    }else{
+        echo json_encode(array("error" => "Admin ID not set"));
+    }
 }
+
+
+
+
 
 
 function addJourney(){
