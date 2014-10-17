@@ -35,10 +35,9 @@
 		<table id = "usersTable">
 			<thead>
 				<tr>
-					<th>User</th>
-					<th>Email</th>
-					<th>Sign-up Date</th>
-					<th>No. of Claims</th>
+					<th>User ID</th>
+					<th>User Name</th>
+					<th>E-mail</th>
 				</tr>
 			</thead>
 			<tbody>

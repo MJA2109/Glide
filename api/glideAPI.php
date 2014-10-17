@@ -293,6 +293,7 @@ function getUsersData(){
         $adminId = $_SESSION["adminId"];
 
         $userData = $database->select("users", [
+            "user_id",
             "user_name",
             "user_email",
             ],[
@@ -389,7 +390,6 @@ function processMerchant($merchantName){
 /**
  * Name: addExpense
  * Purpose: Add expense to expense table
- * @return $expenseData or $error - JSON : JSON: Contains rows for each journey related to that specific instance.
  */
 function addExpense(){
 
@@ -447,7 +447,6 @@ function addExpense(){
 /**
  * Name: addJourney
  * Purpose: Add journey to journey table
- * @return $journeyData or $error - JSON : JSON: Contains rows for each journey related to that specific instance.
  */
 function addJourney(){
 
@@ -501,11 +500,46 @@ function addJourney(){
     
 }
 
-
+/**
+ * Name: addUser
+ * Purpose: Add user to users table
+ */
 function addUser(){
 
-    $test = ["User" => "working"];
-    echo json_encode($test);
+    session_start();
+    
+    if(isset($_SESSION["adminId"])){
+        $userName = Util::get("userName");
+        $userEmail = Util::get("userEmail");
+        $log = array();
+        $log["type"] = "addUser";
+        $log["errors"] = array();
+        $database = connectDB();
+
+        $adminId = $_SESSION["adminId"];
+
+        $emailExists = $database->count("users", [
+            "AND" => [
+                "user_email" => $userEmail,
+                "admin_id" => $adminId
+            ]
+        ]);
+
+        if($emailExists == 1){
+            $log["errors"]["email"] = "User email already exists";
+            echo json_encode($log);   
+        }else{
+                $lastUserId = $database->insert("users", [
+                "admin_id" => intval($adminId),
+                "user_name" => $userName,
+                "user_email" => $userEmail 
+            ]);
+            echo json_encode(array("status" => "New user added..."));     
+        }
+
+    }else{
+        echo json_encode(array("error" => "Admin ID not set"));
+    }
 
 }
 
