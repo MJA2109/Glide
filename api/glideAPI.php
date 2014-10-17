@@ -389,7 +389,7 @@ function processMerchant($merchantName){
 /**
  * Name: addExpense
  * Purpose: Add expense to expense table
- * @return $journeyData or $error - JSON : JSON: Contains rows for each journey related to that specific instance.
+ * @return $expenseData or $error - JSON : JSON: Contains rows for each journey related to that specific instance.
  */
 function addExpense(){
 
@@ -444,15 +444,61 @@ function addExpense(){
 }
 
 
-
-
-
-
+/**
+ * Name: addJourney
+ * Purpose: Add journey to journey table
+ * @return $journeyData or $error - JSON : JSON: Contains rows for each journey related to that specific instance.
+ */
 function addJourney(){
 
-    $test = ["journey" => "working"];
-    echo json_encode($test);
+    session_start();
+    
+    if(isset($_SESSION["adminId"])){
+        $userName = Util::get("userName");
+        $userId = Util::get("userId");
+        $origin = Util::get("origin");
+        $destination = Util::get("destination");
+        $distance = Util::get("distance");
+        $journeyTime = Util::get("journeyTime");
+        $date = Util::get("date");
+        $comment = Util::get("comment");
+        $log = array();
+        $log["type"] = "addExpense";
+        $log["errors"] = array();
+        $database = connectDB();
+        
+        $adminId = $_SESSION["adminId"];
 
+        $userExists = $database->count("users", [
+            "AND" => [
+                "user_id" => $userId,
+                "user_name" => $userName,
+                "admin_id" => $adminId
+            ]
+        ]);
+
+        if($userExists == 0){
+            $log["errors"]["user"] = "User doesn't exist";
+            echo json_encode($log);
+        }else{
+
+            $lastJourneyId = $database->insert("journeys", [
+                "admin_id" => intval($adminId),
+                "user_id" => intval($userId),
+                "origin" => $origin,
+                "destination" => $destination,
+                "distance" => $distance,
+                "journey_time" => $journeyTime,
+                "comment" => $comment  
+            ]);
+            echo json_encode(array("status" => "New journey added..."));  
+        }
+
+
+    }else{
+        echo json_encode(array("error" => "Admin ID not set"));
+    }
+    
 }
 
 
