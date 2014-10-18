@@ -126,7 +126,7 @@ require(['jquery',
             /**
              * Name: submitModalForm
              * Purpose: Submit modal form using Ajax.
-             * @param : form - String : form to send
+             * @param : form - String : form to sent.
              */
             function submitModalForm(form){
                 var frm = $(form);
@@ -149,8 +149,13 @@ require(['jquery',
                 });
             }
 
-
+            /**
+             * Name: deleteData
+             * Purpose: Send Ajax request to server and delete the specified data.
+             * @params: data - json : object containing data to specify which rows/row to delete.
+             */
             function deleteData(data){
+                console.log(JSON.stringify(data));
                 $.ajax({
                     type: "POST",
                     url: appData.api,
@@ -158,11 +163,32 @@ require(['jquery',
                     success: function (data) {
                         console.log("Ajax success");
                         console.log(data);
+                        var data = JSON.parse(data);
+                        if(data.Table == "expenses"){
+                            refreshTable("#expensesTable", "getExpensesData");
+                        }else if(data.Table == "journeys"){
+                            refreshTable("#journeysTable", "getJourneysData");
+                        }else if(data.Table == "users"){
+                            refreshTable("#usersTable", "getUsersData");
+                        }
+                        $.modal.close();
                     },
                     error: function(){
                         console.log("Error: Ajax request unsuccessful");
                     }
                 });
+            }
+
+            /**
+             * Name: refreshTable
+             * Purpose: Refresh specified table.
+             * @params: tableId - string : table to be refreshed.
+             * @params: action - string : the process to be executed by server.
+             */
+            function refreshTable(tableId, action){
+                var table = $(tableId).dataTable();
+                table.fnDestroy();
+                getTableData(action);
             }
 
 
@@ -363,7 +389,7 @@ require(['jquery',
                     displayModal("#modalDeleteConfirmation");   
                 });
 
-                //table select
+                //add selected rows to array for deletions
                 var rowIdArray = new Array();
                 $("body").delegate("tbody", "click", function(event){
                     var rowId = $(event.target).parent().attr("id");
@@ -375,12 +401,18 @@ require(['jquery',
                         $(event.target).parent().removeClass("selected");
                     }
                 });
-
+ 
+                //confirm deletions 
                 $("body").delegate("#modalDeleteConfirmation button", "click", function(event){
-                    var action = $(event.target).attr("id");
+                    var action = $(event.target).attr("action");
+                    var tableData = $(event.target).attr("id");
+                    var rowIds = new Array();
+                    rowIds = rowIdArray;
+                    rowIdArray = [];
                     var data = {
                         action : action,
-                        rowIds : rowIdArray
+                        tableData : tableData,
+                        rowIds : rowIds
                     }
                     deleteData(data);
                 });

@@ -71,7 +71,7 @@
 		<p>Are you sure we want to delete the selected Users ?</p>
 	</div>
 	<div>
-		<button id = "deleteUser" class = "btn btn-default"><span class="glyphicon glyphicon-remove"></span>Yes</button>
+		<button action = "deleteData" id = "deleteUser" class = "btn btn-default"><span class="glyphicon glyphicon-remove"></span>Yes</button>
 	</div>
 </div>
 

@@ -98,7 +98,7 @@
 		<p>Are you sure we want to delete the selected journeys ?</p>
 	</div>
 	<div>
-		<button id = "deleteJourney" class = "btn btn-default"><span class="glyphicon glyphicon-remove"></span>Yes</button>
+		<button action = "deleteData" id = "deleteJourney" class = "btn btn-default"><span class="glyphicon glyphicon-remove"></span>Yes</button>
 	</div>
 </div>
 

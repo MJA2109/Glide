@@ -122,7 +122,7 @@
 		<p>Are you sure we want to delete the selected expenses ?</p>
 	</div>
 	<div>
-		<button id = "deleteExpense" class = "btn btn-default"><span class="glyphicon glyphicon-remove"></span>Yes</button>
+		<button action = "deleteData" id = "deleteExpense" class = "btn btn-default"><span class="glyphicon glyphicon-remove"></span>Yes</button>
 	</div>
 </div>	
 

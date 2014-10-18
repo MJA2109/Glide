@@ -26,11 +26,7 @@ if(isset($_POST["action"])){
         break;
         case "addUser" : addUser();
         break;
-        case "deleteExpense" : deleteExpense();
-        break;
-        case "deleteJourney" : deleteJourney();
-        break;
-        case "deleteUser" : deleteUser();
+        case "deleteData" : deleteData();
         break;
     }
 }
@@ -260,7 +256,8 @@ function getExpensesData(){
                                             JOIN merchants mer on mer.merchant_id = ex.merchant_id
                                             LEFT JOIN receipts re on re.receipt_id = ex.receipt_id
                                             where
-                                            ex.admin_id = '$adminId'")->fetchAll();
+                                            ex.admin_id = '$adminId'
+                                            AND ex.is_deleted = 0")->fetchAll();
         foreach($expensesData as $data){
             $expense[$index] = array();
             $expense[$index]["DT_RowId"] = $data["expense_id"];
@@ -304,9 +301,10 @@ function getUsersData(){
             "user_id(DT_RowId)",
             "user_name",
             "user_email",
-            ],[
-            "admin_id" => $adminId
-        ]);
+            ],[ "AND" => [
+                "admin_id" => $adminId,
+                "is_deleted" => 0
+        ]]);
 
 
 
@@ -343,7 +341,8 @@ function getJourneysData(){
         $journeysData = $database->query("SELECT id, user_name, origin, destination, distance, journey_time, date, status, comment
                                           FROM users, journeys
                                           WHERE ".$adminId." = journeys.admin_id
-                                          AND journeys.user_id = users.user_id")->fetchAll();
+                                          AND journeys.user_id = users.user_id
+                                          AND journeys.is_deleted = 0")->fetchAll();
                      
 
         foreach($journeysData as $data){
@@ -554,17 +553,48 @@ function addUser(){
 }
 
 
-function deleteExpense(){
-    echo json_encode(array("deleteExpense" => "working"));    
+/**
+ * Name: deleteData
+ * Purpose: Delete data from specified table using given parameters.
+ */
+function deleteData(){
+
+    session_start();
+    $ids = Array();
+    
+    if(isset($_SESSION["adminId"])){
+        $ids = $_POST["rowIds"];
+        if($_POST["tableData"] == "deleteExpense"){
+            $table = "expenses";
+            $field = "expense_id";
+        }else if($_POST["tableData"] == "deleteJourney"){
+            $table = "journeys";
+            $field = "id";
+        }else if($_POST["tableData"] == "deleteUser"){
+            $table = "users";
+            $field = "user_id";
+        }
+
+        $database = connectDB();
+        $adminId = $_SESSION["adminId"];
+
+        for($x = 0; $x < sizeof($ids); $x++){
+            $database->update($table,[
+                "is_deleted" => 1
+            ],[
+                "AND" => [
+                    $field => $ids[$x],
+                    "admin_id" => $adminId
+            ]]);
+        }
+
+        echo json_encode(array("Table" => $table));
+
+    }else{
+        echo json_encode(array("error" => "Admin ID not set"));
+    }
 }
 
-function deleteJourney(){
-    echo json_encode(array("deleteJourney" => "working"));    
-}
-
-function deleteUser(){
-    echo json_encode(array("deleteUser" => "working"));    
-}
 
 
 
