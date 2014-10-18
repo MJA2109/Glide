@@ -150,6 +150,22 @@ require(['jquery',
             }
 
 
+            function deleteData(data){
+                $.ajax({
+                    type: "POST",
+                    url: appData.api,
+                    data: data,
+                    success: function (data) {
+                        console.log("Ajax success");
+                        console.log(data);
+                    },
+                    error: function(){
+                        console.log("Error: Ajax request unsuccessful");
+                    }
+                });
+            }
+
+
             /**
              * Name: getTableData
              * Purpose: Query database.
@@ -315,7 +331,7 @@ require(['jquery',
                     getPage("../root/admin.php", "standard");
                 });
 
-                //modal events
+                //modal add data events
                 $("body").delegate("#btnAddExpense", "click", function(){
                     displayModal("#modalAddExpense");    
                 });
@@ -342,6 +358,11 @@ require(['jquery',
                     submitModalForm("#modalUserForm");
                 });
 
+                //modal delete data events
+                $("body").delegate(".btnDelete", "click", function(){
+                    displayModal("#modalDeleteConfirmation");   
+                });
+
                 //table select
                 var rowIdArray = new Array();
                 $("body").delegate("tbody", "click", function(event){
@@ -353,6 +374,15 @@ require(['jquery',
                         rowIdArray.splice($.inArray(rowId, rowIdArray), 1);
                         $(event.target).parent().removeClass("selected");
                     }
+                });
+
+                $("body").delegate("#modalDeleteConfirmation button", "click", function(event){
+                    var action = $(event.target).attr("id");
+                    var data = {
+                        action : action,
+                        rowIds : rowIdArray
+                    }
+                    deleteData(data);
                 });
 
             }

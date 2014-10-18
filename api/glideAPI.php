@@ -26,6 +26,12 @@ if(isset($_POST["action"])){
         break;
         case "addUser" : addUser();
         break;
+        case "deleteExpense" : deleteExpense();
+        break;
+        case "deleteJourney" : deleteJourney();
+        break;
+        case "deleteUser" : deleteUser();
+        break;
     }
 }
 
@@ -545,8 +551,21 @@ function addUser(){
     }else{
         echo json_encode(array("error" => "Admin ID not set"));
     }
-
 }
+
+
+function deleteExpense(){
+    echo json_encode(array("deleteExpense" => "working"));    
+}
+
+function deleteJourney(){
+    echo json_encode(array("deleteJourney" => "working"));    
+}
+
+function deleteUser(){
+    echo json_encode(array("deleteUser" => "working"));    
+}
+
 
 
 

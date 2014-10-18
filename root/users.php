@@ -12,7 +12,7 @@
 					<button id = "btnAddUser" class = "btn btn-default"><span class="glyphicon glyphicon-plus"></span></button>
 				</div>
 				<div>
-					<button id = "btnDeleteUser" class = "btn btn-default"><span class="glyphicon glyphicon-trash"></span></button>
+					<button class = "btn btn-default btnDelete"><span class="glyphicon glyphicon-trash"></span></button>
 				</div>
 			</div>
 		</div>
@@ -63,6 +63,16 @@
 		</div>
 		<div class = "clear"></div>
 	</form>
+</div>
+
+
+<div id = "modalDeleteConfirmation" class = "comfirmationModal">
+	<div>
+		<p>Are you sure we want to delete the selected Users ?</p>
+	</div>
+	<div>
+		<button id = "deleteUser" class = "btn btn-default"><span class="glyphicon glyphicon-remove"></span>Yes</button>
+	</div>
 </div>
 
 

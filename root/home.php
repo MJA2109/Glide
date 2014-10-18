@@ -8,7 +8,7 @@
 ?>	
 	<div id = "ajaxContent">
 	
-	</div>	
+	</div>
 <?php
 		require("../templates/footer.php");
 	}
