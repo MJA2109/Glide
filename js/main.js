@@ -400,6 +400,12 @@ require(['jquery',
                         rowIdArray.splice($.inArray(rowId, rowIdArray), 1);
                         $(event.target).parent().removeClass("selected");
                     }
+
+                    if(rowIdArray.length == 0){
+                        $(".btnDelete").attr("disabled", "disabled");
+                    }else{
+                        $(".btnDelete").attr("disabled", false);
+                    }
                 });
  
                 //confirm deletions 
@@ -409,6 +415,7 @@ require(['jquery',
                     var rowIds = new Array();
                     rowIds = rowIdArray;
                     rowIdArray = [];
+                    $(".btnDelete").attr("disabled", "disabled");
                     var data = {
                         action : action,
                         tableData : tableData,

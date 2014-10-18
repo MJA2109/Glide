@@ -12,7 +12,7 @@
 					<button id = "btnAddJourney" class = "btn btn-default"><span class="glyphicon glyphicon-plus"></span></button>
 				</div>
 				<div>
-					<button class = "btn btn-default btnDelete"><span class="glyphicon glyphicon-trash"></span></button>
+					<button class = "btn btn-default btnDelete" disabled = "true"><span class="glyphicon glyphicon-trash"></span></button>
 				</div>
 			</div>
 		</div>
@@ -95,10 +95,13 @@
 
 <div id = "modalDeleteConfirmation" class = "comfirmationModal">
 	<div>
-		<p>Are you sure we want to delete the selected journeys ?</p>
+		<h4><span class="glyphicon glyphicon-trash"></span>Delete Journey</h4>
 	</div>
 	<div>
-		<button action = "deleteData" id = "deleteJourney" class = "btn btn-default"><span class="glyphicon glyphicon-remove"></span>Yes</button>
+		<p>Are you sure you want to delete the selected journey ?</p>
+	</div>
+	<div>
+		<button action = "deleteData" id = "deleteJourney" class = "btn btn-default"><span class="glyphicon glyphicon-ok"></span>Yes</button>
 	</div>
 </div>
 
