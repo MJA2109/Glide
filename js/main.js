@@ -342,6 +342,19 @@ require(['jquery',
                     submitModalForm("#modalUserForm");
                 });
 
+                //table select
+                var rowIdArray = new Array();
+                $("body").delegate("tbody", "click", function(event){
+                    var rowId = $(event.target).parent().attr("id");
+                    if($.inArray(rowId, rowIdArray) == -1){
+                        rowIdArray.push(rowId);
+                        $(event.target).parent().addClass("selected");
+                    }else{
+                        rowIdArray.splice($.inArray(rowId, rowIdArray), 1);
+                        $(event.target).parent().removeClass("selected");
+                    }
+                });
+
             }
 
             initialiseEvents();
