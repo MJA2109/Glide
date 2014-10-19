@@ -74,6 +74,9 @@
 		<p>Are you sure you want to delete the selected Users ?</p>
 	</div>
 	<div>
+		<p>Warning : All records will be deleted !!</p>
+	</div>
+	<div>
 		<button action = "deleteData" id = "deleteUser" class = "btn btn-default"><span class="glyphicon glyphicon-ok"></span>Yes</button>
 	</div>
 </div>

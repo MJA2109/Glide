@@ -586,6 +586,27 @@ function deleteData(){
                     $field => $ids[$x],
                     "admin_id" => $adminId
             ]]);
+
+            
+            //if user is deleted remove all assoicated records from
+            //expesnes and journeys table.
+            if($table == "users"){
+                $database->update("expenses",[
+                "is_deleted" => 1
+                ],[
+                "AND" => [
+                    $field => $ids[$x],
+                    "admin_id" => $adminId
+                ]]);
+
+                $database->update("journeys",[
+                    "is_deleted" => 1
+                ],[
+                "AND" => [
+                    $field => $ids[$x],
+                    "admin_id" => $adminId
+                ]]);
+            }
         }
 
         echo json_encode(array("Table" => $table));
