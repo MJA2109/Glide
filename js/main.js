@@ -448,6 +448,11 @@ require(['jquery',
                     deleteData(data);
                 });
 
+
+                $("#emailDiv").click(function(){
+                    $("#signOutDiv").toggle("slow");
+                });
+
             }
 
             initialiseEvents();
