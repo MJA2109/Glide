@@ -141,6 +141,18 @@ require(['jquery',
                         success: function (data) {
                             console.log("Ajax success");
                             console.log(data);
+                            var log = JSON.parse(data);
+                            if(log.table == "expenses"){
+                                clearForm("#modalExpenseForm");
+                                refreshTable("#expensesTable", "getExpensesData");   
+                            }else if(log.table == "journeys"){
+                                clearForm("#modalJourneysForm");
+                                refreshTable("#journeysTable", "getJourneysData");
+                            }else if(log.table == "users"){
+                                clearForm("#modalUserForm");
+                                refreshTable("#usersTable", "getUsersData");  
+                            }
+                            $.modal.close();
                         },
                         error: function(){
                             console.log("Error: Ajax request unsuccessful");
@@ -149,6 +161,18 @@ require(['jquery',
                 });
             }
 
+            
+
+            /**
+             * Name: clearForm
+             * Purpose: Reset text input fields.
+             * @param : form - String : form to processed.
+             */
+            function clearForm(form){
+                $(form + " input[type = text]").val("");
+            }
+
+            
             /**
              * Name: deleteData
              * Purpose: Send Ajax request to server and delete the specified data.

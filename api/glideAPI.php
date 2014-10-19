@@ -445,7 +445,7 @@ function addExpense(){
                 "expense_comment" => $comment,
                 
             ]);
-            echo json_encode(array("status" => "New expense added..."));  
+            echo json_encode(array("table" => "expenses", "status" => "New expense added..."));  
         }
 
     }else{
@@ -500,7 +500,7 @@ function addJourney(){
                 "journey_time" => $journeyTime,
                 "comment" => $comment  
             ]);
-            echo json_encode(array("status" => "New journey added..."));  
+            echo json_encode(array("table" => "journeys", "status" => "New journey added..."));  
         }
 
 
@@ -544,7 +544,7 @@ function addUser(){
                 "user_name" => $userName,
                 "user_email" => $userEmail 
             ]);
-            echo json_encode(array("status" => "New user added..."));     
+            echo json_encode(array("table" => "users", "status" => "New user added..."));     
         }
 
     }else{
