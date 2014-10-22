@@ -439,13 +439,13 @@ function addExpense(){
             $lastExpenseId = $database->insert("expenses", [
                 "admin_id" => intval($adminId),
                 "user_id" => intval($userId),
-                "merchant_id" => $merchantId,
+                "merchant_id" => intval($merchantId),
                 "expense_category" => $category,
                 "expense_cost" => $cost,
                 "expense_comment" => $comment,
                 
             ]);
-            echo json_encode(array("table" => "expenses", "status" => "New expense added..."));  
+            echo json_encode(array("table" => "expenses", "status" => $merchantId));  
         }
 
     }else{
