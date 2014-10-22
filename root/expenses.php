@@ -1,5 +1,5 @@
 <?php
-	sleep(3);
+	//sleep(3);
 ?>
 <div id = "subHeader">
 	<div id = "subHeaderFix">
@@ -21,38 +21,41 @@
 
 <div id = "flexfix">
 	<div id = "search">
-		<form action = "POST" id = "searchExpensesForm">
-			<div class = "searchInput">
-				<label for = "userRadio">User</label>
-				<input type = "radio" name = "searchFor" value = "user" id = "userRadio" checked="checked">
-				<label for = "merchantRadio">Merchant</label>
-				<input type = "radio" name = "searchFor" value = "merchant" id = "merchantRadio">
+		<form method = "POST" id = "searchExpensesForm">
+			<input type = 'hidden' name = 'action' value = 'searchExpenses' />
+			<div class = "searchInput input-group">
+				<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+				<input type = "text" name = "searchUser" placeholder = "User name" class = "form-control"/>
 			</div>
-			<div class = "searchInput">
-				<input type = "text" name = "searchUserMerch" placeholder = "User/Merchant" class = "form-control"/>
+			<div class = "searchInput input-group">
+				<span class="input-group-addon"><i class="glyphicon glyphicon-shopping-cart"></i></span>
+				<input type = "text" name = "searchMerch" placeholder = "Merchant" class = "form-control"/>
 			</div>
-			<div class = "searchInput">
+			<div class = "searchInput input-group">
+				<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
 				<input type = "text" name = "searchDate" placeholder = "Date" class = "form-control"/>
 			</div>
-			<div class = "searchInput">
+			<div class = "searchInput input-group">
+				<span class="input-group-addon"><i class="glyphicon glyphicon-flag"></i></span>
 				<select class = "form-control" name = "status">
-					<option value = "All Expenses">All Expenses</option>
-					<option value = "Processed">Processed</option>
-					<option value = "Unprocessed">Unprocessed</option>
+					<option value = "">Status</option>
+					<option value = "processed">Processed</option>
+					<option value = "unprocessed">Unprocessed</option>
 				</select>
 			</div>
-			<div class = "searchInput">
+			<div class = "searchInput input-group">
+				<span class="input-group-addon"><i class="glyphicon glyphicon-tags"></i></span>
 				<select class = "form-control" name = "category">
-					<option value = "allCategories">All Categories</option>
+					<option value = "">All Categories</option>
 					<option value = "accommodation">Accommodation</option>
-					<option value = "Food">Food</option>
-					<option value = "Entertainment">Entertainment</option>
-					<option value = "Phone">Phone</option>
-					<option value = "Travel">Travel</option>
+					<option value = "food">Food</option>
+					<option value = "entertainment">Entertainment</option>
+					<option value = "phone">Phone</option>
+					<option value = "travel">Travel</option>
 				</select>
 			</div>
 			<div class = "searchInput">
-				<button class = "btn btn-default"><span class="glyphicon glyphicon-search"></span>Search</button>
+				<input type = 'submit' value = 'Search' class = "btn btn-default" id = "btnSearchExpenses"/>
 			</div>
 		</form>
 		<div id = "views">

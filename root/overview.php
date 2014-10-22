@@ -1,5 +1,5 @@
 <?php
-	sleep(3);
+	//sleep(3);
 ?>
 <div class = "sectionWrapper">
 	<div class = "section">

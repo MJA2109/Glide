@@ -321,7 +321,53 @@ require(['jquery',
                 });
             }
 
-            
+
+            /**
+             * Name: displaySearchResults
+             * Purpose: Build table with search results.
+             * @params: buildTableFunction - function : specify which table to build.
+             * @params: tableData - JSON : search results.
+             * @params: tableId - String : id of table to insert data.
+             */
+            function displaySearchResults(buildTableFunction, tableData, tableId){
+                var table = $(tableId).dataTable();
+                table.fnDestroy();
+                buildTableFunction(tableData);    
+            }
+
+
+            /**
+             * Name: searchForm
+             * Purpose: Search database for specific entries. Display results in datatable.
+             * @params: form - String : form to be processed.
+             */
+            function searchForm(form){
+                var frm = $(form);
+                frm.submit(function (ev) {
+                    ev.preventDefault();
+                    var data = frm.serialize();
+                    console.log("Data for server : " + data);
+                    $.ajax({
+                        type: frm.attr('method'),
+                        url: appData.api,
+                        data: data,
+                        success: function (data) {
+                            console.log("Ajax success");
+                            var returnedData = JSON.parse(data);
+                            console.log(JSON.stringify(returnedData));
+                            
+                            if(returnedData.type == "expenses"){
+                                displaySearchResults(buildExpensesTable, returnedData.results, "#expensesTable");
+                            }
+                            clearForm("#searchExpensesForm");
+                        },
+                        error: function(){
+                            console.log("Error: Ajax request unsuccessful");
+                        }
+                    });
+                });
+            }
+
 
             /**
              * Name: displayModal
@@ -411,6 +457,12 @@ require(['jquery',
                 //modal delete data events
                 $("body").delegate(".btnDelete", "click", function(){
                     displayModal("#modalDeleteConfirmation");   
+                });
+
+
+                //search data
+                $("body").delegate("#btnSearchExpenses", "click", function(){
+                    searchForm("#searchExpensesForm");
                 });
 
                 //add selected rows to array for deletions

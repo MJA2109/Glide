@@ -28,6 +28,8 @@ if(isset($_POST["action"])){
         break;
         case "deleteData" : deleteData();
         break;
+        case "searchExpenses" : searchExpenses();
+        break;
     }
 }
 
@@ -614,6 +616,69 @@ function deleteData(){
     }else{
         echo json_encode(array("error" => "Admin ID not set"));
     }
+}
+
+/**
+ * Name: searchExpenses
+ * Purpose: Search expense table with the specified parameters.
+ * @return $reults - json : contains search type and results. 
+ */
+function searchExpenses(){
+
+    session_start();
+    
+    if(isset($_SESSION["adminId"])){
+        $userName = Util::get("searchUser");
+        $merchant = Util::get("searchMerch");
+        $date = Util::get("searchDate");
+        $status = Util::get("status");
+        $category = Util::get("category");
+        $database = connectDB();
+        
+        $adminId = $_SESSION["adminId"];
+
+        $sql = "SELECT 
+                  ex.expense_id as DT_RowId,
+                  u.user_name, 
+                  ex.expense_category,
+                  mer.merchant_name,
+                  ex.expense_cost,
+                  re.receipt_image,
+                  ex.expense_date,
+                  ex.expense_status,
+                  ex.expense_comment 
+                  FROM users u
+                       JOIN expenses ex on ex.user_id = u.user_id
+                       JOIN merchants mer on mer.merchant_id = ex.merchant_id
+                       LEFT JOIN receipts re on re.receipt_id = ex.receipt_id
+                       where ex.admin_id = '$adminId' AND ex.is_deleted = 0 ";
+
+        if($userName){
+            $sql .= "AND u.user_name LIKE '%$userName%' ";
+        }
+
+        if($merchant){
+            $sql .= "AND mer.merchant_name LIKE '%$merchant%'";
+        }
+
+        if($status){
+            $sql .= "AND ex.expense_status = '$status' ";
+        }
+
+        if($category){
+            $sql .= "AND ex.expense_category = '$category' ";
+        } 
+
+        unset($userName, $merchant, $date, $status, $category);             
+
+        $expensesData = $database->query($sql)->fetchAll();
+        echo json_encode(array("type" => "expenses", "results" => $expensesData));
+    
+
+    }else{
+        echo json_encode(array("error" => "Admin ID not set"));
+    }
+
 }
 
 

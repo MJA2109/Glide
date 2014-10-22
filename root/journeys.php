@@ -1,5 +1,5 @@
 <?php
-	sleep(3);
+	//sleep(3);
 ?>
 <div id = "subHeader">
 	<div id = "subHeaderFix">
@@ -22,10 +22,20 @@
 <div id = "flexfix">
 	<div id = "search">
 		<form action = "POST" id = "searchJourneyForm">
-			<div class = "searchInput">
+			<div class = "searchInput input-group">
+				<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
 				<input type = "text" name = "userName" placeholder = "User Name" class = "form-control"/>
 			</div>
-			<div class = "searchInput">
+			<div class = "searchInput input-group">
+				<span class="input-group-addon"><i class="glyphicon glyphicon-map-marker"></i></span>
+				<input type = "text" name = "origin" placeholder = "Origin" class = "form-control"/>
+			</div>
+			<div class = "searchInput input-group">
+				<span class="input-group-addon"><i class="glyphicon glyphicon-map-marker"></i></span>
+				<input type = "text" name = "destination" placeholder = "Destination" class = "form-control"/>
+			</div>
+			<div class = "searchInput input-group">
+				<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
 				<input type = "text" name = "date" placeholder = "Date" class = "form-control"/>
 			</div>
 			<div class = "searchInput">
@@ -41,7 +51,7 @@
 			<thead>
 				<tr>
 					<th>User Name</th>
-					<th>Origin</th>
+					<th>Origin Location</th>
 					<th>Destination</th>
 					<th>Distance</th>
 					<th>Journey Time</th>
