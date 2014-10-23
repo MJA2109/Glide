@@ -14,7 +14,7 @@ class Util{
 	public static function get($input){
     	$input = mysql_real_escape_string($_POST[$input]);
     	$input = trim($input);
-    	$input = strtolower($input);
+    	$input = ucwords(strtolower($input));
     	$cleanInput = htmlspecialchars($input); 
     	return $cleanInput;
 	}

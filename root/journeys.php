@@ -21,7 +21,8 @@
 
 <div id = "flexfix">
 	<div id = "search">
-		<form action = "POST" id = "searchJourneyForm">
+		<form method = "POST" id = "searchJourneysForm">
+			<input type = 'hidden' name = 'action' value = 'searchJourneys' />
 			<div class = "searchInput input-group">
 				<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
 				<input type = "text" name = "userName" placeholder = "User Name" class = "form-control"/>
@@ -35,11 +36,19 @@
 				<input type = "text" name = "destination" placeholder = "Destination" class = "form-control"/>
 			</div>
 			<div class = "searchInput input-group">
+				<span class="input-group-addon"><i class="glyphicon glyphicon-flag"></i></span>
+				<select class = "form-control" name = "status">
+					<option value = "" selected="selected" >Status</option>
+					<option value = "processed">Processed</option>
+					<option value = "unprocessed">Unprocessed</option>
+				</select>
+			</div>
+			<div class = "searchInput input-group">
 				<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
 				<input type = "text" name = "date" placeholder = "Date" class = "form-control"/>
 			</div>
 			<div class = "searchInput">
-				<button type = "button" class = "btn btn-default"><span class="glyphicon glyphicon-search"></span>Search</button>
+				<input type = 'submit' value = 'Search' class = "btn btn-default" id = "btnSearchJourneys"/>
 			</div>	
 		</form>
 		<div id = "views">

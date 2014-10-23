@@ -30,6 +30,8 @@ if(isset($_POST["action"])){
         break;
         case "searchExpenses" : searchExpenses();
         break;
+        case "searchJourneys" : searchJourneys();
+        break;
     }
 }
 
@@ -674,6 +676,63 @@ function searchExpenses(){
         $expensesData = $database->query($sql)->fetchAll();
         echo json_encode(array("type" => "expenses", "results" => $expensesData));
     
+
+    }else{
+        echo json_encode(array("error" => "Admin ID not set"));
+    }
+
+}
+
+
+/**
+ * Name: searchJourneys
+ * Purpose: Search journey table with the specified parameters.
+ * @return $reults - json : contains search type and results. 
+ */
+function searchJourneys(){
+
+    session_start();
+
+    if(isset($_SESSION["adminId"])){
+        $userName = Util::get("userName");
+        $origin = Util::get("origin");
+        $destination = Util::get("destination");
+        $status = Util::get("status");
+        $date = Util::get("date");
+        $database = connectDB();
+        
+        $adminId = $_SESSION["adminId"];
+
+        $sql = "SELECT id as DT_RowId, user_name, origin, destination, distance, journey_time, date, status, comment
+                FROM users, journeys
+                WHERE ".$adminId." = journeys.admin_id
+                AND journeys.user_id = users.user_id
+                AND journeys.is_deleted = 0 ";
+
+        if($userName){
+            $sql .= " AND users.user_name LIKE '%$userName%' ";
+        }
+
+        if($origin){
+            $sql .= " AND origin LIKE '%$origin%' ";
+        }
+
+        if($destination){
+            $sql .= " AND destination LIKE '%$destination%' ";
+        }
+
+        if($status){
+            $sql .= " AND status = '$status' ";
+        }
+
+        if($date){
+            $sql .= " AND date LIKE '%$date%' ";
+        }
+
+        unset($userName, $origin, $destination, $status, $date);             
+
+        $journeyData = $database->query($sql)->fetchAll();
+        echo json_encode(array("type" => "journeys", "results" => $journeyData));
 
     }else{
         echo json_encode(array("error" => "Admin ID not set"));

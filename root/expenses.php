@@ -32,10 +32,6 @@
 				<input type = "text" name = "searchMerch" placeholder = "Merchant" class = "form-control"/>
 			</div>
 			<div class = "searchInput input-group">
-				<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-				<input type = "text" name = "searchDate" placeholder = "Date" class = "form-control"/>
-			</div>
-			<div class = "searchInput input-group">
 				<span class="input-group-addon"><i class="glyphicon glyphicon-flag"></i></span>
 				<select class = "form-control" name = "status">
 					<option value = "">Status</option>
@@ -53,6 +49,10 @@
 					<option value = "phone">Phone</option>
 					<option value = "travel">Travel</option>
 				</select>
+			</div>
+			<div class = "searchInput input-group">
+				<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+				<input type = "text" name = "searchDate" placeholder = "Date" class = "form-control"/>
 			</div>
 			<div class = "searchInput">
 				<input type = 'submit' value = 'Search' class = "btn btn-default" id = "btnSearchExpenses"/>

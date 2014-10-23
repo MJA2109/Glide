@@ -355,11 +355,18 @@ require(['jquery',
                             console.log("Ajax success");
                             var returnedData = JSON.parse(data);
                             console.log(JSON.stringify(returnedData));
-                            
-                            if(returnedData.type == "expenses"){
+                            switch(returnedData.type){
+                                case "expenses" : 
                                 displaySearchResults(buildExpensesTable, returnedData.results, "#expensesTable");
+                                clearForm("#searchExpensesForm");
+                                break;
+
+                                case "journeys" : 
+                                displaySearchResults(buildJourneysTable, returnedData.results, "#journeysTable");
+                                clearForm("#searchJourneysForm");
+                                break;
                             }
-                            clearForm("#searchExpensesForm");
+                    
                         },
                         error: function(){
                             console.log("Error: Ajax request unsuccessful");
@@ -465,6 +472,10 @@ require(['jquery',
                     searchForm("#searchExpensesForm");
                 });
 
+                $("body").delegate("#btnSearchJourneys", "click", function(){
+                    searchForm("#searchJourneysForm");
+                });
+
                 //add selected rows to array for deletions
                 var rowIdArray = new Array();
                 $("body").delegate("tbody", "click", function(event){
@@ -482,6 +493,8 @@ require(['jquery',
                     }else{
                         $(".btnDelete").attr("disabled", false);
                     }
+
+                    alert(rowIdArray);
                 });
  
                 //confirm deletions 
