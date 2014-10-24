@@ -32,6 +32,8 @@ if(isset($_POST["action"])){
         break;
         case "searchJourneys" : searchJourneys();
         break;
+        case "searchUsers" : searchUsers();
+        break;
     }
 }
 
@@ -738,6 +740,37 @@ function searchJourneys(){
         echo json_encode(array("error" => "Admin ID not set"));
     }
 
+}
+
+/**
+ * Name: searchUsers
+ * Purpose: Search users table with the specified parameters.
+ * @return $reults - json : contains search type and results. 
+ */
+function searchUsers(){
+
+    session_start();
+
+    if(isset($_SESSION["adminId"])){
+        $userName = Util::get("userName");
+        $database = connectDB();
+
+        $adminId = $_SESSION["adminId"];
+
+        $sql = "SELECT user_id as DT_RowId, user_name, user_email
+                FROM users
+                WHERE admin_id = '$adminId' 
+                AND is_deleted = 0
+                AND user_name LIKE '%$userName%'";
+
+        $userData = $database->query($sql)->fetchAll();
+
+        unset($userName);             
+        echo json_encode(array("type" => "users", "results" => $userData));
+
+    }else{
+        echo json_encode(array("error" => "Admin ID not set"));
+    }
 }
 
 

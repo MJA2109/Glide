@@ -360,13 +360,15 @@ require(['jquery',
                                 displaySearchResults(buildExpensesTable, returnedData.results, "#expensesTable");
                                 clearForm("#searchExpensesForm");
                                 break;
-
                                 case "journeys" : 
                                 displaySearchResults(buildJourneysTable, returnedData.results, "#journeysTable");
                                 clearForm("#searchJourneysForm");
                                 break;
+                                case "users" :
+                                displaySearchResults(buildUserTable, returnedData.results, "#usersTable");
+                                clearForm("#searchUsersForm");
+                                break;
                             }
-                    
                         },
                         error: function(){
                             console.log("Error: Ajax request unsuccessful");
@@ -476,6 +478,10 @@ require(['jquery',
                     searchForm("#searchJourneysForm");
                 });
 
+                $("body").delegate("#btnSearchUsers", "click", function(){
+                    searchForm("#searchUsersForm");
+                });
+
                 //add selected rows to array for deletions
                 var rowIdArray = new Array();
                 $("body").delegate("tbody", "click", function(event){
@@ -517,7 +523,6 @@ require(['jquery',
                 $("#emailDiv").click(function(){
                     $("#signOutDiv").toggle("slow");
                 });
-
             }
 
             initialiseEvents();

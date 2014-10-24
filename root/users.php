@@ -21,12 +21,14 @@
 
 <div id = "flexfix">
 	<div id = "search">
-		<form action = "POST" id = "searchUsersForm">
-			<div class = "searchInput">
+		<form method = "POST" id = "searchUsersForm">
+			<input type = 'hidden' name = 'action' value = 'searchUsers' />
+			<div class = "searchInput input-group">
+				<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
 				<input type = "text" name = "userName" placeholder = "User Name" class = "form-control"/>
 			</div>
 			<div class = "searchInput">
-				<button class = "btn btn-default"><span class="glyphicon glyphicon-search"></span>Search</button>
+				<input type = 'submit' value = 'Search' class = "btn btn-default" id = "btnSearchUsers"/>
 			</div>
 		</form>
 	</div>
