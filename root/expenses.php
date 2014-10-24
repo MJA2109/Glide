@@ -14,6 +14,9 @@
 				<div>
 					<button class = "btn btn-default btnDelete" disabled = "true"><span class="glyphicon glyphicon-trash"></span></button>
 				</div>
+				<div>
+					<button class = "btn btn-default btnEdit" disabled = "true"><span class="glyphicon glyphicon-refresh"></span></button>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -87,7 +90,7 @@
 	<form id = "modalExpenseForm" method = "POST" class = "modalForm">
 		<input type = 'hidden' name = 'action' value = 'addExpense' />
 		<div class = "modalCloseIm"></div>
-		<h4><span class="glyphicon glyphicon-envelope"></span>Add Expense</h4>
+		<h4><span class="glyphicon glyphicon-plus"></span>Add Expense</h4>
 		<div class = "modalInput">
 			<input type = "text" name = "userName" placeholder = "User Name" class = "form-control"/>	
 		</div>
@@ -115,6 +118,48 @@
 		</div>
 		<div class = "modalInput">
 			<input type = 'submit' value = 'Submit' class = "btn btn-default" id = "btnSubmitExpense"/>
+		</div>
+		<div class = "clear"></div>
+	</form>
+</div>
+
+<div id = "modalEditExpense" class = "modalStyle">
+	<form id = "modalEditExpenseForm" method = "POST" class = "modalForm">
+		<input type = 'hidden' name = 'action' value = 'editExpense' />
+		<input id = "expenseId" type = "hidden" name = "expenseId" value = "" />
+		<div class = "modalCloseIm"></div>
+		<h4><span class="glyphicon glyphicon-refresh"></span>Edit Expense</h4>
+		<div class = "modalInput">
+			<input type = "text" name = "userName" placeholder = "User Name" class = "form-control" readonly="readonly"/>	
+		</div>
+		<div class = "modalInput">
+			<select class = "form-control" name = "status">
+				<option value = "" disabled="disabled">Status</option>
+				<option value = "Processed">Processed</option>
+				<option value = "Unprocessed">Unprocessed</option>
+			</select>
+		</div>
+		<div class = "modalInput">
+			<select class = "form-control" name = "category">
+				<option value = "" disabled="disabled">All Categories</option>
+				<option value = "Accommodation">Accommodation</option>
+				<option value = "Food">Food</option>
+				<option value = "Entertainment">Entertainment</option>
+				<option value = "Phone">Phone</option>
+				<option value = "Travel">Travel</option>
+			</select>
+		</div>
+		<div class = "modalInput">
+			<input type = "text" name = "merchant" placeholder = "Merchant" class = "form-control" readonly="readonly"/>	
+		</div>
+		<div class = "modalInput">
+			<input type = "text" name = "cost" placeholder = "Cost" class = "form-control"/>	
+		</div>
+		<div class = "modalInput">
+			<input type = "text" name = "comment" placeholder = "Comment" class = "form-control"/>	
+		</div>
+		<div class = "modalInput">
+			<input type = 'submit' value = 'Update' class = "btn btn-default" id = "btnSubmitEditExpense"/>
 		</div>
 		<div class = "clear"></div>
 	</form>

@@ -34,6 +34,8 @@ if(isset($_POST["action"])){
         break;
         case "searchUsers" : searchUsers();
         break;
+        case "editExpense" : editExpense();
+        break;
     }
 }
 
@@ -771,6 +773,43 @@ function searchUsers(){
     }else{
         echo json_encode(array("error" => "Admin ID not set"));
     }
+}
+
+
+/**
+ * Name: editExpense
+ * Purpose: Edit and update existing record
+ * @return $reults - json : contains table updated and message. 
+ */
+function editExpense(){
+    
+    session_start();
+
+    if(isset($_SESSION["adminId"])){
+        $expenseId = Util::get("expenseId");
+        $status = Util::get("status");
+        $category = Util::get("category");
+        $merchant = Util::get("merchant");
+        $cost = Util::get("cost");
+        $comment = Util::get("comment");
+        $database = connectDB();
+
+        $merchantId = processMerchant($merchant);
+
+        $database->update("expenses", [
+            "expense_category" => $category,
+            "expense_cost" => $cost,
+            "expense_status" => $status,
+            "expense_comment" => $comment
+        ], [
+            "expense_id" => $expenseId
+        ]);
+
+        echo json_encode(array("table" => "expenses", "results" => "updated"));
+
+    }else{
+        echo json_encode(array("error" => "Admin ID not set"));
+    }  
 }
 
 

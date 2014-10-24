@@ -397,6 +397,10 @@ require(['jquery',
                 });   
             }
 
+            function clearSelection(selection){
+                selection = [];    
+            }
+
             /**
              * Name: initialiseEvents
              * Purpose: Initialise application events
@@ -436,7 +440,7 @@ require(['jquery',
                     getPage("../root/admin.php", "standard");
                 });
 
-                //modal add data events
+                //display add data modals
                 $("body").delegate("#btnAddExpense", "click", function(){
                     displayModal("#modalAddExpense");    
                 });
@@ -450,7 +454,7 @@ require(['jquery',
                 });
 
 
-                //submit modal forms
+                //add new data - submit modal forms
                 $("body").delegate("#btnSubmitExpense", "click", function(){
                     submitModalForm("#modalExpenseForm");
                 });
@@ -465,11 +469,45 @@ require(['jquery',
 
                 //modal delete data events
                 $("body").delegate(".btnDelete", "click", function(){
-                    displayModal("#modalDeleteConfirmation");   
+                    displayModal("#modalDeleteConfirmation"); 
+                });
+
+                
+                //display update data modal
+                $("body").delegate(".btnEdit", "click", function(){
+                    var dataId = rowIdArray[0];
+                    var row = "#" + dataId;
+                    var form = "#modalEditExpenseForm";
+                    
+                    //get data from table and place in form
+                    var name = $(row + " td:nth-child(1)").text();
+                    var category = $(row + " td:nth-child(2)").text();
+                    var merchant = $(row + " td:nth-child(3)").text();
+                    var cost = $(row + " td:nth-child(4)").text();
+                    var status = $(row + " td:nth-child(7)").text();
+                    var comment = $(row + " td:nth-child(8)").text();
+
+                    $(form + " #expenseId").val(dataId);
+                    $(form + " input[name = 'userName']").val(name);
+                    $(form + " option[value = '" + status + "']").prop("selected", true);
+                    $(form + " option[value = '" + category + "']").prop("selected", true);
+                    $(form + " input[name = 'merchant']").val(merchant);
+                    $(form + " input[name = 'cost']").val(cost);
+                    $(form + " input[name = 'status']").val(status);
+                    $(form + " input[name = 'comment']").val(comment);
+                    
+                    displayModal("#modalEditExpense");   
                 });
 
 
-                //search data
+
+                //sumbit update form
+                $("body").delegate("#btnSubmitEditExpense", "click", function(){
+                    submitModalForm("#modalEditExpenseForm");
+                });
+
+
+                //search database 
                 $("body").delegate("#btnSearchExpenses", "click", function(){
                     searchForm("#searchExpensesForm");
                 });
@@ -482,7 +520,7 @@ require(['jquery',
                     searchForm("#searchUsersForm");
                 });
 
-                //add selected rows to array for deletions
+                //add selected rows to array for deleting, submitting or updating
                 var rowIdArray = new Array();
                 $("body").delegate("tbody", "click", function(event){
                     var rowId = $(event.target).parent().attr("id");
@@ -494,16 +532,22 @@ require(['jquery',
                         $(event.target).parent().removeClass("selected");
                     }
 
+                    //disable endable deletion, add and edit buttons
                     if(rowIdArray.length == 0){
-                        $(".btnDelete").attr("disabled", "disabled");
+                        $("#btnAddExpense").attr("disabled", false);
+                        $(".btnEdit, .btnDelete").attr("disabled", true);
+                    }else if( rowIdArray.length == 1){
+                        $(".btnEdit, .btnDelete").attr("disabled", false);
+                        $("#btnAddExpense").attr("disabled", true);
                     }else{
-                        $(".btnDelete").attr("disabled", false);
+                        $(".btnEdit, #btnAddExpense").attr("disabled", true);
+                        $(".btnDelete").attr("disabled", false);   
                     }
 
                     alert(rowIdArray);
                 });
  
-                //confirm deletions 
+                //confirm deletions modal
                 $("body").delegate("#modalDeleteConfirmation button", "click", function(event){
                     var action = $(event.target).attr("action");
                     var tableData = $(event.target).attr("id");
