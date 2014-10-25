@@ -30,7 +30,7 @@ require(['jquery',
             
             //Contains global variables
             var appData = {
-                api: "../api/glideAPI.php",
+                api: "../api/handlers/webHandler.php",
                 apiKey: "dflj45fgfg343fggf454rgf53"
             }
 
@@ -47,7 +47,7 @@ require(['jquery',
                     console.log(data);
                     $.ajax({
                         type: frm.attr('method'),
-                        url: frm.attr('action'),
+                        url: appData.api,
                         data: data,
                         success: function (data) {
                             var logData = JSON.parse(data);

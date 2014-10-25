@@ -13,7 +13,7 @@
  			</div>
  		</div>
  		<div class = 'signUpForm'>
-	 		<form name = 'signUpForm' id = 'signUpForm' action = "../api/GlideAPI.php" method = 'POST'>
+	 		<form name = 'signUpForm' id = 'signUpForm' method = 'POST'>
 	 			<input type = 'text' name = 'companyName' placeholder = 'Company Name'/>
 	 			<input type = 'email' name = 'adminEmail' placeholder = 'E-mail' />
 	 			<input type = 'password' name = 'adminPassword' placeholder = 'Password' />

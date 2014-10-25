@@ -4,7 +4,7 @@
 			<div class = 'signupLogo'>
 				<img src = '#' alt = 'Glide logo' />
 			</div>
-			<form name = 'signInForm' id = 'signInForm' action = "../api/GlideAPI.php" method = 'POST'>
+			<form name = 'signInForm' id = 'signInForm'  method = 'POST'>
 	 			<input type = 'email' name = 'adminEmail' placeholder = 'E-mail' />
 	 			<input type = 'password' name = 'adminPassword' placeholder = 'Password' />
 	 			<input type = 'hidden' name = 'action' value = 'signIn' />
