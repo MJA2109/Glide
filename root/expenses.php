@@ -9,13 +9,13 @@
 		<div id = "subHeaderSec2">
 			<div>
 				<div>
-					<button id = "btnAddExpense" class = "btn btn-default"><span class="glyphicon glyphicon-plus"></span></button>
+					<button id = "btnAddExpense" class = "btn btn-default btnAdd"><span class="glyphicon glyphicon-plus"></span></button>
 				</div>
 				<div>
 					<button class = "btn btn-default btnDelete" disabled = "true"><span class="glyphicon glyphicon-trash"></span></button>
 				</div>
 				<div>
-					<button class = "btn btn-default btnEdit" disabled = "true"><span class="glyphicon glyphicon-refresh"></span></button>
+					<button id = "btnEditExpense" class = "btn btn-default btnEdit" disabled = "true"><span class="glyphicon glyphicon-refresh"></span></button>
 				</div>
 			</div>
 		</div>
@@ -85,6 +85,10 @@
 		</table>
 	</div>
 </div>
+
+<div class = "modalReceiptImage modalImageStyle">
+	<img src="" alt = "Receipt Image" />
+</div>	
 
 <div id = "modalAddExpense" class = "modalStyle">
 	<form id = "modalExpenseForm" method = "POST" class = "modalForm">
@@ -177,7 +181,4 @@
 	</div>
 </div>
 
-<div class = "modalReceiptImage modalImageStyle">
-	<img src="" alt = "Receipt Image" />
-</div>	
 

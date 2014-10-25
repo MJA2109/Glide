@@ -36,6 +36,8 @@ if(isset($_POST["action"])){
         break;
         case "editExpense" : editExpense();
         break;
+        case "editJourney" : editJourney();
+        break;
     }
 }
 
@@ -812,15 +814,42 @@ function editExpense(){
     }  
 }
 
+/**
+ * Name: editJourney
+ * Purpose: Edit and update existing record
+ * @return $reults - json : contains table updated and message. 
+ */
+function editJourney(){
 
+    session_start();
 
+    if(isset($_SESSION["adminId"])){
+        $journeyId = Util::get("journeyId");
+        $status = Util::get("status");
+        $origin = Util::get("origin");
+        $destination = Util::get("destination");
+        $distance = Util::get("distance");
+        $time = Util::get("journey_time");
+        $comment = Util::get("comment");
+        $database = connectDB();
 
+        $database->update("journeys", [
+            "status" => $status,
+            "origin" => $origin,
+            "destination" => $destination,
+            "distance" => $distance,
+            "journey_time" => $time,
+            "comment" => $comment
+        ], [
+            "id" => $journeyId
+        ]);
 
+        echo json_encode(array("table" => "journeys", "results" => "updated"));
 
-
-
-
-
+    }else{
+        echo json_encode(array("error" => "Admin ID not set"));
+    }  
+}
 
 
 ?>

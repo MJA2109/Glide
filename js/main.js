@@ -496,7 +496,7 @@ require(['jquery',
 
                 
                 //display update data modal
-                $("body").delegate(".btnEdit", "click", function(){
+                $("body").delegate("#btnEditExpense", "click", function(){
                     var dataId = rowIdArray[0];
                     var row = "#" + dataId;
                     var form = "#modalEditExpenseForm";
@@ -517,8 +517,33 @@ require(['jquery',
                     $(form + " input[name = 'cost']").val(cost);
                     $(form + " input[name = 'status']").val(status);
                     $(form + " input[name = 'comment']").val(comment);
-                    
+
                     displayModal("#modalEditExpense");   
+                });
+
+                $("body").delegate("#btnEditJourney", "click", function(){
+                    var dataId = rowIdArray[0];
+                    var row = "#" + dataId;
+                    var form = "#modalEditJourneyForm";
+
+                    //get data from table and place in form
+                    var name = $(row + " td:nth-child(1)").text();
+                    var status = $(row + " td:nth-child(7)").text();
+                    var origin = $(row + " td:nth-child(2)").text();
+                    var destination = $(row + " td:nth-child(3)").text();
+                    var distance = $(row + " td:nth-child(4)").text();
+                    var journeyTime = $(row + " td:nth-child(5)").text();
+                    var comment = $(row + " td:nth-child(8)").text();
+
+                    $(form + " #journeyId").val(dataId);
+                    $(form + " input[name = 'userName']").val(name);
+                    $(form + " option[value = '" + status + "']").prop("selected", true);
+                    $(form + " input[name = 'origin']").val(origin);
+                    $(form + " input[name = 'destination']").val(destination);
+                    $(form + " input[name = 'distance']").val(distance);
+                    $(form + " input[name = 'journeyTime']").val(journeyTime);
+                    $(form + " input[name = 'comment']").val(comment);
+                   displayModal("#modalEditJourney");
                 });
 
 
@@ -526,6 +551,10 @@ require(['jquery',
                 //sumbit update form
                 $("body").delegate("#btnSubmitEditExpense", "click", function(){
                     submitModalForm("#modalEditExpenseForm");
+                });
+
+                $("body").delegate("#btnSubmitEditJourney", "click", function(){
+                    submitModalForm("#modalEditJourneyForm");
                 });
 
 
@@ -559,13 +588,13 @@ require(['jquery',
                 
                     //disable endable deletion, add and edit buttons
                     if(rowIdArray.length == 0){
-                        $("#btnAddExpense").attr("disabled", false);
+                        $(".btnAdd").attr("disabled", false);
                         $(".btnEdit, .btnDelete").attr("disabled", true);
                     }else if( rowIdArray.length == 1){
                         $(".btnEdit, .btnDelete").attr("disabled", false);
-                        $("#btnAddExpense").attr("disabled", true);
+                        $(".btnAdd").attr("disabled", true);
                     }else{
-                        $(".btnEdit, #btnAddExpense").attr("disabled", true);
+                        $(".btnEdit, .btnAdd").attr("disabled", true);
                         $(".btnDelete").attr("disabled", false);   
                     }
 

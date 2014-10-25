@@ -9,10 +9,13 @@
 		<div id = "subHeaderSec2">
 			<div>
 				<div>
-					<button id = "btnAddJourney" class = "btn btn-default"><span class="glyphicon glyphicon-plus"></span></button>
+					<button id = "btnAddJourney" class = "btn btn-default btnAdd"><span class="glyphicon glyphicon-plus"></span></button>
 				</div>
 				<div>
 					<button class = "btn btn-default btnDelete" disabled = "true"><span class="glyphicon glyphicon-trash"></span></button>
+				</div>
+				<div>
+					<button id = "btnEditJourney" class = "btn btn-default btnEdit" disabled = "true"><span class="glyphicon glyphicon-refresh"></span></button>
 				</div>
 			</div>
 		</div>
@@ -111,6 +114,43 @@
 		<div class = "clear"></div>
 	</form>
 </div>
+
+<div id = "modalEditJourney" class = "modalStyle">
+	<form id = "modalEditJourneyForm" method = "POST" class = "modalForm">
+		<input type = 'hidden' name = 'action' value = 'editJourney' />
+		<input id = "journeyId" type = "hidden" name = "journeyId" value = "" />
+		<div class = "modalCloseIm"></div>
+		<h4><span class="glyphicon glyphicon-refresh"></span>Edit Journey</h4>
+		<div class = "modalInput">
+			<input type = "text" name = "userName" class = "form-control" readonly="readonly"/>	
+		</div>
+		<div class = "modalInput">
+			<select class = "form-control" name = "status">
+				<option value = "" disabled="disabled">Status</option>
+				<option value = "Processed">Processed</option>
+				<option value = "Unprocessed">Unprocessed</option>
+			</select>
+		</div>
+		<div class = "modalInput">
+			<input type = "text" name = "origin" placeholder = "Origin" class = "form-control"/>	
+		</div>
+		<div class = "modalInput">
+			<input type = "text" name = "destination" placeholder = "Destination" class = "form-control"/>	
+		</div>
+		<div class = "modalInput">
+			<input type = "text" name = "distance" placeholder = "Distance" class = "form-control"/>	
+		</div>
+		<div class = "modalInput">
+			<input type = "text" name = "journeyTime" placeholder = "Journey Time" class = "form-control"/>	
+		</div>
+		<div class = "modalInput">
+			<input type = "text" name = "comment" placeholder = "Comment" class = "form-control"/>	
+		</div>
+		<div class = "modalInput">
+			<input type = 'submit' value = 'Update' class = "btn btn-default" id = "btnSubmitEditJourney"/>
+		</div>
+		<div class = "clear"></div>
+	</form>
 
 <div id = "modalDeleteConfirmation" class = "comfirmationModal">
 	<div>
