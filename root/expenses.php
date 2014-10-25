@@ -175,5 +175,9 @@
 	<div>
 		<button action = "deleteData" id = "deleteExpense" class = "btn btn-default"><span class="glyphicon glyphicon-ok"></span>Yes</button>
 	</div>
+</div>
+
+<div class = "modalReceiptImage modalImageStyle">
+	<img src="" alt = "Receipt Image" />
 </div>	
 

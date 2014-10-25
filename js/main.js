@@ -272,8 +272,23 @@ require(['jquery',
                         {"data": "user_name"},
                         {"data": "expense_category"},
                         {"data": "merchant_name"},
-                        {"data": "expense_cost"},
-                        {"data": "receipt_image"},
+                        {
+                            "data": "expense_cost",
+                            "render" : function(data){
+                                return "€ " + data;
+                            }
+                        },
+                        {
+                            "data": "receipt_image",
+                            "render" : function(data){
+                                return  data == null ?
+                                        " " :
+                                        "<div class = 'receiptLink' url = '" + data +"'>"+
+                                            "<p><span class='glyphicon glyphicon-picture'>Image</span></p>"+
+                                       "</div>";
+                            }
+
+                        },
                         {"data": "expense_date"},
                         {"data": "expense_status"},
                         {"data": "expense_comment"}
@@ -312,8 +327,19 @@ require(['jquery',
                         {"data": "user_name"},
                         {"data": "origin"},
                         {"data": "destination"},
-                        {"data": "distance"},
-                        {"data": "journey_time"},
+                        {
+                            "data": "distance",
+                            "render" : function(data){
+                                return "Km " + data;
+                            }
+                        },
+                        {
+                            "data": "journey_time",
+                            "render" : function(data){
+                                return data + " Hours/Mins"
+                            }
+
+                        },
                         {"data": "date"},
                         {"data": "status"},
                         {"data": "comment"}
@@ -395,10 +421,6 @@ require(['jquery',
                         });
                     }
                 });   
-            }
-
-            function clearSelection(selection){
-                selection = [];    
             }
 
             /**
@@ -521,8 +543,10 @@ require(['jquery',
                 });
 
                 //add selected rows to array for deleting, submitting or updating
+                //data
                 var rowIdArray = new Array();
                 $("body").delegate("tbody", "click", function(event){
+                    
                     var rowId = $(event.target).parent().attr("id");
                     if($.inArray(rowId, rowIdArray) == -1){
                         rowIdArray.push(rowId);
@@ -531,7 +555,8 @@ require(['jquery',
                         rowIdArray.splice($.inArray(rowId, rowIdArray), 1);
                         $(event.target).parent().removeClass("selected");
                     }
-
+                    alert(rowIdArray);
+                
                     //disable endable deletion, add and edit buttons
                     if(rowIdArray.length == 0){
                         $("#btnAddExpense").attr("disabled", false);
@@ -544,10 +569,9 @@ require(['jquery',
                         $(".btnDelete").attr("disabled", false);   
                     }
 
-                    alert(rowIdArray);
                 });
  
-                //confirm deletions modal
+                //confirm deletion modal
                 $("body").delegate("#modalDeleteConfirmation button", "click", function(event){
                     var action = $(event.target).attr("action");
                     var tableData = $(event.target).attr("id");
@@ -563,14 +587,21 @@ require(['jquery',
                     deleteData(data);
                 });
 
-
+                //toggle sign out div
                 $("#emailDiv").click(function(){
                     $("#signOutDiv").toggle("slow");
                 });
+                
+                //call receipt image modal
+                $("body").delegate(".receiptLink", "click", function(event){
+                    var url = $(event.target).closest("div").attr("url");
+                    $(".modalReceiptImage img").attr("src", url);
+                    displayModal(".modalReceiptImage");
+                    event.stopImmediatePorpagtion();
+                });
             }
 
-            initialiseEvents();
-               
+            initialiseEvents();              
 });
 
 
