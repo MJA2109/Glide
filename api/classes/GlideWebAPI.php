@@ -1,6 +1,4 @@
 <?php
-require "../helperClasses/medoo.php";
-require "../helperClasses/Util.php";
 require "GlideBaseAPI.php";
 
 class GlideWebAPI extends GlideBaseAPI{
@@ -216,7 +214,9 @@ class GlideWebAPI extends GlideBaseAPI{
                                                 LEFT JOIN receipts re on re.receipt_id = ex.receipt_id
                                                 where
                                                 ex.admin_id = '$adminId'
-                                                AND ex.is_deleted = 0")->fetchAll();
+                                                AND ex.is_deleted = 0
+                                                ORDER BY ex.expense_id Desc")->fetchAll();
+
             foreach($expensesData as $data){
                 $expense[$index] = array();
                 $expense[$index]["DT_RowId"] = $data["expense_id"];
@@ -319,94 +319,6 @@ class GlideWebAPI extends GlideBaseAPI{
             }
 
             echo json_encode($journey);
-        }else{
-            echo json_encode(array("error" => "Admin ID not set"));
-        }
-    }
-
-
-    /**
-     * Name: processMerchant
-     * Purpose: Get merchant id or add new merchant then get id
-     * @param $marchantName - String : Contains merchant name.
-     * @return $merchantId - Int : Contains merchant id.
-     */
-    public static function processMerchant($merchantName){
-        session_start();
-        
-        if(isset($_SESSION["adminId"])){
-            $adminId = $_SESSION["adminId"];
-            $database = GlideWebAPI::connectDB();
-            
-            $merchantId = $database->select("merchants", [ "merchant_id"],[
-                "merchant_name" => $merchantName
-            ]);
-
-            if(empty($merchantId)){
-                $merchantId = $database->insert("merchants", [
-                    "merchant_name" => $merchantName,
-                    "admin_id" => $adminId
-                ]);
-            }
-        }else{
-            echo json_encode(array("error" => "Admin ID not set"));
-        }
-
-        return $merchantId;
-    }
-
-
-    /**
-     * Name: addExpense
-     * Purpose: Add expense to expense table
-     */
-    public static function addExpense(){
-
-        session_start();
-        
-        if(isset($_SESSION["adminId"])){
-
-            $userName = Util::get("userName");
-            $userId = Util::get("userId");
-            $category = Util::get("category");
-            $merchant = Util::get("merchant");
-            $cost = Util::get("cost");
-            $comment = Util::get("comment");
-            $log = array();
-            $log["type"] = "addExpense";
-            $log["errors"] = array();
-            $database = GlideWebAPI::connectDB();
-            
-            $adminId = $_SESSION["adminId"];
-
-            $userExists = $database->count("users", [
-                "AND" => [
-                    "user_id" => $userId,
-                    "user_name" => $userName,
-                    "admin_id" => $adminId
-                ]
-            ]);
-
-            if($userExists == 0){
-                $log["errors"]["user"] = "User doesn't exist";
-                echo json_encode($log);
-            }else{
-                
-                //get merchant id or add new merchant
-                $merchantId = self::processMerchant($merchant);
-                
-                $lastExpenseId = $database->insert("expenses", [
-                    "admin_id" => intval($adminId),
-                    "user_id" => intval($userId),
-                    "merchant_id" => intval($merchantId),
-                    "expense_category" => $category,
-                    "expense_cost" => $cost,
-                    "expense_comment" => $comment,
-                    
-                ]);
-                echo json_encode(array("table" => "expenses", "status" => $merchantId));  
-            }
-
         }else{
             echo json_encode(array("error" => "Admin ID not set"));
         }
@@ -744,8 +656,6 @@ class GlideWebAPI extends GlideBaseAPI{
             $cost = Util::get("cost");
             $comment = Util::get("comment");
             $database = GlideWebAPI::connectDB();
-
-            $merchantId = self::processMerchant($merchant);
 
             $database->update("expenses", [
                 "expense_category" => $category,

@@ -42,37 +42,46 @@
 
                     <form method = "POST" id = "uploadExpenseForm">
                         <div>
+                            <input type = "hidden" name = "action" value = "addExpense" />
+                        </div>
+                        <div>
+                            <input type = "hidden" name = "adminId" value = "50" />
+                        </div>
+                         <div>
+                            <input type = "hidden" name = "userId" value = "27" />
+                        </div>
+                        <div>
+                            <input type = "hidden" name = "userName" value = "Michael Jackson" />
+                        </div>
+                        <div>
                             <input type = "button" value = "Capture Receipt" id = "btnCaptureReceipt" data-icon = "camera"/>
                             <div id = "uploadedImage">
                                 
-                            </div>
+                        </div>
                         </div>
                         <div>
                             <label for="uploadCategory" class="select">
                                 Category:
                             </label>
-                            <select name = "uploadCategory" id="uploadCategory" data-iconpos = "left">
+                            <select name = "category" id="uploadCategory" data-iconpos = "left">
                                 <option value = "accommodation">Accommodation</option>
                                 <option value = "travel">Travel</option>
                                 <option value = "food">Food</option>
                                 <option value = "entertainment">Entertainment</option>
+                                <option value = "phone">Phone</option>
                             </select>
                         </div>
                         <div>
                             <label for = "uploadMerchant">Merchant:</label>
-                            <input type = "text" name = "uploadMerchant" id = "uploadMerchant" value = "" />
+                            <input type = "text" name = "merchant" id = "uploadMerchant" value = "" />
                         </div>
                         <div>
                             <label for = "uploadCost">Cost:</label>
-                            <input type = "text" name = "uploadCost" id = "uploadCost" value = "" />
-                        </div>
-                        <div>
-                            <label for = "uploadDate">Date:</label>
-                            <input type = "date" name = "uploadDate" id = "uploadDate" />
+                            <input type = "text" name = "cost" id = "uploadCost" value = "" />
                         </div>
                         <div>
                             <label for = "uploadComment">Comment:</label>
-                            <textarea name = "uploadComment" id = "uploadComment"></textarea>
+                            <textarea name = "comment" id = "uploadComment"></textarea>
                         </div>
                         <div>
                             <input type = "button" value = "Upload" id = "btnUpload" data-icon = "arrow-u"/>

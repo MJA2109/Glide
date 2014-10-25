@@ -1,6 +1,6 @@
 //Initialize application. Set global variables.
 var app = {
-    server: "http://192.168.1.67/Glide/api/handlers/mobileHandler.php", 
+    server: "http://192.168.1.67/Glide/api/handlers/mobileHandler.php",
     map: "",             //google map object
     trackerMarker: "",   //contains tracker marker
     markerArray: [],     //array of map markers
@@ -458,15 +458,16 @@ function uploadForm(form){
         complete: function(){
         
         }, 
-        success: function(){
+        success: function(data){
             if(form == "#uploadJourneyDataForm"){
                 clearGeoDataArrays();
                 $.mobile.loading("hide");
                 $.mobile.changePage("#home");
-            }  
+            }
+            alert(data);  
         },
-        error: function(data){
-            alert("Ajax Error " + data);
+        error: function(data, error){
+            alert("Ajax Error " + data + " : " + error);
         }               
     });   
 }
