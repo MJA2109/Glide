@@ -93,6 +93,7 @@
 <div id = "modalAddExpense" class = "modalStyle">
 	<form id = "modalExpenseForm" method = "POST" class = "modalForm">
 		<input type = 'hidden' name = 'action' value = 'addExpense' />
+        <input type = "hidden" name = "receiptId" value = "" />
 		<div class = "modalCloseIm"></div>
 		<h4><span class="glyphicon glyphicon-plus"></span>Add Expense</h4>
 		<div class = "modalInput">

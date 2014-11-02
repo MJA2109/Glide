@@ -281,7 +281,7 @@ require(['jquery',
                         {
                             "data": "receipt_image",
                             "render" : function(data){
-                                return  data == null ?
+                                return  data == null || data == "default" ?
                                         " " :
                                         "<div class = 'receiptLink' url = '" + data +"'>"+
                                             "<p><span class='glyphicon glyphicon-picture'>Image</span></p>"+

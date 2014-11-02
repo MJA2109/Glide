@@ -3,7 +3,6 @@ require "GlideBaseAPI.php";
 
 class GlideWebAPI extends GlideBaseAPI{
 
-
     /**
      * Name: register
      * Purpose: Allow users to register an account on the system
@@ -197,7 +196,7 @@ class GlideWebAPI extends GlideBaseAPI{
             
             $adminId = $_SESSION["adminId"];
             
-            //use query public static function for more complex database queries
+            //use query public static static function for more complex database queries
             $expensesData = $database->query("SELECT
                                                 ex.expense_id,
                                                 u.user_name, 
@@ -296,7 +295,7 @@ class GlideWebAPI extends GlideBaseAPI{
             
             $adminId = $_SESSION["adminId"];
             
-            //use query public static function for more complex database queries
+            //use query public static static function for more complex database queries
             $journeysData = $database->query("SELECT id, user_name, origin, destination, distance, journey_time, date, status, comment
                                               FROM users, journeys
                                               WHERE ".$adminId." = journeys.admin_id
@@ -371,6 +370,7 @@ class GlideWebAPI extends GlideBaseAPI{
                     "journey_time" => $journeyTime,
                     "comment" => $comment  
                 ]);
+                
                 echo json_encode(array("table" => "journeys", "status" => "New journey added..."));  
             }
 

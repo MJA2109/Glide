@@ -1,6 +1,8 @@
 <?php
 require "../classes/GlideWebAPI.php";
 
+//$glideWeb = new GlideWebAPI();
+
 //Call public static function based on posted action
 if(isset($_POST["action"])){
 	$action = $_POST["action"];

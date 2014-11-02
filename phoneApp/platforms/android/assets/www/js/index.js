@@ -1,6 +1,7 @@
 //Initialize application. Set global variables.
 var app = {
-    server: "http://192.168.1.67/Glide/api/handlers/mobileHandler.php",
+    server: "http://192.168.1.93/Glide/api/handlers/mobileHandler.php",
+    //server: "http://ma.pickacab.com/test/test.php",
     map: "",             //google map object
     trackerMarker: "",   //contains tracker marker
     markerArray: [],     //array of map markers
@@ -386,6 +387,7 @@ function captureReceipt(){
         app.imageURI = imageURI;
         var image = document.getElementById('receipt');
         image.src = imageURI;
+        uploadReceipt();
     }
 
     function onFail(message) {
@@ -399,11 +401,11 @@ function captureReceipt(){
  */
 function uploadReceipt(){
 
-    $.mobile.loading("show", {
-        text: "Uploading data...",
-        textVisible: true,
-        theme: "z"
-    });
+    // $.mobile.loading("show", {
+    //     text: "Uploading data...",
+    //     textVisible: true,
+    //     theme: "z"
+    // });
 
     var imageURI = app.imageURI;
     var options = new FileUploadOptions();
@@ -412,8 +414,7 @@ function uploadReceipt(){
     options.mimeType = "image/jpeg";
 
     var params = {};
-    params.value1 = "test";
-    params.value2 =  "param";
+    params.action =  "uploadReceipt";
     options.params = params;
     options.headers = {"Connection" : "close"};
 
@@ -421,12 +422,16 @@ function uploadReceipt(){
     fileTrans.upload(imageURI, encodeURI(app.server), uploadComplete, uploadFailed, options);
     
     function uploadFailed(error){
-        alert("Upload failed " + error.target);
+        alert("Upload failed : " + JSON.stringify(error));
     }
 
     function uploadComplete(data){
-        resetUploadExpenseForm();
-        $.mobile.loading("hide");
+        alert(data.response);
+        $("#uploadExpenses input[name = 'receiptId']").val(data.response);
+        //alert($("#uploadExpenses input[name = 'receiptId']").val());
+        //alert("receipt upload from server " + JSON.stringify(data));
+        //resetUploadExpenseForm();
+        //$.mobile.loading("hide");
     }
 }
 
@@ -445,7 +450,7 @@ function uploadForm(form){
         data: data,
         beforeSend: function() {
             if(form == "#uploadExpenseForm"){
-                uploadReceipt();
+                //uploadReceipt();
             }
             if(form == "#uploadJourneyDataForm"){
                 $.mobile.loading("show", {
@@ -464,7 +469,7 @@ function uploadForm(form){
                 $.mobile.loading("hide");
                 $.mobile.changePage("#home");
             }
-            alert(data);  
+            alert("upload from " + data);  
         },
         error: function(data, error){
             alert("Ajax Error " + data + " : " + error);

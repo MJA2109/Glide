@@ -20,6 +20,36 @@ class GlideBaseAPI{
         return $database;
     }
 
+
+    /**
+     * Name: uploadReceipt
+     * Purpose: Retrieve uploaded image and move to upload folder and 
+     *          add to database. 
+     */
+    public static function uploadReceipt(){
+
+        $databasePath = "../uploads/receiptImages/";
+        $storePath = "../../uploads/receiptImages/";
+        $database = GlideBaseAPI::connectDB();
+
+        $filename = basename($_FILES['file']['name']);
+        $storePath = $storePath . $filename;
+        $databasePath = $databasePath . $filename;
+
+
+        if(move_uploaded_file($_FILES["file"]["tmp_name"], $storePath)){
+
+            $receiptId = $database->insert("receipts", [
+                "receipt_image" => $databasePath
+            ]);
+
+            echo $receiptId;
+            
+        }else{
+            echo "Error : Receipt not Uploaded !";
+        }
+    }
+
     
     /**
      * Name: processMerchant
@@ -73,7 +103,7 @@ class GlideBaseAPI{
      */
     public static function addExpense(){
 
-        $adminId = GlideBaseAPI::getAdminId();       
+        $adminId = GlideBaseAPI::getAdminId();  
 
         if($adminId){
 
@@ -83,10 +113,15 @@ class GlideBaseAPI{
             $merchant = Util::get("merchant");
             $cost = Util::get("cost");
             $comment = Util::get("comment");
+            $receiptId = Util::get("receiptId");
             $log = array();
             $log["type"] = "addExpense";
             $log["errors"] = array();
             $database = GlideBaseAPI::connectDB();
+
+            if($receiptId == ""){
+                $receiptId = 1;
+            }   
             
             $userExists = $database->count("users", [
                 "AND" => [
@@ -100,20 +135,22 @@ class GlideBaseAPI{
                 $log["errors"]["user"] = "User doesn't exist";
                 echo json_encode($log);
             }else{
-                
+
                 //get merchant id or add new merchant
                 $merchantId = GlideBaseAPI::processMerchant($merchant, $adminId);
-                
+
                 $lastExpenseId = $database->insert("expenses", [
                     "admin_id" => intval($adminId),
                     "user_id" => intval($userId),
                     "merchant_id" => intval($merchantId),
+                    "receipt_id" => $receiptId,
                     "expense_category" => $category,
                     "expense_cost" => $cost,
                     "expense_comment" => $comment,
                     
-                ]);
-                echo json_encode(array("table" => "expenses", "status" => $lastExpenseId));  
+                ]); 
+
+                echo json_encode(array("table" => "expenses", "status" => "New expense added..."));  
             }
 
         }else{
