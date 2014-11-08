@@ -158,6 +158,63 @@ class GlideBaseAPI{
         }
     }
 
+    /**
+     * Name: addJourney
+     * Purpose: Add journey to journey table
+     */
+    public static function addJourney(){
+
+        $adminId = GlideBaseAPI::getAdminId(); 
+        
+        if($adminId){
+            $userName = Util::get("userName");
+            $userId = Util::get("userId");
+            $origin = Util::get("origin");
+            $destination = Util::get("destination");
+            $distance = Util::get("distance");
+            $journeyTime = Util::get("journeyTime");
+            $date = Util::get("date");
+            $comment = Util::get("comment");
+            $log = array();
+            $log["type"] = "addJouney";
+            $log["errors"] = array();
+            $database = GlideBaseAPI::connectDB();
+            
+            //$adminId = $_SESSION["adminId"];
+
+            $userExists = $database->count("users", [
+                "AND" => [
+                    "user_id" => $userId,
+                    "user_name" => $userName,
+                    "admin_id" => $adminId
+                ]
+            ]);
+
+            if($userExists == 0){
+                $log["errors"]["user"] = "User doesn't exist";
+                echo json_encode($log);
+            }else{
+
+                $lastJourneyId = $database->insert("journeys", [
+                    "admin_id" => intval($adminId),
+                    "user_id" => intval($userId),
+                    "origin" => $origin,
+                    "destination" => $destination,
+                    "distance" => $distance,
+                    "journey_time" => $journeyTime,
+                    "comment" => $comment  
+                ]);
+                
+                echo json_encode(array("table" => "journeys", "status" => "New journey added..."));  
+            }
+
+
+        }else{
+            echo json_encode(array("error" => "Admin ID not set"));
+        }
+        
+    }
+
 
     
 

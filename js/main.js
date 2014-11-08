@@ -336,7 +336,7 @@ require(['jquery',
                         {
                             "data": "journey_time",
                             "render" : function(data){
-                                return data + " Hours/Mins"
+                                return data;
                             }
 
                         },

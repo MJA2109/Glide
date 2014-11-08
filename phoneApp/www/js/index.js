@@ -1,6 +1,6 @@
 //Initialize application. Set global variables.
 var app = {
-    server: "http://192.168.1.93/Glide/api/handlers/mobileHandler.php",
+    server: "http://192.168.1.64/Glide/api/handlers/mobileHandler.php",
     //server: "http://ma.pickacab.com/test/test.php",
     map: "",             //google map object
     trackerMarker: "",   //contains tracker marker
@@ -459,9 +459,6 @@ function uploadForm(form){
                 });
             } 
         },
-        complete: function(){
-        
-        }, 
         success: function(data){
             if(form == "#uploadJourneyDataForm"){
                 clearGeoDataArrays();

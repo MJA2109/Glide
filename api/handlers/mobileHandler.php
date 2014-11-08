@@ -10,6 +10,8 @@ if(isset($_POST["action"])){
 	    break;
 	    case "uploadReceipt" : GlideMobileAPI::uploadReceipt();
 	    break;
+	    case "addJourney" : GlideMobileAPI::addJourney();
+	    break;
 
 	}
 }

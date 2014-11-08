@@ -237,8 +237,6 @@ class GlideWebAPI extends GlideBaseAPI{
         
     }
 
-
-
     /**
      * Name: getUsersData
      * Purpose: Retrieve data from users table
@@ -272,8 +270,6 @@ class GlideWebAPI extends GlideBaseAPI{
             echo json_encode(array("error" => "Admin ID not set"));
         }
     }
-
-
 
 
     /**
@@ -321,64 +317,6 @@ class GlideWebAPI extends GlideBaseAPI{
         }else{
             echo json_encode(array("error" => "Admin ID not set"));
         }
-    }
-
-
-    /**
-     * Name: addJourney
-     * Purpose: Add journey to journey table
-     */
-    public static function addJourney(){
-
-        session_start();
-        
-        if(isset($_SESSION["adminId"])){
-            $userName = Util::get("userName");
-            $userId = Util::get("userId");
-            $origin = Util::get("origin");
-            $destination = Util::get("destination");
-            $distance = Util::get("distance");
-            $journeyTime = Util::get("journeyTime");
-            $date = Util::get("date");
-            $comment = Util::get("comment");
-            $log = array();
-            $log["type"] = "addExpense";
-            $log["errors"] = array();
-            $database = GlideWebAPI::connectDB();
-            
-            $adminId = $_SESSION["adminId"];
-
-            $userExists = $database->count("users", [
-                "AND" => [
-                    "user_id" => $userId,
-                    "user_name" => $userName,
-                    "admin_id" => $adminId
-                ]
-            ]);
-
-            if($userExists == 0){
-                $log["errors"]["user"] = "User doesn't exist";
-                echo json_encode($log);
-            }else{
-
-                $lastJourneyId = $database->insert("journeys", [
-                    "admin_id" => intval($adminId),
-                    "user_id" => intval($userId),
-                    "origin" => $origin,
-                    "destination" => $destination,
-                    "distance" => $distance,
-                    "journey_time" => $journeyTime,
-                    "comment" => $comment  
-                ]);
-                
-                echo json_encode(array("table" => "journeys", "status" => "New journey added..."));  
-            }
-
-
-        }else{
-            echo json_encode(array("error" => "Admin ID not set"));
-        }
-        
     }
 
     /**
@@ -688,7 +626,7 @@ class GlideWebAPI extends GlideBaseAPI{
             $origin = Util::get("origin");
             $destination = Util::get("destination");
             $distance = Util::get("distance");
-            $time = Util::get("journey_time");
+            $time = Util::get("journeyTime");
             $comment = Util::get("comment");
             $database = GlideWebAPI::connectDB();
 

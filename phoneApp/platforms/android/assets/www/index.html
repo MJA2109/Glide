@@ -45,7 +45,7 @@
                             <input type = "hidden" name = "action" value = "addExpense" />
                         </div>
                         <div>
-                            <input type = "hidden" name = "receiptId" value = "" />
+                            <input type = "hidden" name = "receiptId" value = "Null" />
                         </div>
                         <div>
                             <input type = "hidden" name = "adminId" value = "50" />
@@ -173,32 +173,40 @@
                 <div data-role="content">
                     <form method = "POST" id = "uploadJourneyDataForm">
                         <div>
-                            <label for = "uploadJourneyData">Journey:</label>
-                            <input type = "text" name = "uploadJourneyData" id = "uploadJourneyData" />
+                            <input type = "hidden" name = "action" value = "addJourney" />
+                        </div>
+                        <div>
+                            <input type = "hidden" name = "adminId" value = "50" />
+                        </div>
+                         <div>
+                            <input type = "hidden" name = "userId" value = "27" />
+                        </div>
+                        <div>
+                            <input type = "hidden" name = "userName" value = "Michael Jackson" />
                         </div>
                         <div>
                             <label for = "uploadOrigin">Origin:</label>
-                            <input type = "text" name = "uploadOrigin" id = "uploadOrigin" readonly="readonly"/>
+                            <input type = "text" name = "origin" id = "uploadOrigin" readonly="readonly"/>
                         </div>
                         <div>
                             <label for = "uploadDestination">Destination:</label>
-                            <input type = "text" name = "uploadDestination" id = "uploadDestination" readonly="readonly"/>
+                            <input type = "text" name = "destination" id = "uploadDestination" readonly="readonly"/>
                         </div>
                         <div>
                             <label for = "uploadDistance">Distance:</label>
-                            <input type = "text" name = "uploadDistance" id = "uploadDistance" readonly="readonly"/>
+                            <input type = "text" name = "distance" id = "uploadDistance" readonly="readonly"/>
                         </div>
                         <div>
                             <label for = "uploadJourneyTime">Journey Time:</label>
-                            <input type = "text" name = "uploadJourneyTime" id = "uploadJourneyTime" readonly="readonly"/>
+                            <input type = "text" name = "journeyTime" id = "uploadJourneyTime" readonly="readonly"/>
                         </div>
                         <div>
                             <label for = "uploadDateTime">Date/Time:</label>
-                            <input type = "text" name = "uploadDateTime" id = "uploadDateTime" readonly="readonly"/>
+                            <input type = "text" name = "date" id = "uploadDateTime" readonly="readonly"/>
                         </div>
                         <div>
                             <label for = "uploadJourneyComment">Comment:</label>
-                            <input type = "text" name = "uploadJourneyComment" id = "uploadJourneyComment" />
+                            <input type = "text" name = "comment" id = "uploadJourneyComment" />
                         </div>
                         <div>
                             <input type = "button" value = "Upload" id = "btnUploadJourneyData" data-icon = "arrow-u"/>
