@@ -17,6 +17,8 @@ if(isset($_POST["action"])){
 	    break;
 	    case "getJourneyHistory" : GlideMobileAPI::getJourneyHistory();
 	    break;
+	    case "appLogin" : GlideMobileAPI::appLogin();
+	    break;
 
 	}
 }

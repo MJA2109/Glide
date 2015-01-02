@@ -1,6 +1,6 @@
 //Initialize application. Set global variables.
 var app = {
-    server: "http://192.168.1.64/Glide/api/handlers/mobileHandler.php",
+    server: "http://192.168.1.74/Glide/api/handlers/mobileHandler.php",
     //server: "http://ma.pickacab.com/test/test.php",
     map: "",             //google map object
     trackerMarker: "",   //contains tracker marker
@@ -32,6 +32,10 @@ var app = {
  * Purpose: Initialize each event before use.
  */
 function initializeEvents(){
+
+    $("#btnLogin").click(function(){
+        login("#loginForm");
+    });
     
     $("#btnCaptureReceipt").click(function(){
         captureReceipt();
@@ -70,13 +74,82 @@ function initializeEvents(){
         $(this).iscrollview("refresh");
     });
 
+    //check local storage for login details
+    checkPreAuth();
+
+
+}
+
+
+/**
+ * Name: checkPreAuth
+ * Purpose: Check local storage for for login details
+ */
+function checkPreAuth(){
+    if(window.localStorage.userName != undefined && window.localStorage.userId != undefined){   
+        $("#loginEmail").val(window.localStorage.email);
+        $("#instanceId").val(window.localStorage.instanceId);
+        login("#loginForm");
+    }
+}
+
+
+/**
+ * Name: login
+ * Purpose: Allow user to login to phone app. Add user's details to local storage.
+ * @param form - String : form to process
+ */
+function login(form){
+
+    var frm = $(form);
+    var data = frm.serialize();
+
+    $.ajax({
+        type: "post",
+        url: app.server,
+        data: data,
+        success: function(data){
+            var auth = JSON.parse(data);
+            if(auth){
+                window.localStorage.userId = auth[0].user_id;
+                window.localStorage.userName = auth[0].user_name;
+                window.localStorage.email = $("#loginEmail").val();
+                window.localStorage.instanceId = $("#instanceId").val();
+                setFormData();
+                $.mobile.changePage("#home");
+
+            }else{
+                alert("Incorrect details, try again...");
+            } 
+        },
+        error: function(){
+            alert("falied");
+        } 
+    });
+}
+
+
+/**
+ * Name: setFormData
+ * Purpose: Add user login details to hidden form fields to allow for uploading data.
+ */
+function setFormData(){
+
+    $("#uploadJourneyDataForm input[name = 'adminId']").val(window.localStorage.instanceId);
+    $("#uploadJourneyDataForm input[name = 'userId']").val(window.localStorage.userId);
+    $("#uploadJourneyDataForm input[name = 'userName']").val(window.localStorage.userName);
+
+    $("#uploadExpensesForm input[name = 'adminId']").val(window.localStorage.instanceId);
+    $("#uploadExpensesForm input[name = 'userId']").val(window.localStorage.userId);
+    $("#uploadExpensesForm input[name = 'userName']").val(window.localStorage.userName);
+
 }
 
 
 
 /**
- * Name: refreshExpenseHistory
- * Purpose: Prepend new expense data to expense history list.
+ * Name: refreshHistory
+ * Purpose: Prepend new expense/journey data to expense/journey history list.
  */
 function refreshHistory(divId, attr, action){
 
@@ -85,8 +158,8 @@ function refreshHistory(divId, attr, action){
 
     var data = {
         action: action,
-        adminId: 50,
-        userId: 27,
+        adminId: window.localStorage.instanceId,
+        userId: window.localStorage.userId,
         mostRecentExpense: mostRecentExpense
     };
 
@@ -132,26 +205,6 @@ function refreshHistory(divId, attr, action){
     });
 }
 
-
-function refreshJourneyHistory(){
-
-    var mostRecentExpense = 0; //id of most recent expense retreived
-    mostRecentExpense = $("#journeyHistory ul li").attr("journeyId");
-
-    var data = {
-        action: "getJourneyHistory",
-        adminId: 50,
-        userId: 27,
-        mostRecentExpense: mostRecentExpense
-    };
-
-
-
-
-
-
-
-}
 
 /**
  * Name: getCurrentLocation

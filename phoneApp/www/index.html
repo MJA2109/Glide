@@ -14,20 +14,48 @@
     </head>
     <body>
         <div class="app">    
-            
-            <!-- Fix Navigation Bar -->
-            <nav>
-                <div id = "navLogo">
-                    <h1>glide</h1> 
+
+            <!-- Login Page -->
+            <div data-role = "page" data-transition = "flip" id = "login">
+                <div id = "loginWrapper">
+
+                    <div>
+                        <img src="img/glideLogoTrans.png">
+                    </div>
+
+                    <form method = "POST" id = "loginForm">
+                        <div>
+                            <input type = "hidden" name = "action" value = "appLogin"/>
+                        </div>
+                        <div>
+                            <input type = "text" name = "loginEmail" id = "loginEmail" placeholder = "Email"/>
+                        </div>
+                        <div>
+                            <input type = "password" name = "password" id = "loginPassword" placeholder = "Password"/>
+                        </div>
+                        <div>
+                            <input type = "text" name = "instanceId" id = "instanceId" placeholder = "Instance ID"/>
+                        </div>
+                        <div>
+                            <input type = "button" value = "Login" id = "btnLogin" />
+                        </div>
+                    </form>
                 </div>
-                <div id = "navGrid">
-                   <a href="#home"><img src="css/images/icons-svg/grid-white.svg"></a> 
-                </div>
-            </nav>
+            </div>
 
             <!-- Home Page -->
             <div data-role = "page" data-transition = "flip" id="home">
-                <div class = "navSpace"></div>
+                <div data-role= "navbar">
+                    <nav>
+                        <div id = "navLogo">
+                            <h1>glide</h1> 
+                        </div>
+                        <div id = "navGrid">
+                            <a href="#home" class=" ui-alt-icon ui-nodisc-icon ui-btn ui-corner-all ui-icon-grid ui-btn-icon-notext"></a> 
+                        </div>
+                    </nav>
+                </div>
+
                 <div data-role="content">
                     <a href="#uploadExpenses" data-role="button" data-icon = "arrow-u" data-iconpos = "top">Upload Expenses</a>
                     <a href="#trackJourney" data-role="button" data-icon = "forward" data-iconpos = "top">Track Journey</a>
@@ -36,10 +64,22 @@
                     <a href="#accountInfo" data-role="button" data-icon = "info" data-iconpos = "top">Account Info</a>
                 </div>
             </div>
+
             
             <!-- Upload Expenses Page -->
             <div data-role = "page" data-transition = "flip" id="uploadExpenses" data-tap-toggle="false">
-                <div class = "navSpace"></div>
+                <div data-role= "navbar">
+                    <nav>
+                        <div id = "navLogo">
+                            <h1>glide</h1> 
+                        </div>
+                        <div id = "navGrid">
+                            <a href="#home" class=" ui-alt-icon ui-nodisc-icon ui-btn ui-corner-all ui-icon-grid ui-btn-icon-notext"></a> 
+                        </div>
+                    </nav>
+                </div>
+                
+
                 <div data-role="content">
 
                     <form method = "POST" id = "uploadExpenseForm">
@@ -50,13 +90,13 @@
                             <input type = "hidden" name = "receiptId" value = "Null" />
                         </div>
                         <div>
-                            <input type = "hidden" name = "adminId" value = "50" />
+                            <input type = "hidden" name = "adminId" />
                         </div>
                          <div>
-                            <input type = "hidden" name = "userId" value = "27" />
+                            <input type = "hidden" name = "userId" />
                         </div>
                         <div>
-                            <input type = "hidden" name = "userName" value = "Michael Jackson" />
+                            <input type = "hidden" name = "userName" />
                         </div>
                         <div>
                             <input type = "button" value = "Capture Receipt" id = "btnCaptureReceipt" data-icon = "camera"/>
@@ -97,6 +137,17 @@
 
             <!-- Track Journey Page -->
             <div data-role = "page" data-transition = "flip" id="trackJourney" data-tap-toggle="false">
+                    <div data-role= "navbar">
+                        <nav>
+                            <div id = "navLogo">
+                                <h1>glide</h1> 
+                            </div>
+                            <div id = "navGrid">
+                                <a href="#home" class=" ui-alt-icon ui-nodisc-icon ui-btn ui-corner-all ui-icon-grid ui-btn-icon-notext"></a> 
+                            </div>
+                        </nav>
+                    </div>
+
                     <div id = "googleMap">
                         
                         
@@ -110,7 +161,17 @@
 
             <!-- Account Info Page -->
             <div data-role = "page" data-transition = "flip" id="accountInfo" data-tap-toggle="false">
-                <div class = "navSpace"></div>
+                <div data-role= "navbar">
+                    <nav>
+                        <div id = "navLogo">
+                            <h1>glide</h1> 
+                        </div>
+                        <div id = "navGrid">
+                            <a href="#home" class=" ui-alt-icon ui-nodisc-icon ui-btn ui-corner-all ui-icon-grid ui-btn-icon-notext"></a> 
+                        </div>
+                    </nav>
+                </div>
+
                 <div data-role="content">
                     <div>
                         <h2>Total Expenses: <span>€1054.23<span></h2>
@@ -120,7 +181,17 @@
 
             <!-- Previous Expenses Page -->
             <div data-role = "page" data-transition = "flip" id="expenseHistory" data-tap-toggle="false">
-                <div class = "navSpace"></div>
+                <div data-role= "navbar">
+                    <nav>
+                        <div id = "navLogo">
+                            <h1>glide</h1> 
+                        </div>
+                        <div id = "navGrid">
+                            <a href="#home" class=" ui-alt-icon ui-nodisc-icon ui-btn ui-corner-all ui-icon-grid ui-btn-icon-notext"></a> 
+                        </div>
+                    </nav>
+                </div>
+
                 <div data-role="content" id = "expenseScroll" data-iscroll >
                     <div class="iscroll-pulldown">
                         <span class="iscroll-pull-icon"></span>
@@ -136,7 +207,17 @@
 
 
             <div data-role = "page" data-transition = "flip" id="journeyHistory" data-tap-toggle="false">
-                <div class = "navSpace"></div>
+                <div data-role= "navbar">
+                    <nav>
+                        <div id = "navLogo">
+                            <h1>glide</h1> 
+                        </div>
+                        <div id = "navGrid">
+                            <a href="#home" class=" ui-alt-icon ui-nodisc-icon ui-btn ui-corner-all ui-icon-grid ui-btn-icon-notext"></a> 
+                        </div>
+                    </nav>
+                </div>
+
                 <div data-role="content" id = "journeyScroll" data-iscroll>
                     <div class="iscroll-pulldown">
                         <span class="iscroll-pull-icon"></span>
@@ -152,20 +233,30 @@
 
             <!-- Upload Journey Data -->
             <div data-role = "page" id="uploadJourneyData" data-tap-toggle="false">
-                <div class = "navSpace"></div>
+                <div data-role= "navbar">
+                    <nav>
+                        <div id = "navLogo">
+                            <h1>glide</h1> 
+                        </div>
+                        <div id = "navGrid">
+                            <a href="#home" class=" ui-alt-icon ui-nodisc-icon ui-btn ui-corner-all ui-icon-grid ui-btn-icon-notext"></a> 
+                        </div>
+                    </nav>
+                </div>
+
                 <div data-role="content">
                     <form method = "POST" id = "uploadJourneyDataForm">
                         <div>
                             <input type = "hidden" name = "action" value = "addJourney" />
                         </div>
                         <div>
-                            <input type = "hidden" name = "adminId" value = "50" />
+                            <input type = "hidden" name = "adminId" />
                         </div>
                          <div>
-                            <input type = "hidden" name = "userId" value = "27" />
+                            <input type = "hidden" name = "userId" />
                         </div>
                         <div>
-                            <input type = "hidden" name = "userName" value = "Michael Jackson" />
+                            <input type = "hidden" name = "userName" />
                         </div>
                         <div>
                             <label for = "uploadOrigin">Origin:</label>

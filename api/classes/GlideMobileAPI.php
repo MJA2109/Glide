@@ -4,6 +4,37 @@ require "GlideBaseAPI.php";
 class GlideMobileAPI extends GlideBaseAPI{
 
 
+	/**
+     * Name: appLogin
+     * Purpose: Check does user exist in system.
+     */
+	public static function appLogin(){
+		$database = GlideBaseAPI::connectDB();
+
+		$email = Util::get("loginEmail");
+		$password = Util::get("password");
+		$instanceId = Util::get("instanceId");
+
+		$auth = $database->select("users", [
+			
+			"user_id",
+			"user_name"
+
+			], [
+			"AND" => [
+				"user_email" => $email,
+				"admin_id" => $instanceId,
+				"is_deleted" => 0
+			]
+
+		]);
+
+		if($auth){
+			echo json_encode($auth);
+		}else{
+			echo json_encode(false);
+		}
+	}
 	
 
 	/**
@@ -42,6 +73,11 @@ class GlideMobileAPI extends GlideBaseAPI{
         }
 	}
 
+
+	/**
+     * Name: getJourneyHistory
+     * Purpose: Get data from journey table.
+     */
 	public static function getJourneyHistory(){
 
 		$database = GlideBaseAPI::connectDB();
