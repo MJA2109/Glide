@@ -100,7 +100,8 @@ nav{
     font-size: 0.8em;
     float:left;
     width:15%;
-    padding-right:30%;
+    padding-right:10%;
+    font-weight:bold;
 }
 
 .historyDiv{

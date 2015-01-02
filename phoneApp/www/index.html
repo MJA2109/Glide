@@ -8,6 +8,7 @@
         <link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.4.3.min.css">
         <link rel="stylesheet" type="text/css" href="css/glideTheme.min.css">
         <link rel="stylesheet" type="text/css" href="css/jquery.mobile.icons.min.css" />
+         <link rel="stylesheet" type="text/css" href="css/jquery.mobile.iscrollview-pull.css" />
         <link rel="stylesheet" type="text/css" href="css/index.css" />
         <title>Glide</title>
     </head>
@@ -30,7 +31,8 @@
                 <div data-role="content">
                     <a href="#uploadExpenses" data-role="button" data-icon = "arrow-u" data-iconpos = "top">Upload Expenses</a>
                     <a href="#trackJourney" data-role="button" data-icon = "forward" data-iconpos = "top">Track Journey</a>
-                    <a href="#history" data-role="button" data-icon = "star" data-iconpos = "top">History</a>
+                    <a href="#expenseHistory" data-role="button" data-icon = "star" data-iconpos = "top">Expense History</a>
+                    <a href="#journeyHistory" data-role="button" data-icon = "star" data-iconpos = "top">Journey History</a>
                     <a href="#accountInfo" data-role="button" data-icon = "info" data-iconpos = "top">Account Info</a>
                 </div>
             </div>
@@ -117,52 +119,33 @@
             </div>
 
             <!-- Previous Expenses Page -->
-            <div data-role = "page" data-transition = "flip" id="history" data-tap-toggle="false">
+            <div data-role = "page" data-transition = "flip" id="expenseHistory" data-tap-toggle="false">
                 <div class = "navSpace"></div>
-                <div data-role="content">
+                <div data-role="content" id = "expenseScroll" data-iscroll >
+                    <div class="iscroll-pulldown">
+                        <span class="iscroll-pull-icon"></span>
+                        <span class="iscroll-pull-label"></span>
+                    </div>
                     <ul data-role = "listview">
-                        <li>
-                            <div class = "historyDiv"><div class = "historyInfo">Date:</div> 21th Sept 2014</div>
-                            <div class = "historyDiv"><div class = "historyInfo">Type:</div> Accommodation</div>
-                            <div class = "historyDiv"><div class = "historyInfo">Merchant:</div> Clarion Hotel</div>
-                            <div class = "historyDiv"><div class = "historyInfo">Location:</div> Cork City</div>
-                            <div class = "historyDiv"><div class = "historyInfo">Cost:</div> £153.76</div>
-                        </li>
-                        <li>
-                            <div class = "historyDiv"><div class = "historyInfo">Date:</div> 21th Sept 2014</div>
-                            <div class = "historyDiv"><div class = "historyInfo">Type:</div> Accommodation</div>
-                            <div class = "historyDiv"><div class = "historyInfo">Merchant:</div> Clarion Hotel</div>
-                            <div class = "historyDiv"><div class = "historyInfo">Location:</div> Cork City</div>
-                            <div class = "historyDiv"><div class = "historyInfo">Cost:</div> £153.76</div>
-                        </li>
-                        <li>
-                            <div class = "historyDiv"><div class = "historyInfo">Date:</div> 21th Sept 2014</div>
-                            <div class = "historyDiv"><div class = "historyInfo">Type:</div> Accommodation</div>
-                            <div class = "historyDiv"><div class = "historyInfo">Merchant:</div> Clarion Hotel</div>
-                            <div class = "historyDiv"><div class = "historyInfo">Location:</div> Cork City</div>
-                            <div class = "historyDiv"><div class = "historyInfo">Cost:</div> £153.76</div>
-                        </li>
-                        <li>
-                            <div class = "historyDiv"><div class = "historyInfo">Date:</div> 21th Sept 2014</div>
-                            <div class = "historyDiv"><div class = "historyInfo">Type:</div> Accommodation</div>
-                            <div class = "historyDiv"><div class = "historyInfo">Merchant:</div> Clarion Hotel</div>
-                            <div class = "historyDiv"><div class = "historyInfo">Location:</div> Cork City</div>
-                            <div class = "historyDiv"><div class = "historyInfo">Cost:</div> £153.76</div>
-                        </li>
-                        <li>
-                            <div class = "historyDiv"><div class = "historyInfo">Date:</div> 21th Sept 2014</div>
-                            <div class = "historyDiv"><div class = "historyInfo">Type:</div> Accommodation</div>
-                            <div class = "historyDiv"><div class = "historyInfo">Merchant:</div> Clarion Hotel</div>
-                            <div class = "historyDiv"><div class = "historyInfo">Location:</div> Cork City</div>
-                            <div class = "historyDiv"><div class = "historyInfo">Cost:</div> £153.76</div>
-                        </li>
-                        <li>
-                            <div class = "historyDiv"><div class = "historyInfo">Date:</div> 21th Sept 2014</div>
-                            <div class = "historyDiv"><div class = "historyInfo">Type:</div> Accommodation</div>
-                            <div class = "historyDiv"><div class = "historyInfo">Merchant:</div> Clarion Hotel</div>
-                            <div class = "historyDiv"><div class = "historyInfo">Location:</div> Cork City</div>
-                            <div class = "historyDiv"><div class = "historyInfo">Cost:</div> £153.76</div>
-                        </li>
+                        <!-- expense history data goes here -->
+
+                        
+                    </ul>
+                </div>
+            </div>
+
+
+            <div data-role = "page" data-transition = "flip" id="journeyHistory" data-tap-toggle="false">
+                <div class = "navSpace"></div>
+                <div data-role="content" id = "journeyScroll" data-iscroll>
+                    <div class="iscroll-pulldown">
+                        <span class="iscroll-pull-icon"></span>
+                        <span class="iscroll-pull-label"></span>
+                    </div>
+                    <ul data-role = "listview">
+                         <!-- journey history data goes here --> 
+
+
                     </ul>
                 </div>
             </div>
@@ -225,6 +208,8 @@
         <script src="js/vendor/jquery-1.10.2.min.js"></script>
         <script type="text/javascript" src = "js/vendor/jquery.mobile-1.4.3.min.js"></script>
         <script type="text/javascript" src = "js/vendor/moment.js"></script>
+        <script type="text/javascript" src = "js/vendor/iscroll.js"></script>
+        <script type="text/javascript" src = "js/vendor/jquery-mobile-iscroll.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
         <script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script> 
         <script type="text/javascript">

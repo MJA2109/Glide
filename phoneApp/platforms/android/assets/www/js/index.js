@@ -60,9 +60,97 @@ function initializeEvents(){
         $.mobile.changePage("#home");
     });
 
-    $("#btnUploadJourneyData").click(function(){
-        uploadForm("#uploadJourneyDataForm");
+    $("#expenseScroll").on("iscroll_onpulldown", function(){
+        refreshHistory("#expenseHistory", "expenseId", "getExpenseHistory");
+        $(this).iscrollview("refresh");
     });
+
+    $("#journeyScroll").on("iscroll_onpulldown", function(){
+        refreshHistory("#journeyHistory", "journeyId", "getJourneyHistory");
+        $(this).iscrollview("refresh");
+    });
+
+}
+
+
+
+/**
+ * Name: refreshExpenseHistory
+ * Purpose: Prepend new expense data to expense history list.
+ */
+function refreshHistory(divId, attr, action){
+
+    var mostRecentExpense = 0; //id of most recent expense retreived
+    mostRecentExpense = $(divId + " ul li").attr(attr);
+
+    var data = {
+        action: action,
+        adminId: 50,
+        userId: 27,
+        mostRecentExpense: mostRecentExpense
+    };
+
+    $.ajax({
+        type: "post",
+        url: app.server,
+        data: data,
+        success: function(data){
+            if(data){
+                var history = JSON.parse(data);
+                if(attr == "expenseId"){
+                    $.each(history, function(key, value){
+                        $(divId + " ul").prepend("<li expenseId  = ' " + value.expense_id + " '>" +
+                                                 "<div class = 'historyDiv'><div class = 'historyInfo'>Date:</div> " + value.expense_date + "</div>" +
+                                                 "<div class = 'historyDiv'><div class = 'historyInfo'>Type:</div> " + value.expense_category + "</div>" +
+                                                 "<div class = 'historyDiv'><div class = 'historyInfo'>Merchant:</div> " + value.merchant_name + " </div>" +
+                                                 "<div class = 'historyDiv'><div class = 'historyInfo'>Location:</div> Cork City</div>" +
+                                                 "<div class = 'historyDiv'><div class = 'historyInfo'>Cost:</div> € " + value.expense_cost + "</div></li>");      
+                    });
+                    data = null;
+                }else{
+                    $.each(history, function(key, value){
+                        $(divId + " ul").prepend("<li journeyId  = ' " + value.id + " '>" +
+                                                 "<div class = 'historyDiv'><div class = 'historyInfo'>Date:</div> " + value.date + "</div>" +
+                                                 "<div class = 'historyDiv'><div class = 'historyInfo'>Origin:</div> " + value.origin + "</div>" +
+                                                 "<div class = 'historyDiv'><div class = 'historyInfo'>Destination:</div> " + value.destination + " </div>" +
+                                                 "<div class = 'historyDiv'><div class = 'historyInfo'>Time:</div>  " + value.journey_time + " </div>" +
+                                                 "<div class = 'historyDiv'><div class = 'historyInfo'>Distance:</div> Km " + value.distance + "</div></li>");      
+                    });
+                    data = null;
+                }
+
+                $( divId + " ul").listview("refresh"); //fix to reapply css
+
+            }else{
+                alert("Already up to date...");
+            }    
+        },
+        errror: function(){
+            alert("Unable to retrieve data...");  
+        }
+
+    });
+}
+
+
+function refreshJourneyHistory(){
+
+    var mostRecentExpense = 0; //id of most recent expense retreived
+    mostRecentExpense = $("#journeyHistory ul li").attr("journeyId");
+
+    var data = {
+        action: "getJourneyHistory",
+        adminId: 50,
+        userId: 27,
+        mostRecentExpense: mostRecentExpense
+    };
+
+
+
+
+
+
+
 }
 
 /**
@@ -498,7 +586,6 @@ function clearGeoDataArrays(){
     app.journeyData.length = 0;
     app.timestamp.length = 0;
 }
-
 
 
 
