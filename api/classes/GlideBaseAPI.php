@@ -62,17 +62,22 @@ class GlideBaseAPI{
         $database = GlideBaseAPI::connectDB();
         
         $merchantId = $database->select("merchants", [ "merchant_id"],[
-            "merchant_name" => $merchantName
+            "AND" => [
+                "merchant_name" => $merchantName,
+                "admin_id" => $adminId
+            ]
         ]);
 
         if(empty($merchantId)){
             $merchantId = $database->insert("merchants", [
                 "merchant_name" => $merchantName,
                 "admin_id" => $adminId
+                
             ]);
+            return $merchantId;
         }
 
-        return $merchantId;
+        return $merchantId[0]["merchant_id"];
     }
 
 
@@ -142,7 +147,7 @@ class GlideBaseAPI{
                 $lastExpenseId = $database->insert("expenses", [
                     "admin_id" => intval($adminId),
                     "user_id" => intval($userId),
-                    "merchant_id" => intval($merchantId),
+                    "merchant_id" => $merchantId,
                     "receipt_id" => $receiptId,
                     "expense_category" => $category,
                     "expense_cost" => $cost,
@@ -150,7 +155,7 @@ class GlideBaseAPI{
                     
                 ]); 
 
-                echo json_encode(array("table" => "expenses", "status" => "New expense added..."));  
+                echo json_encode(array("table" => "expenses", "status" => $merchantId));  
             }
 
         }else{
