@@ -20,9 +20,8 @@ var app = {
     onDeviceReady: function() {
         if(navigator.network.connection.type == Connection.NONE){
             alert("No Network Connection detected");   
-        }else{
-            initializeEvents();
         }
+        initializeEvents();
     }
 };
 
@@ -45,13 +44,22 @@ function initializeEvents(){
         uploadForm("#uploadExpenseForm");
     });
 
+    $("#btnUploadJourneyData").click(function(){
+        uploadForm("#uploadJourneyDataForm");
+    });
+
     $("#trackJourney").on("pageshow", function(){
         getCurrentLocation();
     });
 
+    $("#home").on("pageshow", function(){
+        resetMapGPS();
+        resetUploadExpenseForm();
+        resetUploadJourneyData();
+    });
+
     $("#btnStartJourney").click(function(){
         startJourney();
-        alert("Journey Started");
     });
 
     $("#btnFinishJourney").click(function(){
@@ -73,6 +81,8 @@ function initializeEvents(){
         refreshHistory("#journeyHistory", "journeyId", "getJourneyHistory");
         $(this).iscrollview("refresh");
     });
+
+    window.localStorage.clear();
 
     //check local storage for login details
     checkPreAuth();
@@ -123,9 +133,22 @@ function login(form){
             } 
         },
         error: function(){
-            alert("falied");
+            alert("Unable to connect to server.");
         } 
     });
+}
+
+
+/**
+ * Name: resetMapGPS
+ * Purpose: Reset the GPS ID and reset map controls.
+ */
+function resetMapGPS(){
+    
+    $("#start").show();
+    $("#finish").hide();
+    navigator.geolocation.clearWatch(app.watchId);
+    app.watchId = null;
 }
 
 
@@ -135,14 +158,12 @@ function login(form){
  */
 function setFormData(){
 
-    $("#uploadJourneyDataForm input[name = 'adminId']").val(window.localStorage.instanceId);
-    $("#uploadJourneyDataForm input[name = 'userId']").val(window.localStorage.userId);
-    $("#uploadJourneyDataForm input[name = 'userName']").val(window.localStorage.userName);
-
-    $("#uploadExpensesForm input[name = 'adminId']").val(window.localStorage.instanceId);
-    $("#uploadExpensesForm input[name = 'userId']").val(window.localStorage.userId);
-    $("#uploadExpensesForm input[name = 'userName']").val(window.localStorage.userName);
-
+    $("#jourAdminId").val(window.localStorage.instanceId);
+    $("#jourUserId").val(window.localStorage.userId);
+    $("#jourUserName").val(window.localStorage.userName);
+    $("#expAdminId").val(window.localStorage.instanceId);
+    $("#expUserId").val(window.localStorage.userId);
+    $("#expUserName").val(window.localStorage.userName);
 }
 
 
@@ -214,11 +235,11 @@ function getCurrentLocation(){
     
     var options = {
         enableHighAccuracy: true,
-        timeout: 100000,
+        timeout: 10000,
         maximumAge: 0
     }
 
-    navigator.geolocation.getCurrentPosition(onSuccess, onError, options);
+    navigator.geolocation.getCurrentPosition(onSuccess, onFail, options);
 
     function onSuccess(position){
         initializeMap(position);
@@ -227,7 +248,7 @@ function getCurrentLocation(){
         addTrackerMarker();
     }
 
-    function onError(error){
+    function onFail(error){
         alert("Unable to retrieve GPS position.");
     }
 }
@@ -238,6 +259,10 @@ function getCurrentLocation(){
  *          polyline on route taking.
  */
 function startJourney(){
+
+    $("#start").hide();
+    $("#finish").show();
+    alert("Journey Started");
 
     var minimumAccuracy = 20;
 
@@ -275,20 +300,30 @@ function startJourney(){
  */
 function finishJourney(){
 
-    navigator.geolocation.clearWatch(app.watchId);
-    window.localStorage.setItem("journeyData", JSON.stringify(app.journeyData));
-    var geoData = window.localStorage.getItem("journeyData");
-    var jsonGeoData = JSON.parse(geoData);
     
-    setOrigin(jsonGeoData);
-    setDestination(jsonGeoData);
-    setTotalDistance(jsonGeoData);
-    setJourneyTime(getJourneyTime());
-    setCurrentDateTime();
-    
-    $.mobile.changePage("#uploadJourneyData");
-    app.watchId = null;
-    resetMap();
+    if(app.journeyData.length > 0){
+
+        window.localStorage.setItem("journeyData", JSON.stringify(app.journeyData));
+        var geoData = window.localStorage.getItem("journeyData");
+        var jsonGeoData = JSON.parse(geoData);
+        
+        setOrigin(jsonGeoData);
+        setDestination(jsonGeoData);
+        setTotalDistance(jsonGeoData);
+        setJourneyTime(getJourneyTime());
+        setCurrentDateTime();
+        
+        $.mobile.changePage("#uploadJourneyData");
+        resetMap();
+
+    }else{
+        alert("Device has not received sufficient GPS data.");
+        $.mobile.changePage("#home");
+        $("#start").show();
+        $("#finish").hide();
+    }
+
+    resetMapGPS();
 }
 
 /**
@@ -306,6 +341,10 @@ function getJourneyTime(){
     finishTime = new Date(app.timestamp[app.timestamp.length - 1]).getTime();
     totalJourneyTime = finishTime - startTime;
     return moment.utc(totalJourneyTime).format("HH:mm:ss");
+
+    alert(startTime);
+    alert(finishTime);
+    alert(totalJourneyTime);
 }
 
 /**
@@ -326,8 +365,11 @@ function setOrigin(geoData){
 
     var originUrl = "https://maps.googleapis.com/maps/api/geocode/json?latlng=";
     var originLat = geoData[Object.keys(geoData)[0]].k;
-    var originLng = geoData[Object.keys(geoData)[0]].B;
+    var originLng = geoData[Object.keys(geoData)[0]].D;
     originUrl = originUrl + originLat + "," + originLng;
+
+    // alert("geo data : " + JSON.stringify(geoData));
+    // alert("setOrigin : " + originUrl);
 
     //reverse geocoding looking up request
     $.ajax({
@@ -358,8 +400,11 @@ function setDestination(geoData){
     var lastKey = objectKeys[objectKeys.length-1];
 
     var originLat = geoData[Object.keys(geoData)[lastKey]].k;
-    var originLng = geoData[Object.keys(geoData)[lastKey]].B;
-    originUrl = originUrl + originLat + "," + originLng;
+    var originLng = geoData[Object.keys(geoData)[lastKey]].D;
+    originUrl = originUrl + originLat + ", " + originLng;
+
+    // alert("geo data : " + JSON.stringify(geoData));
+    // alert("destination : " + originUrl);
 
     $.ajax({
         type: "post",
@@ -388,10 +433,12 @@ function setTotalDistance(jsonGeoData){
             break;
         }
         totalDistance += gpsDistance(jsonGeoData[i].k,
-                                     jsonGeoData[i].B,
+                                     jsonGeoData[i].D,
                                      jsonGeoData[i+1].k,
-                                     jsonGeoData[i+1].B);
+                                     jsonGeoData[i+1].D);
     }
+
+    // alert("total distance : " + totalDistance);
 
     $("#uploadDistance").val(totalDistance.toFixed(2));
 }
@@ -485,6 +532,7 @@ function addLocationMarker(){
  * Purpose: Add tracker marker to Google Map.
  */
 function addTrackerMarker(){
+
     var customIcon = "http://maps.google.com/mapfiles/kml/pal4/icon15.png";
     app.trackerMarker = new google.maps.Marker({
         position: app.latLng,
@@ -510,6 +558,7 @@ function resetMap(){
  * Purpose: Resize map to ensures all tiles are loaded.
  */
 function resizeMap(){
+   
     google.maps.event.trigger(app.map, "resize");
     app.map.setCenter(app.latLng);
 }
@@ -532,7 +581,7 @@ function captureReceipt(){
     }
 
     function onFail(message) {
-        alert('Failed because: ' + message);
+        alert("Error : Can't access device camera.");
     }
 }
 
@@ -541,12 +590,6 @@ function captureReceipt(){
  * Purpose: Upload captured receipt to the Glide server.
  */
 function uploadReceipt(){
-
-    // $.mobile.loading("show", {
-    //     text: "Uploading data...",
-    //     textVisible: true,
-    //     theme: "z"
-    // });
 
     var imageURI = app.imageURI;
     var options = new FileUploadOptions();
@@ -567,11 +610,7 @@ function uploadReceipt(){
     }
 
     function uploadComplete(data){
-        alert(data.response);
         $("#uploadExpenses input[name = 'receiptId']").val(data.response);
-        //alert($("#uploadExpenses input[name = 'receiptId']").val());
-        //alert("receipt upload from server " + JSON.stringify(data));
-        //$.mobile.loading("hide");
     }
 }
 
@@ -588,31 +627,31 @@ function uploadForm(form){
         type: "post",
         url: app.server,
         data: data,
-        beforeSend: function() {
-            if(form == "#uploadExpenseForm"){
-                //uploadReceipt();
-            }
-            if(form == "#uploadJourneyDataForm"){
-                $.mobile.loading("show", {
-                    text: "Uploading data...",
-                    textVisible: true,
-                    theme: "z"
-                });
-            } 
+        beforeSend: function() {          
+            $.mobile.loading("show", {
+                text: "Uploading data...",
+                textVisible: true,
+                theme: "z"
+            });
         },
         success: function(data){
-            if(form == "#uploadJourneyDataForm"){
+           
+            if(form == "#uploadJourneyDataForm"){ 
                 clearGeoDataArrays();
-                $.mobile.loading("hide");
-                $.mobile.changePage("#home");
+                resetUploadJourneyData(); 
             }
-            alert("upload from " + data);  
+            if(form == "#uploadExpenseForm"){ 
+                resetUploadExpenseForm(); 
+            }
+            $.mobile.changePage("#home");
+            $.mobile.loading("hide");
         },
         error: function(data, error){
             alert("Ajax Error " + data + " : " + error);
         }               
     });   
 }
+
 
 /**
  * Name: resetUploadExpenseForm
