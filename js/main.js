@@ -423,11 +423,17 @@ require(['jquery',
                 });   
             }
 
+
+
+
             /**
              * Name: initialiseEvents
              * Purpose: Initialise application events
              */
             function initialiseEvents(){
+
+                //array to hold Ids of selected users, expenses and journeys
+                var selectedIdStack = new Array();
                 
                 //load home page
                 setLinkColour("#navHome");
@@ -437,7 +443,7 @@ require(['jquery',
                 submitForm('#signInForm');
 
                 
-                // navbar events
+                /********* NAVBAR EVENTS **********/
                 $("#btnSignOut").on("click", function(){
                     signOut();
                 });
@@ -447,20 +453,24 @@ require(['jquery',
                 });
                 $("#navExpenses").click(function(){
                     setLinkColour(this);
+                    selectedIdStack = new Array(); //reset array
                     getPage("../root/expenses.php", "getExpensesData", "datatable");
                 });
                 $("#navJourneys").click(function(){
                     setLinkColour(this);
+                    selectedIdStack = new Array(); //reset array
                     getPage("../root/journeys.php", "getJourneysData", "datatable");
                 });
                 $("#navUsers").click(function(){
                     setLinkColour(this);
+                    selectedIdStack = new Array(); //reset array
                     getPage("../root/users.php", "getUsersData", "datatable");
                 });
                 $("#navAdmin").click(function(){
                     setLinkColour(this);
                     getPage("../root/admin.php", "standard");
                 });
+
 
                 //display add data modals
                 $("body").delegate("#btnAddExpense", "click", function(){
@@ -497,7 +507,7 @@ require(['jquery',
                 
                 //display update data modal
                 $("body").delegate("#btnEditExpense", "click", function(){
-                    var dataId = rowIdArray[0];
+                    var dataId = selectedIdStack[0];
                     var row = "#" + dataId;
                     var form = "#modalEditExpenseForm";
                     
@@ -506,7 +516,7 @@ require(['jquery',
                     var category = $(row + " td:nth-child(2)").text();
                     var merchant = $(row + " td:nth-child(3)").text();
                     var cost = $(row + " td:nth-child(4)").text();
-                    cost = cost.replace(/[^\d]/g, '');
+                    cost = cost.replace(/[^\d \.]/g, '');
                     var status = $(row + " td:nth-child(7)").text();
                     var comment = $(row + " td:nth-child(8)").text();
 
@@ -523,7 +533,7 @@ require(['jquery',
                 });
 
                 $("body").delegate("#btnEditJourney", "click", function(){
-                    var dataId = rowIdArray[0];
+                    var dataId = selectedIdStack[0];
                     var row = "#" + dataId;
                     var form = "#modalEditJourneyForm";
 
@@ -533,7 +543,7 @@ require(['jquery',
                     var origin = $(row + " td:nth-child(2)").text();
                     var destination = $(row + " td:nth-child(3)").text();
                     var distance = $(row + " td:nth-child(4)").text();
-                    distance = distance.replace(/[^\d]/g, '');
+                    distance = distance.replace(/[^\d \.]/g, '');
                     var journeyTime = $(row + " td:nth-child(5)").text();
                     var comment = $(row + " td:nth-child(8)").text();
 
@@ -552,10 +562,12 @@ require(['jquery',
 
                 //sumbit update form
                 $("body").delegate("#btnSubmitEditExpense", "click", function(){
+                    selectedIdStack = new Array(); //reset array
                     submitModalForm("#modalEditExpenseForm");
                 });
 
                 $("body").delegate("#btnSubmitEditJourney", "click", function(){
+                    selectedIdStack = new Array(); //reset array
                     submitModalForm("#modalEditJourneyForm");
                 });
 
@@ -573,26 +585,28 @@ require(['jquery',
                     searchForm("#searchUsersForm");
                 });
 
+               
+
                 //add selected rows to array for deleting, submitting or updating
                 //data
-                var rowIdArray = new Array();
                 $("body").delegate("tbody", "click", function(event){
                     
                     var rowId = $(event.target).parent().attr("id");
-                    if($.inArray(rowId, rowIdArray) == -1){
-                        rowIdArray.push(rowId);
+                    if($.inArray(rowId, selectedIdStack) == -1){
+                        selectedIdStack.push(rowId);
                         $(event.target).parent().addClass("selected");
                     }else{
-                        rowIdArray.splice($.inArray(rowId, rowIdArray), 1);
+                        selectedIdStack.splice($.inArray(rowId, selectedIdStack), 1);
                         $(event.target).parent().removeClass("selected");
                     }
-                    alert(rowIdArray);
+                    
+                    //alert(selectedIdStack);
                 
                     //disable endable deletion, add and edit buttons
-                    if(rowIdArray.length == 0){
+                    if(selectedIdStack.length == 0){
                         $(".btnAdd").attr("disabled", false);
                         $(".btnEdit, .btnDelete").attr("disabled", true);
-                    }else if( rowIdArray.length == 1){
+                    }else if( selectedIdStack.length == 1){
                         $(".btnEdit, .btnDelete").attr("disabled", false);
                         $(".btnAdd").attr("disabled", true);
                     }else{
@@ -601,14 +615,15 @@ require(['jquery',
                     }
 
                 });
- 
+
+
                 //confirm deletion modal
                 $("body").delegate("#modalDeleteConfirmation button", "click", function(event){
                     var action = $(event.target).attr("action");
                     var tableData = $(event.target).attr("id");
                     var rowIds = new Array();
-                    rowIds = rowIdArray;
-                    rowIdArray = [];
+                    rowIds = selectedIdStack;
+                    selectedIdStack = [];
                     $(".btnDelete").attr("disabled", "disabled");
                     var data = {
                         action : action,
