@@ -506,6 +506,7 @@ require(['jquery',
                     var category = $(row + " td:nth-child(2)").text();
                     var merchant = $(row + " td:nth-child(3)").text();
                     var cost = $(row + " td:nth-child(4)").text();
+                    cost = cost.replace(/[^\d]/g, '');
                     var status = $(row + " td:nth-child(7)").text();
                     var comment = $(row + " td:nth-child(8)").text();
 
@@ -532,6 +533,7 @@ require(['jquery',
                     var origin = $(row + " td:nth-child(2)").text();
                     var destination = $(row + " td:nth-child(3)").text();
                     var distance = $(row + " td:nth-child(4)").text();
+                    distance = distance.replace(/[^\d]/g, '');
                     var journeyTime = $(row + " td:nth-child(5)").text();
                     var comment = $(row + " td:nth-child(8)").text();
 

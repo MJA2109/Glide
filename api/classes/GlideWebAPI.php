@@ -296,7 +296,8 @@ class GlideWebAPI extends GlideBaseAPI{
                                               FROM users, journeys
                                               WHERE ".$adminId." = journeys.admin_id
                                               AND journeys.user_id = users.user_id
-                                              AND journeys.is_deleted = 0")->fetchAll();
+                                              AND journeys.is_deleted = 0
+                                              ORDER BY journeys.id Desc")->fetchAll();
                          
 
             foreach($journeysData as $data){
@@ -591,7 +592,7 @@ class GlideWebAPI extends GlideBaseAPI{
             $status = Util::get("status");
             $category = Util::get("category");
             $merchant = Util::get("merchant");
-            $cost = Util::get("cost");
+            $cost = $_POST["cost"];
             $comment = Util::get("comment");
             $database = GlideWebAPI::connectDB();
 

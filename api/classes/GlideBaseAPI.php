@@ -146,7 +146,7 @@ class GlideBaseAPI{
                     "receipt_id" => $receiptId,
                     "expense_category" => $category,
                     "expense_cost" => $cost,
-                    "expense_comment" => $comment,
+                    "expense_comment" => $comment
                     
                 ]); 
 
