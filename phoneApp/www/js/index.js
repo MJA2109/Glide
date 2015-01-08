@@ -1,6 +1,6 @@
 //Initialize application. Set global variables.
 var app = {
-    server: "http://192.168.1.74/Glide/api/handlers/mobileHandler.php",
+    server: "http://192.168.1.84/Glide/api/handlers/mobileHandler.php",
     //server: "http://ma.pickacab.com/test/test.php",
     map: "",             //google map object
     trackerMarker: "",   //contains tracker marker
@@ -82,7 +82,7 @@ function initializeEvents(){
         $(this).iscrollview("refresh");
     });
 
-    window.localStorage.clear();
+    //window.localStorage.clear();
 
     //check local storage for login details
     checkPreAuth();
@@ -658,7 +658,7 @@ function uploadForm(form){
  * Purpose: Reset image & data input fields to null
  */
 function resetUploadExpenseForm(){
-    $("#uploadMerchant, #uploadDate, #uploadCost, #uploadComment").val("");
+    $("#uploadMerchant, #uploadDate, #uploadCost, #uploadComment, #uploadAccount").val("");
     $("#receipt").remove();
 }
 
@@ -667,7 +667,7 @@ function resetUploadExpenseForm(){
  * Purpose: Reset form fields
  */
 function resetUploadJourneyData(){
-    $("#uploadJourneyData, #uploadOrigin, #uploadDestination, #uploadDistance, #uploadJourneyTime, #uploadDateTime, #uploadJourneyComment").val("");
+    $("#uploadJourneyData, #uploadOrigin, #uploadDestination, #uploadDistance, #uploadJourneyTime, #uploadDateTime, #uploadJourneyComment, #uploadAccount").val("");
 }
 
 /**

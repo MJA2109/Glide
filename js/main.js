@@ -291,6 +291,7 @@ require(['jquery',
                         },
                         {"data": "expense_date"},
                         {"data": "expense_status"},
+                        {"data": "account"},
                         {"data": "expense_comment"}
                     ]
                 });
@@ -342,6 +343,7 @@ require(['jquery',
                         },
                         {"data": "date"},
                         {"data": "status"},
+                        {"data": "account"},
                         {"data": "comment"}
                     ]
                 });
@@ -518,7 +520,8 @@ require(['jquery',
                     var cost = $(row + " td:nth-child(4)").text();
                     cost = cost.replace(/[^\d \.]/g, '');
                     var status = $(row + " td:nth-child(7)").text();
-                    var comment = $(row + " td:nth-child(8)").text();
+                    var account = $(row + " td:nth-child(8)").text();
+                    var comment = $(row + " td:nth-child(9)").text();
 
                     $(form + " #expenseId").val(dataId);
                     $(form + " input[name = 'userName']").val(name);
@@ -527,6 +530,7 @@ require(['jquery',
                     $(form + " input[name = 'merchant']").val(merchant);
                     $(form + " input[name = 'cost']").val(cost);
                     $(form + " input[name = 'status']").val(status);
+                    $(form + " input[name = 'account']").val(account);
                     $(form + " input[name = 'comment']").val(comment);
 
                     displayModal("#modalEditExpense");   
@@ -545,7 +549,8 @@ require(['jquery',
                     var distance = $(row + " td:nth-child(4)").text();
                     distance = distance.replace(/[^\d \.]/g, '');
                     var journeyTime = $(row + " td:nth-child(5)").text();
-                    var comment = $(row + " td:nth-child(8)").text();
+                    var account = $(row + " td:nth-child(8)").text();
+                    var comment = $(row + " td:nth-child(9)").text();
 
                     $(form + " #journeyId").val(dataId);
                     $(form + " input[name = 'userName']").val(name);
@@ -554,6 +559,7 @@ require(['jquery',
                     $(form + " input[name = 'destination']").val(destination);
                     $(form + " input[name = 'distance']").val(distance);
                     $(form + " input[name = 'journeyTime']").val(journeyTime);
+                    $(form + " input[name = 'account']").val(account);
                     $(form + " input[name = 'comment']").val(comment);
                    displayModal("#modalEditJourney");
                 });

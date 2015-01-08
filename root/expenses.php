@@ -31,6 +31,10 @@
 				<input type = "text" name = "searchUser" placeholder = "User name" class = "form-control"/>
 			</div>
 			<div class = "searchInput input-group">
+				<span class="input-group-addon"><i class="glyphicon glyphicon-folder-open"></i></span>
+				<input type = "text" name = "account" placeholder = "Account" class = "form-control"/>
+			</div>
+			<div class = "searchInput input-group">
 				<span class="input-group-addon"><i class="glyphicon glyphicon-shopping-cart"></i></span>
 				<input type = "text" name = "searchMerch" placeholder = "Merchant" class = "form-control"/>
 			</div>
@@ -76,6 +80,7 @@
 					<th>Receipt</th>
 					<th>Date</th>
 					<th>Status</th>
+					<th>Account</th>
 					<th>Comment</th>
 				</tr>
 			</thead>
@@ -119,6 +124,9 @@
 			<input type = "text" name = "cost" placeholder = "Cost" class = "form-control"/>	
 		</div>
 		<div class = "modalInput">
+			<input type = "text" name = "account" placeholder = "Account" class = "form-control"/>	
+		</div>
+		<div class = "modalInput">
 			<input type = "text" name = "comment" placeholder = "Comment" class = "form-control"/>	
 		</div>
 		<div class = "modalInput">
@@ -159,6 +167,9 @@
 		</div>
 		<div class = "modalInput">
 			<input type = "text" name = "cost" placeholder = "Cost" class = "form-control"/>	
+		</div>
+		<div class = "modalInput">
+			<input type = "text" name = "account" placeholder = "Account" class = "form-control"/>	
 		</div>
 		<div class = "modalInput">
 			<input type = "text" name = "comment" placeholder = "Comment" class = "form-control"/>	

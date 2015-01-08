@@ -206,7 +206,8 @@ class GlideWebAPI extends GlideBaseAPI{
                                                 ex.expense_date, 
                                                 ex.expense_status,
                                                 re.receipt_image, 
-                                                ex.expense_comment
+                                                ex.expense_comment,
+                                                ex.account
                                                 FROM users u
                                                 JOIN expenses ex on ex.user_id = u.user_id
                                                 JOIN merchants mer on mer.merchant_id = ex.merchant_id
@@ -226,6 +227,7 @@ class GlideWebAPI extends GlideBaseAPI{
                 $expense[$index]["receipt_image"] = $data["receipt_image"];
                 $expense[$index]["expense_status"] = $data["expense_status"];
                 $expense[$index]["expense_date"] = $data["expense_date"];
+                $expense[$index]["account"] = $data["account"];
                 $expense[$index]["expense_comment"] = $data["expense_comment"];
                 $index++;
             }
@@ -292,7 +294,7 @@ class GlideWebAPI extends GlideBaseAPI{
             $adminId = $_SESSION["adminId"];
             
             //use query public static static function for more complex database queries
-            $journeysData = $database->query("SELECT id, user_name, origin, destination, distance, journey_time, date, status, comment
+            $journeysData = $database->query("SELECT id, user_name, origin, destination, distance, journey_time, date, status, account, comment
                                               FROM users, journeys
                                               WHERE ".$adminId." = journeys.admin_id
                                               AND journeys.user_id = users.user_id
@@ -310,6 +312,7 @@ class GlideWebAPI extends GlideBaseAPI{
                 $journey[$index]["journey_time"] = $data["journey_time"];
                 $journey[$index]["date"] = $data["date"];
                 $journey[$index]["status"] = $data["status"];
+                $journey[$index]["account"] = $data["account"];
                 $journey[$index]["comment"] = $data["comment"];
                 $index++;
             }
@@ -437,6 +440,7 @@ class GlideWebAPI extends GlideBaseAPI{
         
         if(isset($_SESSION["adminId"])){
             $userName = Util::get("searchUser");
+            $account = Util::get("account");
             $merchant = Util::get("searchMerch");
             $date = Util::get("searchDate");
             $status = Util::get("status");
@@ -454,6 +458,7 @@ class GlideWebAPI extends GlideBaseAPI{
                       re.receipt_image,
                       ex.expense_date,
                       ex.expense_status,
+                      ex.account,
                       ex.expense_comment 
                       FROM users u
                            JOIN expenses ex on ex.user_id = u.user_id
@@ -463,6 +468,10 @@ class GlideWebAPI extends GlideBaseAPI{
 
             if($userName){
                 $sql .= "AND u.user_name LIKE '%$userName%' ";
+            }
+
+            if($account){
+                $sql .="AND ex.account LIKE '%$account%' ";
             }
 
             if($merchant){
@@ -475,7 +484,9 @@ class GlideWebAPI extends GlideBaseAPI{
 
             if($category){
                 $sql .= "AND ex.expense_category = '$category' ";
-            } 
+            }
+
+            $sql .= "ORDER BY ex.expense_id Desc"; 
 
             unset($userName, $merchant, $date, $status, $category);             
 
@@ -504,12 +515,13 @@ class GlideWebAPI extends GlideBaseAPI{
             $origin = Util::get("origin");
             $destination = Util::get("destination");
             $status = Util::get("status");
+            $account = Util::get("account");
             $date = Util::get("date");
             $database = GlideWebAPI::connectDB();
             
             $adminId = $_SESSION["adminId"];
 
-            $sql = "SELECT id as DT_RowId, user_name, origin, destination, distance, journey_time, date, status, comment
+            $sql = "SELECT id as DT_RowId, user_name, origin, destination, distance, journey_time, date, status, account, comment
                     FROM users, journeys
                     WHERE ".$adminId." = journeys.admin_id
                     AND journeys.user_id = users.user_id
@@ -534,6 +546,12 @@ class GlideWebAPI extends GlideBaseAPI{
             if($date){
                 $sql .= " AND date LIKE '%$date%' ";
             }
+
+            if($account){
+                $sql .= "AND account LIKE '%$account%' ";
+            }
+
+            $sql .= "ORDER BY journeys.id Desc";
 
             unset($userName, $origin, $destination, $status, $date);             
 
@@ -593,6 +611,7 @@ class GlideWebAPI extends GlideBaseAPI{
             $category = Util::get("category");
             $merchant = Util::get("merchant");
             $cost = $_POST["cost"];
+            $account = Util::get("account");
             $comment = Util::get("comment");
             $database = GlideWebAPI::connectDB();
 
@@ -600,6 +619,7 @@ class GlideWebAPI extends GlideBaseAPI{
                 "expense_category" => $category,
                 "expense_cost" => $cost,
                 "expense_status" => $status,
+                "account" => $account,
                 "expense_comment" => $comment
             ], [
                 "expense_id" => $expenseId
@@ -628,6 +648,7 @@ class GlideWebAPI extends GlideBaseAPI{
             $destination = Util::get("destination");
             $distance = Util::get("distance");
             $time = Util::get("journeyTime");
+            $account = Util::get("account");
             $comment = Util::get("comment");
             $database = GlideWebAPI::connectDB();
 
@@ -637,6 +658,7 @@ class GlideWebAPI extends GlideBaseAPI{
                 "destination" => $destination,
                 "distance" => $distance,
                 "journey_time" => $time,
+                "account" => $account,
                 "comment" => $comment
             ], [
                 "id" => $journeyId

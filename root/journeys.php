@@ -31,6 +31,10 @@
 				<input type = "text" name = "userName" placeholder = "User Name" class = "form-control"/>
 			</div>
 			<div class = "searchInput input-group">
+				<span class="input-group-addon"><i class="glyphicon glyphicon-folder-open"></i></span>
+				<input type = "text" name = "account" placeholder = "Account" class = "form-control"/>
+			</div>
+			<div class = "searchInput input-group">
 				<span class="input-group-addon"><i class="glyphicon glyphicon-map-marker"></i></span>
 				<input type = "text" name = "origin" placeholder = "Origin" class = "form-control"/>
 			</div>
@@ -69,6 +73,7 @@
 					<th>Journey Time</th>
 					<th>Date</th>
 					<th>Status</th>
+					<th>Account</th>
 					<th>Comment</th>
 				</tr>
 			</thead>
@@ -104,6 +109,9 @@
 		</div>
 		<div class = "modalInput">
 			<input type = "text" name = "date" placeholder = "Date" class = "form-control"/>	
+		</div>
+		<div class = "modalInput">
+			<input type = "text" name = "account" placeholder = "Account" class = "form-control"/>	
 		</div>
 		<div class = "modalInput">
 			<input type = "text" name = "comment" placeholder = "Comment" class = "form-control"/>	
@@ -142,6 +150,9 @@
 		</div>
 		<div class = "modalInput">
 			<input type = "text" name = "journeyTime" placeholder = "Journey Time" class = "form-control"/>	
+		</div>
+		<div class = "modalInput">
+			<input type = "text" name = "account" placeholder = "Account" class = "form-control"/>	
 		</div>
 		<div class = "modalInput">
 			<input type = "text" name = "comment" placeholder = "Comment" class = "form-control"/>	

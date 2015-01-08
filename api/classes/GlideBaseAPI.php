@@ -117,7 +117,8 @@ class GlideBaseAPI{
             $category = Util::get("category");
             $merchant = Util::get("merchant");
             $cost = Util::get("cost");
-            $comment = Util::get("comment");
+            $cost = Util::get("cost");
+            $account = Util::get("account");
             $receiptId = Util::get("receiptId");
             $log = array();
             $log["type"] = "addExpense";
@@ -151,6 +152,7 @@ class GlideBaseAPI{
                     "receipt_id" => $receiptId,
                     "expense_category" => $category,
                     "expense_cost" => $cost,
+                    "account" => $account,
                     "expense_comment" => $comment
                     
                 ]); 
@@ -179,6 +181,7 @@ class GlideBaseAPI{
             $distance = Util::get("distance");
             $journeyTime = Util::get("journeyTime");
             $date = Util::get("date");
+            $account = Util::get("account");
             $comment = Util::get("comment");
             $log = array();
             $log["type"] = "addJouney";
@@ -207,6 +210,7 @@ class GlideBaseAPI{
                     "destination" => $destination,
                     "distance" => $distance,
                     "journey_time" => $journeyTime,
+                    "account" => $account,
                     "comment" => $comment  
                 ]);
                 
