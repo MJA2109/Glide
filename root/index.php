@@ -21,6 +21,7 @@
 	 			<input type = 'hidden' name = 'action' value = 'register' />
 	 			<input type = 'submit' value = 'Sign Up'/>
 	 			<p>Already have an account ? <a href = 'signIn.php'>Sign In</a></p>
+	 			<p>Are you a Project Manager ? <a href = 'pmSignIn.php'>Sign In</a></p>
 	 		</form>
  		</div>
  	</div>       

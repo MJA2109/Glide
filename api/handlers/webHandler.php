@@ -39,6 +39,8 @@ if(isset($_POST["action"])){
 	    break;
 	    case "editUser" : GlideWebAPI::editUser();
 	    break;
+	    case "pmSignIn" : GlideWebAPI::pmSignIn();
+	    break;
 	}
 }
 

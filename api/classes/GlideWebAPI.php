@@ -100,8 +100,7 @@ class GlideWebAPI extends GlideBaseAPI{
 
     /**
      * Name: signIn
-     * Purpose: Allow users to sign into the system
-     * @return $log - Array: Contains admin data error info 
+     * Purpose: Allow admin to sign into the system
      */
     public static function signIn(){
 
@@ -166,6 +165,125 @@ class GlideWebAPI extends GlideBaseAPI{
 
 
     /**
+     * Name: signIn
+     * Purpose: Allow project manager to sign into the system
+     */
+    public static function pmSignIn(){
+        
+        define("AUTHORIZED", true);
+        $adminEmail = Util::get("adminEmail");
+        $email = Util::get("email");
+        $password = Util::get("password");
+        $account = Util::get("account");
+        $registeredUser = array();
+        $log = array(); 
+        $log["type"] = "pmSignIn";
+        $log["errors"] = array();
+        $log["data"] = array();
+        $errorCount;
+        $logObject;
+        $validAdminEmail;
+        $hashedAdminPassword;
+        $database;
+        
+        $database = GlideWebAPI::connectDB();
+
+        if(empty($adminEmail)){
+            $log["errors"]["adminEmailErr"] = "Admin E-mail address required";
+        }else{
+            
+            $validAdminEmail = Util::validateEmail($adminEmail);
+            
+            if($validAdminEmail === false){
+                $log["errors"]["invalidAdminEmail"] = "Admin Email address is invalid";
+            }else{
+                
+                $registeredAdmin = $database->select("admins", "*",[   
+                    "admin_email" => $adminEmail   
+                ]);
+
+                if($registeredAdmin){
+                    
+                    if(empty($account)){
+                        $log["errors"]["accountError"] = "Account required";
+                    }else{
+
+                        $accountExistsExpense = $database->count("expenses", [
+                            "AND" => [
+                                "account" => $account,
+                                "admin_id" => $registeredAdmin[0]["admin_id"]
+
+                            ]
+                        ]);
+
+                        $accountExistsJourney = $database->count("journeys", [
+                            "AND" => [
+                                "account" => $account,
+                                "admin_id" => $registeredAdmin[0]["admin_id"]
+
+                            ]
+                        ]);
+
+                        if($accountExistsJourney == 0 && $accountExistsExpense == 0){
+                            $log["errors"]["accountError"] = "Account doesn't exist in system.";   
+                        }
+
+                    }
+                }else{
+                    $log["errors"]["invalidAdminEmail"] = "Admin Email address not recognised";   
+                }
+            }
+        }
+
+        if(empty($email)){
+            $log["errors"]["emailErr"] = "E-mail address required";
+        }else{
+            
+            $validEmail = Util::validateEmail($email);
+            
+            if($validEmail === false){
+                $log["errors"]["invalidEmail"] = "Email address is invalid";
+            }
+        }
+
+        if(empty($password)){
+            $log["errors"]["passwordErr"] = "Password required";
+        }else{
+            $hashedPassword = sha1($password);
+        }
+        
+        $errorCount = count($log["errors"]);
+
+        if($errorCount == 0){ 
+            
+            $registeredUser = $database->select("users", "*",[
+                    // "AND" => [
+                    //     "user_email" => $validAdminEmail,
+                    //     "admin_password" => $hashedPassword
+                    //     "user_type" => "Project Manager"
+                    // ]
+                    "user_email" => $email
+            ]);
+            
+            if(!empty($registeredUser)){
+                session_start();
+                $_SESSION["authorized"] = AUTHORIZED;
+                $_SESSION["adminEmail"] = $registeredUser[0]["user_email"];
+                $_SESSION["adminId"] = $registeredUser[0]["admin_id"];
+                $_SESSION["account"] = $account;
+                $log["data"]["adminId"] = $registeredUser[0]["admin_id"];
+                $log["data"]["adminEmail"] = $registeredUser[0]["admin_email"];
+            }else{
+                $log["errors"]["incorrectDetails"] = "The details you provided are incorrect";
+            }
+        }
+
+        $logObject = json_encode($log);
+        echo $logObject;
+    }
+
+
+    /**
      * Name: signOut
      * Purpose: Destroys session and allow users to sign out of system
      */
@@ -192,10 +310,13 @@ class GlideWebAPI extends GlideBaseAPI{
             $expensesData;
             $adminId;
             $error;
+            $accountName;
             $database = GlideWebAPI::connectDB();
             
             $adminId = $_SESSION["adminId"];
-            $accountName = null;
+            if(isset($_SESSION["account"])){
+                $accountName = $_SESSION["account"];
+            }
             
             $sql = "SELECT
                     ex.expense_id,
@@ -300,10 +421,13 @@ class GlideWebAPI extends GlideBaseAPI{
             $journeysData;
             $adminId;
             $error;
+            $accountName;
             $database = GlideWebAPI::connectDB();
             
             $adminId = $_SESSION["adminId"];
-            $accountName = null;
+            if(isset($_SESSION["account"])){
+                $accountName = $_SESSION["account"];
+            }
 
             $sql = "SELECT id, user_name, origin, destination, distance, journey_time, date, status, account, comment
                                               FROM users, journeys
@@ -515,8 +639,12 @@ class GlideWebAPI extends GlideBaseAPI{
             $status = Util::get("status");
             $category = Util::get("category");
             $database = GlideWebAPI::connectDB();
+            $accountName;
             
             $adminId = $_SESSION["adminId"];
+            if(isset($_SESSION["account"])){
+                $accountName = $_SESSION["account"];
+            }
 
             $sql = "SELECT 
                       ex.expense_id as DT_RowId,
@@ -555,6 +683,10 @@ class GlideWebAPI extends GlideBaseAPI{
                 $sql .= "AND ex.expense_category = '$category' ";
             }
 
+            if($accountName){
+                $sql .= "AND ex.account = '$accountName' ";
+            }
+
             $sql .= "ORDER BY ex.expense_id Desc"; 
 
             unset($userName, $merchant, $date, $status, $category);             
@@ -587,8 +719,12 @@ class GlideWebAPI extends GlideBaseAPI{
             $account = Util::get("account");
             $date = Util::get("date");
             $database = GlideWebAPI::connectDB();
+            $accountName;
             
             $adminId = $_SESSION["adminId"];
+            if(isset($_SESSION["account"])){
+                $accountName = $_SESSION["account"];
+            }
 
             $sql = "SELECT id as DT_RowId, user_name, origin, destination, distance, journey_time, date, status, account, comment
                     FROM users, journeys
@@ -620,6 +756,11 @@ class GlideWebAPI extends GlideBaseAPI{
                 $sql .= "AND account LIKE '%$account%' ";
             }
 
+            if($accountName){
+                $sql .= "AND journeys.account = '$accountName' ";
+            }
+
+
             $sql .= "ORDER BY journeys.id Desc";
 
             unset($userName, $origin, $destination, $status, $date);             
@@ -648,7 +789,7 @@ class GlideWebAPI extends GlideBaseAPI{
 
             $adminId = $_SESSION["adminId"];
 
-            $sql = "SELECT user_id as DT_RowId, user_name, user_email
+            $sql = "SELECT user_id as DT_RowId, user_name, user_email, user_mobile, user_type
                     FROM users
                     WHERE admin_id = '$adminId' 
                     AND is_deleted = 0

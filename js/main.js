@@ -34,7 +34,6 @@ require(['jquery',
                 apiKey: "dflj45fgfg343fggf454rgf53"
             }
 
-            
             /**
              * Name: submitFrom
              * Purpose: Submits form using ajax. Redirection based on return Ajax values.
@@ -57,6 +56,10 @@ require(['jquery',
                             if(logData.type == "registration" && errorCount == 0){
                                 window.location = "signIn.php"
                             }else if(logData.type == "signIn" && errorCount == 0){
+                                window.localStorage.layout = "admin";
+                                window.location = "home.php";
+                            }else if(logData.type == "pmSignIn" && errorCount == 0){
+                                window.localStorage.layout = "projectManager";
                                 window.location = "home.php";
                             }else{
                                 console.log("not working");
@@ -434,13 +437,40 @@ require(['jquery',
             }
 
 
-
+            /**
+             * Name: resetButtons
+             * Purpose: Reset control buttons.
+             */
             function resetButtons(){
                 $(".btnAdd").attr("disabled", false);
                 $(".btnEdit, .btnDelete").attr("disabled", true);
             }
 
 
+            /**
+             * Name: setAdminLayout
+             * Purpose: Display all features in layout.
+             */
+            function setAdminLayout(){
+                $(document).on('DOMNodeInserted', function() {
+                    $("#subHeaderSec2").removeClass('hidden');
+                    $("#navUsers").removeClass('hidden');
+                    $(".accountSearch").removeClass('hidden');
+                });
+            }
+
+
+            /**
+             * Name: setProjectManagerLayout
+             * Purpose: Hide certain features in layout.
+             */
+            function setProjectManagerLayout(){
+                $(document).on('DOMNodeInserted', function() {
+                    $("#subHeaderSec2").addClass('hidden');
+                    $("#navUsers").addClass('hidden');
+                    $(".accountSearch").addClass('hidden');
+                });
+            }
 
 
             /**
@@ -458,6 +488,15 @@ require(['jquery',
 
                 submitForm('#signUpForm');
                 submitForm('#signInForm');
+                submitForm('#pmSignInForm');
+
+                //set layout
+                if(window.localStorage.layout == "admin"){
+                    setAdminLayout();
+                }
+                if(window.localStorage.layout == "projectManager"){
+                   setProjectManagerLayout(); 
+                }
 
                 
                 /********* NAVBAR EVENTS **********/

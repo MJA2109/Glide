@@ -30,7 +30,7 @@
 				<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
 				<input type = "text" name = "searchUser" placeholder = "User name" class = "form-control"/>
 			</div>
-			<div class = "searchInput input-group">
+			<div class = "searchInput input-group accountSearch">
 				<span class="input-group-addon"><i class="glyphicon glyphicon-folder-open"></i></span>
 				<input type = "text" name = "account" placeholder = "Account" class = "form-control"/>
 			</div>
