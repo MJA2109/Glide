@@ -144,12 +144,15 @@ require(['jquery',
                             var log = JSON.parse(data);
                             if(log.table == "expenses"){
                                 clearForm("#modalExpenseForm");
+                                resetButtons();
                                 refreshTable("#expensesTable", "getExpensesData");   
                             }else if(log.table == "journeys"){
                                 clearForm("#modalJourneysForm");
+                                resetButtons();
                                 refreshTable("#journeysTable", "getJourneysData");
                             }else if(log.table == "users"){
                                 clearForm("#modalUserForm");
+                                resetButtons();
                                 refreshTable("#usersTable", "getUsersData");  
                             }
                             $.modal.close();
@@ -189,10 +192,13 @@ require(['jquery',
                         console.log(data);
                         var data = JSON.parse(data);
                         if(data.Table == "expenses"){
+                            resetButtons();
                             refreshTable("#expensesTable", "getExpensesData");
                         }else if(data.Table == "journeys"){
+                            resetButtons();
                             refreshTable("#journeysTable", "getJourneysData");
                         }else if(data.Table == "users"){
+                            resetButtons();
                             refreshTable("#usersTable", "getUsersData");
                         }
                         $.modal.close();
@@ -309,7 +315,9 @@ require(['jquery',
                     "columns" : [
                         {"data": "DT_RowId"},
                         {"data": "user_name"},
-                        {"data": "user_email"}
+                        {"data": "user_mobile"},
+                        {"data": "user_email"},
+                        {"data": "user_type"}
                     ]
                 });
             }
@@ -423,6 +431,13 @@ require(['jquery',
                         });
                     }
                 });   
+            }
+
+
+
+            function resetButtons(){
+                $(".btnAdd").attr("disabled", false);
+                $(".btnEdit, .btnDelete").attr("disabled", true);
             }
 
 
@@ -561,7 +576,29 @@ require(['jquery',
                     $(form + " input[name = 'journeyTime']").val(journeyTime);
                     $(form + " input[name = 'account']").val(account);
                     $(form + " input[name = 'comment']").val(comment);
-                   displayModal("#modalEditJourney");
+                    displayModal("#modalEditJourney");
+                });
+
+                $("body").delegate("#btnEditUser", "click", function(){
+
+                    var dataId = selectedIdStack[0];
+                    var row = "#" + dataId;
+                    var form = "#modalEditUserForm";
+
+                    var userId = $(row + " td:nth-child(1)").text();
+                    var userName = $(row + " td:nth-child(2)").text();
+                    var userMobile = $(row + " td:nth-child(3)").text();
+                    var userEmail = $(row + " td:nth-child(4)").text();
+                    var userType = $(row + " td:nth-child(5)").text();
+                    
+
+                    $(form + " #userId").val(dataId);
+                    $(form + " input[name = 'userName']").val(userName);
+                    $(form + " input[name = 'userMobile']").val(userMobile);
+                    $(form + " input[name = 'userEmail']").val(userEmail);
+                    $(form + " option[value = '" + userType + "']").prop("selected", true);
+
+                    displayModal("#modalEditUser");
                 });
 
 
@@ -576,6 +613,12 @@ require(['jquery',
                     selectedIdStack = new Array(); //reset array
                     submitModalForm("#modalEditJourneyForm");
                 });
+
+                $("body").delegate("#btnSubmitEditUser", "click", function(){
+                    selectedIdStack = new Array(); //reset array
+                    submitModalForm("#modalEditUserForm");
+                });
+
 
 
                 //search database 

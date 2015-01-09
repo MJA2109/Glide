@@ -195,27 +195,35 @@ class GlideWebAPI extends GlideBaseAPI{
             $database = GlideWebAPI::connectDB();
             
             $adminId = $_SESSION["adminId"];
+            $accountName = null;
+            
+            $sql = "SELECT
+                    ex.expense_id,
+                    u.user_name, 
+                    ex.expense_category, 
+                    mer.merchant_name, 
+                    ex.expense_cost, 
+                    ex.expense_date, 
+                    ex.expense_status,
+                    re.receipt_image, 
+                    ex.expense_comment,
+                    ex.account
+                    FROM users u
+                    JOIN expenses ex on ex.user_id = u.user_id
+                    JOIN merchants mer on mer.merchant_id = ex.merchant_id
+                    LEFT JOIN receipts re on re.receipt_id = ex.receipt_id
+                    where
+                    ex.admin_id = '$adminId'
+                    AND ex.is_deleted = 0 ";
+
+            if($accountName){
+                $sql .="AND ex.account = '$accountName'";
+            }
+
+            $sql .="ORDER BY ex.expense_id Desc";
             
             //use query public static static function for more complex database queries
-            $expensesData = $database->query("SELECT
-                                                ex.expense_id,
-                                                u.user_name, 
-                                                ex.expense_category, 
-                                                mer.merchant_name, 
-                                                ex.expense_cost, 
-                                                ex.expense_date, 
-                                                ex.expense_status,
-                                                re.receipt_image, 
-                                                ex.expense_comment,
-                                                ex.account
-                                                FROM users u
-                                                JOIN expenses ex on ex.user_id = u.user_id
-                                                JOIN merchants mer on mer.merchant_id = ex.merchant_id
-                                                LEFT JOIN receipts re on re.receipt_id = ex.receipt_id
-                                                where
-                                                ex.admin_id = '$adminId'
-                                                AND ex.is_deleted = 0
-                                                ORDER BY ex.expense_id Desc")->fetchAll();
+            $expensesData = $database->query($sql)->fetchAll();
 
             foreach($expensesData as $data){
                 $expense[$index] = array();
@@ -259,6 +267,8 @@ class GlideWebAPI extends GlideBaseAPI{
                 "user_id(DT_RowId)",
                 "user_name",
                 "user_email",
+                "user_type",
+                "user_mobile"
                 ],[ "AND" => [
                     "admin_id" => $adminId,
                     "is_deleted" => 0
@@ -280,6 +290,7 @@ class GlideWebAPI extends GlideBaseAPI{
      * @return $journeyData or $error - JSON : JSON: Contains rows for each journey related to that specific instance.
      */
     public static function getJourneysData(){
+        
         session_start();
         
         if(isset($_SESSION["adminId"])){
@@ -292,14 +303,21 @@ class GlideWebAPI extends GlideBaseAPI{
             $database = GlideWebAPI::connectDB();
             
             $adminId = $_SESSION["adminId"];
-            
-            //use query public static static function for more complex database queries
-            $journeysData = $database->query("SELECT id, user_name, origin, destination, distance, journey_time, date, status, account, comment
+            $accountName = null;
+
+            $sql = "SELECT id, user_name, origin, destination, distance, journey_time, date, status, account, comment
                                               FROM users, journeys
                                               WHERE ".$adminId." = journeys.admin_id
                                               AND journeys.user_id = users.user_id
-                                              AND journeys.is_deleted = 0
-                                              ORDER BY journeys.id Desc")->fetchAll();
+                                              AND journeys.is_deleted = 0 ";
+            if($accountName){
+                $sql .= "AND journeys.account = '$accountName' ";
+            }
+                                              
+            $sql .= "ORDER BY journeys.id Desc";
+            
+            //use query public static static function for more complex database queries
+            $journeysData = $database->query($sql)->fetchAll();
                          
 
             foreach($journeysData as $data){
@@ -334,6 +352,8 @@ class GlideWebAPI extends GlideBaseAPI{
         if(isset($_SESSION["adminId"])){
             $userName = Util::get("userName");
             $userEmail = Util::get("userEmail");
+            $userMobile = Util::get("userMobile");
+            $userType = Util::get("userType");
             $log = array();
             $log["type"] = "addUser";
             $log["errors"] = array();
@@ -348,17 +368,66 @@ class GlideWebAPI extends GlideBaseAPI{
                 ]
             ]);
 
+            $mobileExists = $database->count("users", [
+                "AND" => [
+                    "user_mobile" => $userMobile,
+                    "admin_id" => $adminId
+                ]
+            ]);
+
             if($emailExists == 1){
                 $log["errors"]["email"] = "User email already exists";
                 echo json_encode($log);   
+            
+            }else if($mobileExists == 1){
+                $log["errors"]["mobile"] = "User mobile already exists";
+                echo json_encode($log);
+            
             }else{
                     $lastUserId = $database->insert("users", [
                     "admin_id" => intval($adminId),
                     "user_name" => $userName,
-                    "user_email" => $userEmail 
+                    "user_email" => $userEmail,
+                    "user_mobile" => $userMobile,
+                    "user_type" => $userType 
                 ]);
                 echo json_encode(array("table" => "users", "status" => "New user added..."));     
             }
+
+        }else{
+            echo json_encode(array("error" => "Admin ID not set"));
+        }
+    }
+
+
+    /**
+     * Name: addUser
+     * Purpose: Edit user table.
+     */
+    public static function editUser(){
+
+        session_start();
+
+        
+        if(isset($_SESSION["adminId"])){
+            
+            $userId = Util::get("userId");
+            $userName = Util::get("userName");
+            $userEmail = Util::get("userEmail");
+            $userMobile = Util::get("userMobile");
+            $userType = Util::get("userType");
+            $database = GlideWebAPI::connectDB();
+
+            $database->update("users", [
+                "user_name" => $userName,
+                "user_email" => $userEmail,
+                "user_mobile" => $userMobile,
+                "user_type" => $userType
+            ], [
+                "user_id" => $userId
+            ]);
+
+            echo json_encode(array("table" => "users", "status" => "User details updated...")); 
 
         }else{
             echo json_encode(array("error" => "Admin ID not set"));

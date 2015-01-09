@@ -9,10 +9,13 @@
 		<div id = "subHeaderSec2">
 			<div>
 				<div>
-					<button id = "btnAddUser" class = "btn btn-default"><span class="glyphicon glyphicon-plus"></span></button>
+					<button id = "btnAddUser" class = "btn btn-default btnAdd"><span class="glyphicon glyphicon-plus"></span></button>
 				</div>
 				<div>
 					<button class = "btn btn-default btnDelete" disabled = "true"><span class="glyphicon glyphicon-trash"></span></button>
+				</div>
+				<div>
+					<button id = "btnEditUser" class = "btn btn-default btnEdit" disabled = "true"><span class="glyphicon glyphicon-refresh"></span></button>
 				</div>
 			</div>
 		</div>
@@ -39,7 +42,9 @@
 				<tr>
 					<th>User ID</th>
 					<th>User Name</th>
+					<th>Mobile</th>
 					<th>E-mail</th>
+					<th>User Type</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -58,10 +63,53 @@
 			<input type = "text" name = "userName" placeholder = "User Name" class = "form-control"/>	
 		</div>
 		<div class = "modalInput">
+			<input type = "text" name = "userMobile" placeholder = "User Mobile" class = "form-control"/>	
+		</div>
+		<div class = "modalInput">
+			<input type = "text" name = "retypeMobile" placeholder = "Retype Mobile" class = "form-control"/>	
+		</div>
+		<div class = "modalInput">
 			<input type = "text" name = "userEmail" placeholder = "Email" class = "form-control"/>	
 		</div>
 		<div class = "modalInput">
+			<select class = "form-control" name = "userType">
+				<option value = "">User Type</option>
+				<option value = "Project Manager">Project Manager</option>
+				<option value = "Standard User">Standard User</option>
+			</select>
+		</div>
+		<div class = "modalInput">
 			<input type = 'submit' value = 'Submit' class = "btn btn-default" id = "btnSubmitUser"/>
+		</div>
+		<div class = "clear"></div>
+	</form>
+</div>
+
+
+<div id = "modalEditUser" class = "modalStyle">
+	<form id = "modalEditUserForm" method = "POST" class = "modalForm">
+		<input type = 'hidden' name = 'action' value = 'editUser' />
+		<input id = "userId" type = "hidden" name = "userId" value = "" />
+		<div class = "modalCloseIm"></div>
+		<h4><span class="glyphicon glyphicon-user"></span>Edit User</h4>
+		<div class = "modalInput">
+			<input type = "text" name = "userName" placeholder = "User Name" class = "form-control" readonly="readonly"/>	
+		</div>
+		<div class = "modalInput">
+			<input type = "text" name = "userEmail" placeholder = "Email" class = "form-control" readonly="readonly"/>	
+		</div>
+		<div class = "modalInput">
+			<input type = "text" name = "userMobile" placeholder = "Mobile" class = "form-control" readonly="readonly"/>	
+		</div>
+		<div class = "modalInput">
+			<select class = "form-control" name = "userType">
+				<option value = "">User Type</option>
+				<option value = "Project Manager">Project Manager</option>
+				<option value = "Standard User">Standard User</option>
+			</select>
+		</div>
+		<div class = "modalInput">
+			<input type = 'submit' value = 'Submit' class = "btn btn-default" id = "btnSubmitEditUser"/>
 		</div>
 		<div class = "clear"></div>
 	</form>
