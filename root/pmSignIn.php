@@ -1,20 +1,47 @@
 <?php require("../templates/head.php"); ?>
-	<div class = 'wrapper'>
-		<div class = 'signinform'>
-			<div class = 'signupLogo'>
-				<img src = '#' alt = 'Glide logo' />
+	<div class = "signUpBody">
+		<div class = 'wrapper'>
+			<div class = 'indexLogo'>
+	 			<div class = "strip"></div>
+	 			<img src="../img/glideLogoTrans250.png" alt = 'glide logo'>
+	 		</div>
+
+	 		<div class = "signContent">
+
+				<div class = 'signForm'>
+					<form name = 'pmSignInForm' id = 'pmSignInForm'  method = 'POST'>
+						<div class = "input-group">
+							<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+			 				<input type = 'email' name = 'email' placeholder = 'User E-mail' class = "form-control"/>
+			 			</div>
+
+			 			<div class = "input-group">
+							<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+			 				<input type = 'email' name = 'adminEmail' placeholder = 'Admin Email' class = "form-control"/>
+			 			</div>
+
+			 			<div class = "input-group">
+							<span class="input-group-addon"><i class="glyphicon glyphicon-folder-open"></i></span>
+			 				<input type = 'text' name = 'account' placeholder = 'Account Name' class = "form-control"/>
+			 			</div>
+
+			 			<div class = "input-group">
+							<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+			 				<input type = 'password' name = 'password' placeholder = 'Password' class = "form-control"/>
+			 			</div>
+
+			 			<input type = 'hidden' name = 'action' value = 'pmSignIn' />
+			 			
+			 			<div class = "divBtnSign">
+			 				<input type = 'submit' value = 'Sign In' class = "btn btn-default"/>
+			 			</div>
+			 		</form>
+			 		<div class = "alternativeSign">
+			 			<p>Return to home page <a href = 'index.php'>Home</a></p>
+			 		</div>
+				</div>
+			
 			</div>
-			<form name = 'pmSignInForm' id = 'pmSignInForm'  method = 'POST'>
-	 			<input type = 'email' name = 'email' placeholder = 'E-mail' />
-	 			<input type = 'email' name = 'adminEmail' placeholder = 'Admin Email' />
-	 			<input type = 'text' name = 'account' placeholder = 'Account Name' />
-	 			<input type = 'password' name = 'password' placeholder = 'Password' />
-	 			<input type = 'hidden' name = 'action' value = 'pmSignIn' />
-	 			<input type = 'submit' value = 'Sign In'/>
-	 		</form>
-		</div>
-		<div class = 'divBtnSignUp'>
-			<button><a href = 'index.php'>Back</a></button>
 		</div>
 	</div>
 <?php require("../templates/footer.php"); ?>

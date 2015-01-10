@@ -1,28 +1,44 @@
 <?php require("../templates/head.php"); ?>
- 	<div class = 'wrapper'>
- 		<div class = 'indexLogo'>
- 			<img src="#" alt = 'glide logo'>
- 		</div>
- 		<div class = 'divBtnSignin'>
- 			<button><a href = 'signIn.php'>Sign In</a></button>
- 		</div>
- 		<div class = 'info'>
- 			<h3>this is the slogan</h3>
- 			<div>
- 				<p>this is some extra info</p>
- 			</div>
- 		</div>
- 		<div class = 'signUpForm'>
-	 		<form name = 'signUpForm' id = 'signUpForm' method = 'POST'>
-	 			<input type = 'text' name = 'companyName' placeholder = 'Company Name'/>
-	 			<input type = 'email' name = 'adminEmail' placeholder = 'E-mail' />
-	 			<input type = 'password' name = 'adminPassword' placeholder = 'Password' />
-	 			<input type = 'password' name = 'adminRePassword' placeholder = 'Retype Password' />
-	 			<input type = 'hidden' name = 'action' value = 'register' />
-	 			<input type = 'submit' value = 'Sign Up'/>
-	 			<p>Already have an account ? <a href = 'signIn.php'>Sign In</a></p>
-	 			<p>Are you a Project Manager ? <a href = 'pmSignIn.php'>Sign In</a></p>
-	 		</form>
- 		</div>
+	<div class = "signUpBody">
+	 	<div class = 'wrapper'>
+	 		<div class = 'indexLogo'>
+	 			<div class = "strip"></div>
+	 			<img src="../img/glideLogoTrans250.png" alt = 'glide logo'>
+	 		</div>
+	 		<div class = "signContent">
+		 		<div class = 'signForm'>
+			 		
+			 		<form name = 'signUpForm' id = 'signUpForm' method = 'POST'>
+			 			<div class = "input-group">
+			 				<span class="input-group-addon"><i class="glyphicon glyphicon-globe"></i></span>
+			 				<input type = 'text' name = 'companyName' placeholder = 'Company Name' class = "form-control"/>
+			 			</div>
+			 			<div class = "input-group">
+			 				<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+			 				<input type = 'email' name = 'adminEmail' placeholder = 'E-mail' class = "form-control"/>
+			 			</div>
+			 			<div class = "input-group">
+			 				<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+			 				<input type = 'password' name = 'adminPassword' placeholder = 'Password' class = "form-control"/>
+			 			</div>
+			 			<div class = "input-group">
+			 				<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+			 				<input type = 'password' name = 'adminRePassword' placeholder = 'Retype Password' class = "form-control"/>
+			 			</div>
+			 			<input type = 'hidden' name = 'action' value = 'register' />
+			 			
+			 			<div class = "divBtnSign">
+			 				<input type = 'submit' value = 'Sign Up' class = "btn btn-default"/>
+			 			</div>
+			 		</form>
+
+			 		<div class = "alternativeSign">
+			 			<p>Already have an account ? <a href = 'signIn.php'>Sign In</a></p>
+			 			<p>Are you a Project Manager ? <a href = 'pmSignIn.php'>Sign In</a></p>
+			 		</div>
+
+		 		</div>
+	 		</div>
+	 	</div>
  	</div>       
 <?php require("../templates/footer.php"); ?>
