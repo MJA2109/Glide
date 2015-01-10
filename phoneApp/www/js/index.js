@@ -82,7 +82,7 @@ function initializeEvents(){
         $(this).iscrollview("refresh");
     });
 
-    //window.localStorage.clear();
+    window.localStorage.clear();
 
     //check local storage for login details
     checkPreAuth();
@@ -99,6 +99,7 @@ function checkPreAuth(){
     if(window.localStorage.userName != undefined && window.localStorage.userId != undefined){   
         $("#loginEmail").val(window.localStorage.email);
         $("#instanceId").val(window.localStorage.instanceId);
+        $("#password").val(window.localStorage.password);
         login("#loginForm");
     }
 }
@@ -123,6 +124,7 @@ function login(form){
             if(auth){
                 window.localStorage.userId = auth[0].user_id;
                 window.localStorage.userName = auth[0].user_name;
+                window.localStorage.password = auth[0].password;
                 window.localStorage.email = $("#loginEmail").val();
                 window.localStorage.instanceId = $("#instanceId").val();
                 setFormData();

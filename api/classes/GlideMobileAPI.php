@@ -9,10 +9,12 @@ class GlideMobileAPI extends GlideBaseAPI{
      * Purpose: Check does user exist in system.
      */
 	public static function appLogin(){
+
 		$database = GlideBaseAPI::connectDB();
 
 		$email = Util::get("loginEmail");
-		$password = Util::get("password");
+		$password = $_POST["password"];
+		$hashedPassword = sha1($password);
 		$instanceId = Util::get("instanceId");
 
 		$auth = $database->select("users", [
@@ -24,19 +26,20 @@ class GlideMobileAPI extends GlideBaseAPI{
 			"AND" => [
 				"user_email" => $email,
 				"admin_id" => $instanceId,
+				"user_password" => $hashedPassword,
 				"is_deleted" => 0
 			]
 
 		]);
 
 		if($auth){
+			$auth[0]["password"] = $password;
 			echo json_encode($auth);
 		}else{
 			echo json_encode(false);
 		}
 	}
 	
-
 	/**
      * Name: getExpenseHistory
      * Purpose: Get data from expenses table.
