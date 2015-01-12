@@ -1,8 +1,6 @@
 <?php
 require "../classes/GlideWebAPI.php";
 
-//$glideWeb = new GlideWebAPI();
-
 //Call public static function based on posted action
 if(isset($_POST["action"])){
 	$action = $_POST["action"];
@@ -41,6 +39,14 @@ if(isset($_POST["action"])){
 	    break;
 	    case "pmSignIn" : GlideWebAPI::pmSignIn();
 	    break;
+	}
+}
+
+if(isset($_GET["action"])){
+	$action = $_GET["action"];
+	switch($action){
+		case "isEmailAvail" : GlideWebAPI::isEmailAvail();
+		break;
 	}
 }
 

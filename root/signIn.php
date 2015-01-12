@@ -10,21 +10,27 @@
 				
 				<div class = 'signForm'>
 					<form name = 'signInForm' id = 'signInForm'  method = 'POST'>
-						<div class = "input-group">
-							<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-			 				<input type = 'email' name = 'adminEmail' placeholder = 'E-mail' class = "form-control"/>
-			 			</div>
-			 			<div class = "input-group">
-			 				<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-			 				<input type = 'password' name = 'adminPassword' placeholder = 'Password' class = "form-control"/>
-			 			</div>
+						<div class = "form-group">
+							<div class = "input-group">
+								<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+				 				<input type = 'email' name = 'adminEmail' placeholder = 'E-mail' class = "form-control"/>
+				 			</div>
+				 		</div>
+				 		<div class = "form-group">
+				 			<div class = "input-group">
+				 				<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+				 				<input type = 'password' name = 'adminPassword' placeholder = 'Password' class = "form-control"/>
+				 			</div>
+				 		</div>
 
 			 			<input type = 'hidden' name = 'action' value = 'signIn' class = "btn btn-default"/>
 			 			
-
-			 			<div class = "divBtnSign">
-			 				<input type = 'submit' value = 'Sign In' class = "btn btn-default"/>
-			 			</div>
+			 			<div class = "form-group">
+				 			<div class = "divBtnSign">
+				 				<input type = 'submit' value = 'Sign In' class = "btn btn-default"/>
+				 			</div>
+				 		</div>
+				 		<div id = "errorNote"></div>
 			 		</form>
 
 			 		<div class = "alternativeSign">

@@ -170,6 +170,7 @@ body{
 
 .signForm{
     width:300px;
+    position:relative;
     margin:auto;
     padding-top:40px;
 
@@ -197,12 +198,13 @@ body{
 }
 
 
-
-
-
-
-
-
+#errorNote{
+    width:30px;
+    height:30px;
+    position:absolute;
+    bottom:105px;
+    right:45px;
+}
 
 
 
@@ -524,6 +526,17 @@ body{
 /* ==========================================================================
    Helper classes
    ========================================================================== */
+
+.err{
+    color: #A94442;
+    background-color: #F2DEDE;
+    border-color: #A94442;
+}
+
+.errBorder{
+    border-color: #A94442;    
+}
+
 .paginate_button:hover{
     background-color: @subHeader !important;
 }

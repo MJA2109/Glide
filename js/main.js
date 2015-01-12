@@ -9,12 +9,18 @@ requirejs.config({
         'bootstrap': ['//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min', 'vendor/boostrap.min'],
         'cssLess' : ['//cdnjs.cloudflare.com/ajax/libs/less.js/1.7.3/less.min', 'vendor/less-1.7.3.min'],
         'datatables' : ['//cdn.datatables.net/1.10.1/js/jquery.dataTables', '../../../Glide/js/vendor/datatables'],
-        'modal' : ['../../js/vendor/jquery.simplemodal.1.4.4.min']
+        'modal' : ['../../js/vendor/jquery.simplemodal.1.4.4.min'],
+        'validator' : ['//cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.3/js/bootstrapValidator.min'],
+        'val' : ['../../js/val'],
+        'notify' : ['../../js/vendor/notify.min']
     },
     shim:{
     	'bootstrap': ['jquery'],
         'datatables': ['jquery'],
-        'modal': ['jquery']
+        'modal': ['jquery'],
+        'validator' : ['jquery'],
+        'val' : ['validator'],
+        'notify' : ['jquery']
     }
 });
 
@@ -25,7 +31,10 @@ require(['jquery',
 		 'bootstrap',
 		 'cssLess',
          'datatables',
-         'modal'], function($) {
+         'modal',
+         'validator',
+         'val',
+         'notify'], function($) {
 
             
             //Contains global variables
@@ -55,12 +64,22 @@ require(['jquery',
                             var errorCount = Object.keys(logData.errors).length;
                             if(logData.type == "registration" && errorCount == 0){
                                 window.location = "signIn.php"
-                            }else if(logData.type == "signIn" && errorCount == 0){
-                                window.localStorage.layout = "admin";
-                                window.location = "home.php";
-                            }else if(logData.type == "pmSignIn" && errorCount == 0){
-                                window.localStorage.layout = "projectManager";
-                                window.location = "home.php";
+                            }else if(logData.type == "signIn"){
+                                if(errorCount == 0){
+                                    window.localStorage.layout = "admin";
+                                    window.location = "home.php";
+                                }else{
+                                    errorFeedback(); 
+                                    $("#errorNote").notify("Incorrect details...");    
+                                }
+                            }else if(logData.type == "pmSignIn"){
+                                if(errorCount == 0){
+                                    window.localStorage.layout = "projectManager";
+                                    window.location = "home.php";
+                                }else{
+                                    errorFeedback();
+                                    $("#errorNote").notify("Incorrect details...");
+                                }
                             }else{
                                 console.log("not working");
                             }
@@ -470,6 +489,12 @@ require(['jquery',
                     $("#navUsers").addClass('hidden');
                     $(".accountSearch").addClass('hidden');
                 });
+            }
+
+            function errorFeedback(){
+                $(".input-group-addon").addClass("err");
+                $(".input-group-addon").addClass("err");
+                $("input[type = 'text'], input[type = 'email'], input[type = 'password']").addClass("errBorder");
             }
 
 

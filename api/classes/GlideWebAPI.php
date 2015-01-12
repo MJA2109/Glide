@@ -95,9 +95,6 @@ class GlideWebAPI extends GlideBaseAPI{
         echo $logObject;   
     }
 
-
-
-
     /**
      * Name: signIn
      * Purpose: Allow admin to sign into the system
@@ -291,6 +288,31 @@ class GlideWebAPI extends GlideBaseAPI{
         session_destroy();
         echo "session is destroyed";
     }
+
+
+    /**
+     * Name: isEmailAvail
+     * Purpose: Check email address availability
+     */
+    public static function isEmailAvail(){
+
+        $adminEmail = $_GET["adminEmail"];
+        $log = array();
+
+        $database = GlideWebAPI::connectDB();
+
+        $emailInUse = $database->count("admins", [
+            "admin_email" => $adminEmail
+        ]);
+        if($emailInUse > 0){
+            $log["valid"] = false;
+        }else{
+            $log["valid"] = true;
+        }
+        echo json_encode($log);  
+    }
+
+
 
 
     /**
