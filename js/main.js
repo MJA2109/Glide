@@ -45,7 +45,7 @@ require(['jquery',
 
             /**
              * Name: submitFrom
-             * Purpose: Submits form using ajax. Redirection based on return Ajax values.
+             * Purpose: Submits form for signing in/up. Redirection based on return Ajax values.
              * @params: from - string : form to be processed
              */
             function submitForm(form){
@@ -81,7 +81,7 @@ require(['jquery',
                                     $("#errorNote").notify("Incorrect details...");
                                 }
                             }else{
-                                console.log("not working");
+                                console.log("Error : " + JSON.stringify(data));
                             }
                         },
                         error: function(){
@@ -153,7 +153,6 @@ require(['jquery',
             function submitModalForm(form){
                 var frm = $(form);
                 frm.submit(function (ev) {
-                    ev.preventDefault();
                     var data = frm.serialize();
                     console.log("Data for server : " + data);
                     $.ajax({
@@ -164,25 +163,34 @@ require(['jquery',
                             console.log("Ajax success");
                             console.log(data);
                             var log = JSON.parse(data);
+                            var errorCount = Object.keys(log.errors).length;
                             if(log.table == "expenses"){
-                                clearForm("#modalExpenseForm");
-                                resetButtons();
-                                refreshTable("#expensesTable", "getExpensesData");   
+                                if(errorCount == 0){
+                                    resetButtons();
+                                    refreshTable("#expensesTable", "getExpensesData");
+                                    $.modal.close();
+                                }else{
+                                    console.log(JSON.stringify(log));
+                                }  
                             }else if(log.table == "journeys"){
-                                clearForm("#modalJourneysForm");
                                 resetButtons();
                                 refreshTable("#journeysTable", "getJourneysData");
+                                $.modal.close();
                             }else if(log.table == "users"){
-                                clearForm("#modalUserForm");
                                 resetButtons();
-                                refreshTable("#usersTable", "getUsersData");  
+                                refreshTable("#usersTable", "getUsersData");
+                                $.modal.close();  
                             }
-                            $.modal.close();
+                            
                         },
                         error: function(){
                             console.log("Error: Ajax request unsuccessful");
                         }
                     });
+                    // $(form).unbind('submit');
+                    ev.preventDefault();
+                    ev.stopImmediatePropagation();
+                    return false;  
                 });
             }
 
@@ -451,6 +459,7 @@ require(['jquery',
                                 dialog.container.fadeIn(500);
                             });
                         });
+                        attachValEvent(div); //method located in val.js
                     }
                 });   
             }
@@ -598,6 +607,7 @@ require(['jquery',
                     var merchant = $(row + " td:nth-child(3)").text();
                     var cost = $(row + " td:nth-child(4)").text();
                     cost = cost.replace(/[^\d \.]/g, '');
+                    cost = cost.trim();
                     var status = $(row + " td:nth-child(7)").text();
                     var account = $(row + " td:nth-child(8)").text();
                     var comment = $(row + " td:nth-child(9)").text();

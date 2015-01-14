@@ -117,28 +117,49 @@ class GlideBaseAPI{
             $category = Util::get("category");
             $merchant = Util::get("merchant");
             $cost = Util::get("cost");
-            $cost = Util::get("cost");
             $account = Util::get("account");
             $receiptId = Util::get("receiptId");
+            $comment = Util::get("comment");
             $log = array();
+            $log["table"] = "expenses";
             $log["type"] = "addExpense";
             $log["errors"] = array();
             $database = GlideBaseAPI::connectDB();
 
             if($receiptId == ""){
                 $receiptId = 1;
-            }   
-            
-            $userExists = $database->count("users", [
+            }
+
+            if(empty($userName)){
+                $log["errors"]["userName"] = "User Name is required";   
+            }else{
+                $userExists = $database->count("users", [
                 "AND" => [
                     "user_id" => $userId,
                     "user_name" => $userName,
                     "admin_id" => $adminId
-                ]
-            ]);
+                    ]
+                ]);
+                if($userExists == 0){
+                    $log["errors"]["userName"] = "User Name doesn't exist";   
+                }
+            }
 
-            if($userExists == 0){
-                $log["errors"]["user"] = "User doesn't exist";
+            if(empty($userId)){
+                $log["errors"]["userId"] = "User ID is required";
+            }
+
+            if(empty($merchant)){
+                $log["errors"]["merchant"] = "Merchant is required";
+            }
+
+            if(empty($cost)){
+                $log["errors"]["cost"] = "Cost is required";
+            }   
+
+            $errorCount = count($log["errors"]);
+
+            if($errorCount != 0){
                 echo json_encode($log);
             }else{
 
@@ -157,11 +178,12 @@ class GlideBaseAPI{
                     
                 ]); 
 
-                echo json_encode(array("table" => "expenses", "status" => $merchantId));  
+                echo json_encode($log);  
             }
 
         }else{
-            echo json_encode(array("error" => "Admin ID not set"));
+            $log["errors"]["adminId"] = "Admin ID not set";
+            echo json_encode($log);
         }
     }
 

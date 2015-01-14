@@ -24,7 +24,7 @@
 
 <div id = "flexfix">
 	<div id = "search">
-		<form method = "POST" id = "searchExpensesForm">
+		<form method = "POST" id = "searchExpensesForm" >
 			<input type = 'hidden' name = 'action' value = 'searchExpenses' />
 			<div class = "searchInput input-group">
 				<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
@@ -101,38 +101,69 @@
         <input type = "hidden" name = "receiptId" value = "" />
 		<div class = "modalCloseIm"></div>
 		<h4><span class="glyphicon glyphicon-plus"></span>Add Expense</h4>
-		<div class = "modalInput">
-			<input type = "text" name = "userName" placeholder = "User Name" class = "form-control"/>	
+
+		<div class = "form-group">
+			 <div class="input-group">	
+		 		<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+				<input type = "text" name = "userName" placeholder = "User Name" class = "form-control"/>	
+			</div>
 		</div>
-		<div class = "modalInput">
-			<input type = "text" name = "userId" placeholder = "User ID" class = "form-control"/>	
+
+		<div class = "form-group">
+			 <div class="input-group">
+				<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+				<input type = "text" name = "userId" placeholder = "User ID" class = "form-control"/>	
+			</div>
 		</div>
-		<div class = "modalInput">
-			<select class = "form-control" name = "category">
-				<option value = "allCategories">All Categories</option>
-				<option value = "accommodation">Accommodation</option>
-				<option value = "Food">Food</option>
-				<option value = "Entertainment">Entertainment</option>
-				<option value = "Phone">Phone</option>
-				<option value = "Travel">Travel</option>
-			</select>
+
+		<div class = "form-group">
+			 <div class="input-group">
+				<span class="input-group-addon"><i class="glyphicon glyphicon-tags"></i></span>
+					<select class = "form-control" name = "category">
+						<option value = "">Select Category</option>
+						<option value = "accommodation">Accommodation</option>
+						<option value = "Food">Food</option>
+						<option value = "Entertainment">Entertainment</option>
+						<option value = "Phone">Phone</option>
+						<option value = "Travel">Travel</option>
+					</select>
+			</div>
 		</div>
-		<div class = "modalInput">
-			<input type = "text" name = "merchant" placeholder = "Merchant" class = "form-control"/>	
+
+		<div class = "form-group">
+			<div class="input-group">
+				<span class="input-group-addon"><i class="glyphicon glyphicon-shopping-cart"></i></span>
+				<input type = "text" name = "merchant" placeholder = "Merchant" class = "form-control"/>	
+			</div>
 		</div>
-		<div class = "modalInput">
-			<input type = "text" name = "cost" placeholder = "Cost" class = "form-control"/>	
+
+		<div class = "form-group">
+			<div class="input-group">
+				<span class="input-group-addon"><i class="glyphicon glyphicon-euro"></i></span>
+				<input type = "text" name = "cost" placeholder = "Cost" class = "form-control"/>	
+			</div>
 		</div>
-		<div class = "modalInput">
-			<input type = "text" name = "account" placeholder = "Account" class = "form-control"/>	
+		
+		<div class = "form-group">
+			<div class="input-group">
+				<span class="input-group-addon"><i class="glyphicon glyphicon-folder-open"></i></span>
+				<input type = "text" name = "account" placeholder = "Account" class = "form-control"/>	
+			</div>
 		</div>
-		<div class = "modalInput">
-			<input type = "text" name = "comment" placeholder = "Comment" class = "form-control"/>	
+
+		<div class = "form-group">
+			<div class="input-group">
+				<span class="input-group-addon"><i class="glyphicon glyphicon-comment"></i></span>
+				<input type = "text" name = "comment" placeholder = "Comment" class = "form-control"/>	
+			</div>
 		</div>
+
 		<div class = "modalInput">
 			<input type = 'submit' value = 'Submit' class = "btn btn-default" id = "btnSubmitExpense"/>
 		</div>
+
 		<div class = "clear"></div>
+
 	</form>
 </div>
 
@@ -142,38 +173,79 @@
 		<input id = "expenseId" type = "hidden" name = "expenseId" value = "" />
 		<div class = "modalCloseIm"></div>
 		<h4><span class="glyphicon glyphicon-refresh"></span>Edit Expense</h4>
-		<div class = "modalInput">
-			<input type = "text" name = "userName" placeholder = "User Name" class = "form-control" readonly="readonly"/>	
+		
+
+
+
+		<div class = "form-group">
+			 <div class="input-group">	
+		 		<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+				<input type = "text" name = "userName" placeholder = "User Name" class = "form-control" readonly="readonly"/>	
+			</div>
 		</div>
-		<div class = "modalInput">
-			<select class = "form-control" name = "status">
-				<option value = "" disabled="disabled">Status</option>
-				<option value = "Processed">Processed</option>
-				<option value = "Unprocessed">Unprocessed</option>
-			</select>
+		
+
+
+		<div class = "form-group">
+			 <div class="input-group">	
+		 		<span class="input-group-addon"><i class="glyphicon glyphicon-flag"></i></span>
+				<select class = "form-control" name = "status">
+					<option value = "" disabled="disabled">Status</option>
+					<option value = "Processed">Processed</option>
+					<option value = "Unprocessed">Unprocessed</option>
+				</select>
+			</div>
 		</div>
-		<div class = "modalInput">
-			<select class = "form-control" name = "category">
-				<option value = "" disabled="disabled">All Categories</option>
-				<option value = "Accommodation">Accommodation</option>
-				<option value = "Food">Food</option>
-				<option value = "Entertainment">Entertainment</option>
-				<option value = "Phone">Phone</option>
-				<option value = "Travel">Travel</option>
-			</select>
+
+
+		<div class = "form-group">
+			 <div class="input-group">	
+		 		<span class="input-group-addon"><i class="glyphicon glyphicon-tags"></i></span>
+				<select class = "form-control" name = "category">
+					<option value = "" disabled="disabled">Select Categories</option>
+					<option value = "Accommodation">Accommodation</option>
+					<option value = "Food">Food</option>
+					<option value = "Entertainment">Entertainment</option>
+					<option value = "Phone">Phone</option>
+					<option value = "Travel">Travel</option>
+				</select>
+			</div>
 		</div>
-		<div class = "modalInput">
-			<input type = "text" name = "merchant" placeholder = "Merchant" class = "form-control" readonly="readonly"/>	
+
+
+
+		<div class = "form-group">
+			 <div class="input-group">	
+		 		<span class="input-group-addon"><i class="glyphicon glyphicon-shopping-cart"></i></span>
+				<input type = "text" name = "merchant" placeholder = "Merchant" class = "form-control" readonly="readonly"/>	
+			</div>
 		</div>
-		<div class = "modalInput">
-			<input type = "text" name = "cost" placeholder = "Cost" class = "form-control"/>	
+
+
+		<div class = "form-group">
+			 <div class="input-group">	
+		 		<span class="input-group-addon"><i class="glyphicon glyphicon-euro"></i></span>
+				<input type = "text" name = "cost" placeholder = "Cost" class = "form-control"/>
+			</div>	
 		</div>
-		<div class = "modalInput">
-			<input type = "text" name = "account" placeholder = "Account" class = "form-control"/>	
+
+
+		<div class = "form-group">
+			 <div class="input-group">	
+		 		<span class="input-group-addon"><i class="glyphicon glyphicon-folder-open"></i></span>
+				<input type = "text" name = "account" placeholder = "Account" class = "form-control"/>
+			</div>	
 		</div>
-		<div class = "modalInput">
-			<input type = "text" name = "comment" placeholder = "Comment" class = "form-control"/>	
+
+
+		<div class = "form-group">
+			 <div class="input-group">	
+		 		<span class="input-group-addon"><i class="glyphicon glyphicon-comment"></i></span>
+				<input type = "text" name = "comment" placeholder = "Comment" class = "form-control"/>
+			</div>	
 		</div>
+
+
 		<div class = "modalInput">
 			<input type = 'submit' value = 'Update' class = "btn btn-default" id = "btnSubmitEditExpense"/>
 		</div>

@@ -39,16 +39,13 @@ if(isset($_POST["action"])){
 	    break;
 	    case "pmSignIn" : GlideWebAPI::pmSignIn();
 	    break;
+	    case "isEmailAvail" : GlideWebAPI::isEmailAvail();
+		break;
+	    case "doesUserExist" : GlideWebAPI::doesUserExist();
+	    break;
 	}
 }
 
-if(isset($_GET["action"])){
-	$action = $_GET["action"];
-	switch($action){
-		case "isEmailAvail" : GlideWebAPI::isEmailAvail();
-		break;
-	}
-}
 
 
 

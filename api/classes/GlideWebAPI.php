@@ -296,7 +296,7 @@ class GlideWebAPI extends GlideBaseAPI{
      */
     public static function isEmailAvail(){
 
-        $adminEmail = $_GET["adminEmail"];
+        $adminEmail = Util::get("adminEmail"); 
         $log = array();
 
         $database = GlideWebAPI::connectDB();
@@ -313,6 +313,52 @@ class GlideWebAPI extends GlideBaseAPI{
     }
 
 
+    /**
+     * Name: doesUserExist
+     * Purpose: Check does user exist in database 
+     */
+    public static function doesUserExist(){
+        
+        session_start();
+        
+        if(isset($_SESSION["adminId"])){
+            $database = GlideWebAPI::connectDB();
+            $adminId = $_SESSION["adminId"];
+            $userName = Util::get("userName");
+
+            if(Util::get("userId") != null){
+                
+                $userId = Util::get("userId");
+                
+                $userExists = $database->count("users", [
+                    "AND" => [
+                        "user_name" => $userName,
+                        "admin_id" => $adminId,
+                        "user_id" => $userId
+                    ]
+                ]);
+            
+            }else{
+                $userExists = $database->count("users", [
+                    "AND" => [
+                        "user_name" => $userName,
+                        "admin_id" => $adminId
+                    ]
+                ]);
+            }
+
+            if($userExists > 0){
+                $log["valid"] = true;
+            }else{
+                $log["valid"] = false;
+            }
+            echo json_encode($log); 
+
+        }else{
+            echo json_encode(array("error" => "Admin ID not set"));
+        }
+
+    }
 
 
     /**
@@ -858,7 +904,20 @@ class GlideWebAPI extends GlideBaseAPI{
             $cost = $_POST["cost"];
             $account = Util::get("account");
             $comment = Util::get("comment");
+            $log = array();
+            $log["type"] = "editExpense"; 
+            $log["table"] = "expenses";
+            $log["errors"] = array();
+            $log["data"] = array();
             $database = GlideWebAPI::connectDB();
+
+            if(empty($cost)){
+                $log["errors"]["cost"] = "Cost is required";
+            }
+
+            if(empty($category)){
+                $log["errors"]["category"] = "Category is required";
+            }
 
             $database->update("expenses", [
                 "expense_category" => $category,
@@ -870,7 +929,7 @@ class GlideWebAPI extends GlideBaseAPI{
                 "expense_id" => $expenseId
             ]);
 
-            echo json_encode(array("table" => "expenses", "results" => "updated"));
+            echo json_encode($log);
 
         }else{
             echo json_encode(array("error" => "Admin ID not set"));

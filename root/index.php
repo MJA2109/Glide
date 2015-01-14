@@ -9,12 +9,14 @@
 		 		<div class = 'signForm'>
 			 		
 			 		<form name = 'signUpForm' id = 'signUpForm' method = 'POST'>
+			 			
 			 			<div class = "form-group">
 			 				<div class="input-group">
 				 				<span class="input-group-addon"><i class="glyphicon glyphicon-globe"></i></span>
 				 				<input type = 'text' name = 'companyName' placeholder = 'Company Name' class = "form-control"/>
 			 				</div>
 			 			</div>
+			 			
 			 			<div class = "form-group">
 			 				<div class="input-group">
 				 				<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
