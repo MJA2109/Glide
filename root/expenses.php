@@ -173,8 +173,6 @@
 		<input id = "expenseId" type = "hidden" name = "expenseId" value = "" />
 		<div class = "modalCloseIm"></div>
 		<h4><span class="glyphicon glyphicon-refresh"></span>Edit Expense</h4>
-		
-
 
 
 		<div class = "form-group">

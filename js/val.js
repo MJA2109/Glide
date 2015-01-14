@@ -1,6 +1,10 @@
 
 var validation = {
-    server : "../api/handlers/webHandler.php"
+    server : "../api/handlers/webHandler.php",
+    timeFormat : /^([0-9]+):([0-5]?[0-9]):([0-5]?[0-9])$/,
+    alphaNum : /^([a-z A-Z 0-9]*)$/,
+    disFormat : /^([0-9]+).([0-9]{2})$/,
+    costFormat : /^([0-9]+).([0-9]{2})$/
 }
 
 
@@ -10,8 +14,10 @@ function attachValEvent(div){
         break;
         case "#modalEditExpense" : editExpenseValidation();
         break;
-
-
+        case "#modalAddJourney" : addJourneyValidation();
+        break;
+        case "#modalEditJourney" : editJourneyValidation();
+        break;
     }
 }
 
@@ -85,7 +91,7 @@ function addExpenseValidation(){
                         message: 'Cost is required',
                     },
                     regexp: {
-                        regexp: /^([0-9]+).([0-9]{2})$/,
+                        regexp: validation.costFormat,
                         message: 'Incorrect format, use 00.00'
                     }
 
@@ -94,7 +100,7 @@ function addExpenseValidation(){
             account: {
                 validators: {
                     regexp: {
-                        regexp: /^([a-z A-Z 0-9]*)$/,
+                        regexp: validation.alphaNum,
                         message: 'Alphanumeric characters only'
                     }
                 }
@@ -102,7 +108,7 @@ function addExpenseValidation(){
             comment: {
                 validators: {
                     regexp: {
-                        regexp: /^([a-z A-Z 0-9]*)$/,
+                        regexp: validation.alphaNum,
                         message: 'Alphanumeric characters only'
                     }
                 }
@@ -131,7 +137,7 @@ function editExpenseValidation(){
                         message: 'Cost is required',
                     },
                     regexp: {
-                        regexp: /^([0-9]+).([0-9]{2})$/,
+                        regexp: validation.costFormat,
                         message: 'Incorrect format, use 00.00'
                     }
 
@@ -140,7 +146,7 @@ function editExpenseValidation(){
             account: {
                 validators: {
                     regexp: {
-                        regexp: /^([a-z A-Z 0-9]*)$/,
+                        regexp: validation.alphaNum,
                         message: 'Alphanumeric characters only'
                     }
                 }
@@ -148,7 +154,7 @@ function editExpenseValidation(){
             comment: {
                 validators: {
                     regexp: {
-                        regexp: /^([a-z A-Z 0-9]*)$/,
+                        regexp: validation.alphaNum,
                         message: 'Alphanumeric characters only'
                     }
                 }
@@ -159,6 +165,212 @@ function editExpenseValidation(){
         e.stopImmediatePropagation();
     });  
 }
+
+
+function addJourneyValidation(){
+
+    $('#modalJourneyForm').bootstrapValidator({
+
+        framework: 'bootstrap',
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            userName: {
+                validators: {
+                    notEmpty: {
+                        message: 'User Name is required'
+                    },
+                    remote: {
+                        url: validation.server,
+                        data: {
+                            action : "doesUserExist"
+                        },
+                        message: 'User does not exist',
+                        type: 'POST'
+                    }
+
+                }
+            },
+            userId: {
+                validators: {
+                    notEmpty: {
+                        message: 'User ID is required'
+                    },
+                    integer: {
+                        message: 'The value is not an integer'
+                    },
+                    remote: {
+                        url: validation.server,
+                        data: function(validator) {
+                            return {
+                                userName: validator.getFieldElements('userName').val(),
+                                action: "doesUserExist"
+                            };
+                        },
+                        message: "User ID and Name do not match",
+                        type: 'POST'
+                    }
+                }
+            },
+            origin: {
+                validators: {
+                    stringLength: {
+                        message : "Origin address must be at least 10 characters",
+                        min : 10
+                    },
+                    notEmpty: {
+                        message: 'Origin address is required'
+                    }
+                }
+            },
+            destination: {
+                validators: {
+                    stringLength: {
+                        message : "Destination address must be at least 10 characters",
+                        min : 10
+                    },
+                    notEmpty: {
+                        message: 'Destination address is required'
+                    }
+
+                }
+            },
+            distance: {
+                validators: {
+                    notEmpty: {
+                        message: 'Distance is required',
+                    },
+                    regexp: {
+                        regexp: validation.disFormat,
+                        message: 'Incorrect format, use 00.00'
+                    }
+
+                }
+            },
+            journeyTime: {
+                validators: {
+                    notEmpty: {
+                        message: 'Journey Time is required',
+                    },
+                    regexp: {
+                        regexp: validation.timeFormat,
+                        message: 'Incorrect format, use 00:00:00'
+                    }
+                }
+            },
+            account: {
+                validators: {
+                    regexp: {
+                        regexp: validation.alphaNum,
+                        message: 'Alphanumeric characters only'
+                    }
+                }
+            },
+            comment: {
+                validators: {
+                    regexp: {
+                        regexp: validation.alphaNum,
+                        message: 'Alphanumeric characters only'
+                    }
+                }
+            }
+        }
+    }).on('success.form.bv',function(e){
+        e.preventDefault();
+        e.stopImmediatePropagation();
+    });
+    
+}
+
+
+function editJourneyValidation(){
+
+    $('#modalEditJourneyForm').bootstrapValidator({
+
+        framework: 'bootstrap',
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            origin: {
+                validators: {
+                    stringLength: {
+                        message : "Origin address must be at least 10 characters",
+                        min : 10
+                    },
+                    notEmpty: {
+                        message: 'Origin address is required'
+                    }
+                }
+            },
+            destination: {
+                validators: {
+                    stringLength: {
+                        message : "Destination address must be at least 10 characters",
+                        min : 10
+                    },
+                    notEmpty: {
+                        message: 'Destination address is required'
+                    }
+
+                }
+            },
+            distance: {
+                validators: {
+                    notEmpty: {
+                        message: 'Distance is required',
+                    },
+                    regexp: {
+                        regexp: validation.disFormat,
+                        message: 'Incorrect format, use 00.00'
+                    }
+
+                }
+            },
+            journeyTime: {
+                validators: {
+                    notEmpty: {
+                        message: 'Journey Time is required',
+                    },
+                    regexp: {
+                        regexp: validation.timeFormat,
+                        message: 'Incorrect format, use 00:00:00'
+                    }
+                }
+            },
+            account: {
+                validators: {
+                    regexp: {
+                        regexp: validation.alphaNum,
+                        message: 'Alphanumeric characters only'
+                    }
+                }
+            },
+            comment: {
+                validators: {
+                    regexp: {
+                        regexp: validation.alphaNum,
+                        message: 'Alphanumeric characters only'
+                    }
+                }
+            }
+        }
+    }).on('success.form.bv',function(e){
+        e.preventDefault();
+        e.stopImmediatePropagation();
+    });
+    
+}
+
+
+
+
+
 
 
 $(document).ready(function(){

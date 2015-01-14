@@ -89,36 +89,83 @@
 		<input type = 'hidden' name = 'action' value = 'addJourney' />
 		<div class = "modalCloseIm"></div>
 		<h4><span class="glyphicon glyphicon-road"></span>Add Journey</h4>
-		<div class = "modalInput">
-			<input type = "text" name = "userName" placeholder = "User Name" class = "form-control"/>	
+
+
+		<div class = "form-group">
+			<div class="input-group">	
+		 		<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+				<input type = "text" name = "userName" placeholder = "User Name" class = "form-control"/>	
+			</div>
 		</div>
-		<div class = "modalInput">
-			<input type = "text" name = "userId" placeholder = "User ID" class = "form-control"/>	
+
+
+		<div class = "form-group">
+			<div class="input-group">	
+		 		<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+				<input type = "text" name = "userId" placeholder = "User ID" class = "form-control"/>
+			</div>	
 		</div>
-		<div class = "modalInput">
-			<input type = "text" name = "origin" placeholder = "Origin" class = "form-control"/>	
+
+
+		<div class = "form-group">
+			<div class="input-group">	
+		 		<span class="input-group-addon"><i class="glyphicon glyphicon-map-marker"></i></span>
+				<input type = "text" name = "origin" placeholder = "Origin" class = "form-control"/>
+			</div>	
 		</div>
-		<div class = "modalInput">
-			<input type = "text" name = "destination" placeholder = "Destination" class = "form-control"/>	
+
+		<div class = "form-group">
+			<div class="input-group">	
+		 		<span class="input-group-addon"><i class="glyphicon glyphicon-map-marker"></i></span>
+				<input type = "text" name = "destination" placeholder = "Destination" class = "form-control"/>	
+			</div>
 		</div>
-		<div class = "modalInput">
-			<input type = "text" name = "distance" placeholder = "Distance" class = "form-control"/>	
+
+
+		<div class = "form-group">
+			 <div class="input-group">	
+		 		<span class="input-group-addon textReduce">km<!-- <i class="glyphicon glyphicon-user"> --></span>
+				<input type = "text" name = "distance" placeholder = "Distance" class = "form-control"/>	
+			</div>
 		</div>
-		<div class = "modalInput">
-			<input type = "text" name = "journeyTime" placeholder = "Journey Time" class = "form-control"/>	
+
+
+		<div class = "form-group">
+			<div class="input-group">	
+		 		<span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+				<input type = "text" name = "journeyTime" placeholder = "Journey Time" class = "form-control"/>
+			</div>	
 		</div>
-		<div class = "modalInput">
-			<input type = "text" name = "date" placeholder = "Date" class = "form-control"/>	
+
+
+		<!-- <div class = "form-group">
+			 <div class="input-group">	
+		 		<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+				<input type = "text" name = "date" placeholder = "Date" class = "form-control"/>
+			</div>	
+		</div> -->
+
+
+		<div class = "form-group">
+			<div class="input-group">	
+		 		<span class="input-group-addon"><i class="glyphicon glyphicon-folder-open"></i></span>
+				<input type = "text" name = "account" placeholder = "Account" class = "form-control"/>
+			</div>	
 		</div>
-		<div class = "modalInput">
-			<input type = "text" name = "account" placeholder = "Account" class = "form-control"/>	
+
+
+		<div class = "form-group">
+			<div class="input-group">	
+		 		<span class="input-group-addon"><i class="glyphicon glyphicon-comment"></i></span>
+				<input type = "text" name = "comment" placeholder = "Comment" class = "form-control"/>
+			</div>	
 		</div>
-		<div class = "modalInput">
-			<input type = "text" name = "comment" placeholder = "Comment" class = "form-control"/>	
-		</div>
-		<div class = "modalInput">
+
+		<div class = "modalInput">	
 			<input type = 'submit' value = 'Submit' class = "btn btn-default" id = "btnSubmitJourney"/>
 		</div>
+
+
 		<div class = "clear"></div>
 	</form>
 </div>
@@ -129,34 +176,74 @@
 		<input id = "journeyId" type = "hidden" name = "journeyId" value = "" />
 		<div class = "modalCloseIm"></div>
 		<h4><span class="glyphicon glyphicon-refresh"></span>Edit Journey</h4>
-		<div class = "modalInput">
-			<input type = "text" name = "userName" class = "form-control" readonly="readonly"/>	
+
+		
+		
+		<div class = "form-group">
+			 <div class="input-group">	
+		 		<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+				<input type = "text" name = "userName" class = "form-control" readonly="readonly"/>	
+			</div>
 		</div>
-		<div class = "modalInput">
-			<select class = "form-control" name = "status">
-				<option value = "" disabled="disabled">Status</option>
-				<option value = "Processed">Processed</option>
-				<option value = "Unprocessed">Unprocessed</option>
-			</select>
+
+		<div class = "form-group">
+			 <div class="input-group">	
+		 		<span class="input-group-addon"><i class="glyphicon glyphicon-flag"></i></span>
+				<select class = "form-control" name = "status">
+					<option value = "" disabled="disabled">Status</option>
+					<option value = "Processed">Processed</option>
+					<option value = "Unprocessed">Unprocessed</option>
+				</select>
+			</div>
 		</div>
-		<div class = "modalInput">
-			<input type = "text" name = "origin" placeholder = "Origin" class = "form-control"/>	
+
+
+		<div class = "form-group">
+			<div class="input-group">	
+		 		<span class="input-group-addon"><i class="glyphicon glyphicon-map-marker"></i></span>
+				<input type = "text" name = "origin" placeholder = "Origin" class = "form-control"/>	
+			</div>
 		</div>
-		<div class = "modalInput">
-			<input type = "text" name = "destination" placeholder = "Destination" class = "form-control"/>	
+
+
+		<div class = "form-group">
+			<div class="input-group">	
+		 		<span class="input-group-addon"><i class="glyphicon glyphicon-map-marker"></i></span>
+				<input type = "text" name = "destination" placeholder = "Destination" class = "form-control"/>	
+			</div>
 		</div>
-		<div class = "modalInput">
-			<input type = "text" name = "distance" placeholder = "Distance" class = "form-control"/>	
+
+
+		<div class = "form-group">
+			<div class="input-group">	
+		 		<span class="input-group-addon textReduce">km<!-- <i class="glyphicon glyphicon-user"></i> --></span>
+				<input type = "text" name = "distance" placeholder = "Distance" class = "form-control"/>	
+			</div>
 		</div>
-		<div class = "modalInput">
-			<input type = "text" name = "journeyTime" placeholder = "Journey Time" class = "form-control"/>	
+
+
+		<div class = "form-group">
+			<div class="input-group">	
+		 		<span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+				<input type = "text" name = "journeyTime" placeholder = "Journey Time" class = "form-control"/>	
+			</div>
 		</div>
-		<div class = "modalInput">
-			<input type = "text" name = "account" placeholder = "Account" class = "form-control"/>	
+
+
+		<div class = "form-group">
+			<div class="input-group">	
+		 		<span class="input-group-addon"><i class="glyphicon glyphicon-folder-open"></i></span>
+				<input type = "text" name = "account" placeholder = "Account" class = "form-control"/>	
+			</div>
 		</div>
-		<div class = "modalInput">
-			<input type = "text" name = "comment" placeholder = "Comment" class = "form-control"/>	
+
+		<div class = "form-group">
+			<div class="input-group">	
+		 		<span class="input-group-addon"><i class="glyphicon glyphicon-comment"></i></span>
+				<input type = "text" name = "comment" placeholder = "Comment" class = "form-control"/>	
+			</div>
 		</div>
+
 		<div class = "modalInput">
 			<input type = 'submit' value = 'Update' class = "btn btn-default" id = "btnSubmitEditJourney"/>
 		</div>

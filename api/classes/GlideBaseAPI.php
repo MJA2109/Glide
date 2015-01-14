@@ -206,22 +206,47 @@ class GlideBaseAPI{
             $account = Util::get("account");
             $comment = Util::get("comment");
             $log = array();
+            $log["table"] = "journeys";
             $log["type"] = "addJouney";
             $log["errors"] = array();
             $database = GlideBaseAPI::connectDB();
             
             //$adminId = $_SESSION["adminId"];
+            
+            if(empty($userId)){
+                $log["errors"]["userId"] = "User ID is required";
+            }else{
 
-            $userExists = $database->count("users", [
-                "AND" => [
-                    "user_id" => $userId,
-                    "user_name" => $userName,
-                    "admin_id" => $adminId
-                ]
-            ]);
+                if(empty($userName)){
+                    $log["errors"]["userName"] = "User Name is required";   
+                }else{
+                    $userExists = $database->count("users", [
+                    "AND" => [
+                        "user_id" => $userId,
+                        "user_name" => $userName,
+                        "admin_id" => $adminId
+                        ]
+                    ]);
+                    if($userExists == 0){
+                        $log["errors"]["userName"] = "User Name doesn't exist";   
+                    }
+                }
+            }
 
-            if($userExists == 0){
-                $log["errors"]["user"] = "User doesn't exist";
+            if(empty($origin)){
+                $log["errors"]["origin"] = "Origin address is required";
+            }
+            if(empty($destination)){
+                $log["errors"]["destination"] = "Destination address is required";
+            }
+            if(empty($journeyTime)){
+                $log["errors"]["journeyTime"] = "Journey Time is required";
+            }
+
+
+            $errorCount = count($log["errors"]);
+
+            if($errorCount != 0){
                 echo json_encode($log);
             }else{
 
@@ -236,7 +261,7 @@ class GlideBaseAPI{
                     "comment" => $comment  
                 ]);
                 
-                echo json_encode(array("table" => "journeys", "status" => "New journey added..."));  
+                echo json_encode($log);  
             }
 
 

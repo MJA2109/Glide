@@ -494,6 +494,8 @@ class GlideWebAPI extends GlideBaseAPI{
             $adminId = $_SESSION["adminId"];
             if(isset($_SESSION["account"])){
                 $accountName = $_SESSION["account"];
+            }else{
+                $accountName = null;
             }
 
             $sql = "SELECT id, user_name, origin, destination, distance, journey_time, date, status, account, comment
@@ -919,17 +921,24 @@ class GlideWebAPI extends GlideBaseAPI{
                 $log["errors"]["category"] = "Category is required";
             }
 
-            $database->update("expenses", [
-                "expense_category" => $category,
-                "expense_cost" => $cost,
-                "expense_status" => $status,
-                "account" => $account,
-                "expense_comment" => $comment
-            ], [
-                "expense_id" => $expenseId
-            ]);
+            $errorCount = count($log["errors"]);
 
-            echo json_encode($log);
+            if($errorCount != 0){
+                echo json_encode($log);
+            }else{
+
+                $database->update("expenses", [
+                    "expense_category" => $category,
+                    "expense_cost" => $cost,
+                    "expense_status" => $status,
+                    "account" => $account,
+                    "expense_comment" => $comment
+                ], [
+                    "expense_id" => $expenseId
+                ]);
+
+                echo json_encode($log);
+            }
 
         }else{
             echo json_encode(array("error" => "Admin ID not set"));
@@ -955,20 +964,48 @@ class GlideWebAPI extends GlideBaseAPI{
             $account = Util::get("account");
             $comment = Util::get("comment");
             $database = GlideWebAPI::connectDB();
+            $log = array();
+            $log["type"] = "editJourney"; 
+            $log["table"] = "journeys";
+            $log["errors"] = array();
+            $log["data"] = array();
 
-            $database->update("journeys", [
-                "status" => $status,
-                "origin" => $origin,
-                "destination" => $destination,
-                "distance" => $distance,
-                "journey_time" => $time,
-                "account" => $account,
-                "comment" => $comment
-            ], [
-                "id" => $journeyId
-            ]);
+            if(empty($origin)){
+                $log["errors"]["origin"] = "Origin address is required";
+            }
+            if(empty($destination)){
+                $log["errors"]["destination"] = "Destination address is required";
+            }
+            if(empty($time)){
+                $log["errors"]["journeyTime"] = "Journey Time is required";
+            }
+            if(empty($distance)){
+                $log["errors"]["distance"] = "Distance is required";
+            }
+            if(empty($time)){
+                $log["errors"]["time"] = "Time is required";
+            }
 
-            echo json_encode(array("table" => "journeys", "results" => "updated"));
+            $errorCount = count($log["errors"]);
+
+            if($errorCount != 0){
+                echo json_encode($log);
+            }else{
+
+                $database->update("journeys", [
+                    "status" => $status,
+                    "origin" => $origin,
+                    "destination" => $destination,
+                    "distance" => $distance,
+                    "journey_time" => $time,
+                    "account" => $account,
+                    "comment" => $comment
+                ], [
+                    "id" => $journeyId
+                ]);
+
+                echo json_encode($log);
+            }
 
         }else{
             echo json_encode(array("error" => "Admin ID not set"));

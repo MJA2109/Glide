@@ -173,9 +173,13 @@ require(['jquery',
                                     console.log(JSON.stringify(log));
                                 }  
                             }else if(log.table == "journeys"){
-                                resetButtons();
-                                refreshTable("#journeysTable", "getJourneysData");
-                                $.modal.close();
+                                if(errorCount == 0){
+                                    resetButtons();
+                                    refreshTable("#journeysTable", "getJourneysData");
+                                    $.modal.close();
+                                }else{
+                                    console.log(JSON.stringify(log));
+                                }
                             }else if(log.table == "users"){
                                 resetButtons();
                                 refreshTable("#usersTable", "getUsersData");
@@ -637,6 +641,7 @@ require(['jquery',
                     var destination = $(row + " td:nth-child(3)").text();
                     var distance = $(row + " td:nth-child(4)").text();
                     distance = distance.replace(/[^\d \.]/g, '');
+                    distance = distance.trim();
                     var journeyTime = $(row + " td:nth-child(5)").text();
                     var account = $(row + " td:nth-child(8)").text();
                     var comment = $(row + " td:nth-child(9)").text();
