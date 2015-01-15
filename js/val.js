@@ -100,27 +100,17 @@ function addExpenseValidation(){
                     }
 
                 }
-            },
-            account: {
-                validators: {
-                    regexp: {
-                        regexp: validation.alphaNum,
-                        message: 'Alphanumeric characters only'
-                    }
-                }
-            },
-            comment: {
-                validators: {
-                    regexp: {
-                        regexp: validation.alphaNum,
-                        message: 'Alphanumeric characters only'
-                    }
-                }
             }
         }
     }).on('success.form.bv',function(e){
         e.preventDefault();
         e.stopImmediatePropagation();
+    }).on('status.field.bv', function(e, data) {
+        if(data.bv.isValid()){
+            data.bv.disableSubmitButtons(false);
+        }else{
+            data.bv.disableSubmitButtons(true);
+        }
     });
 }
 
@@ -146,27 +136,17 @@ function editExpenseValidation(){
                     }
 
                 }
-            },
-            account: {
-                validators: {
-                    regexp: {
-                        regexp: validation.alphaNum,
-                        message: 'Alphanumeric characters only'
-                    }
-                }
-            },
-            comment: {
-                validators: {
-                    regexp: {
-                        regexp: validation.alphaNum,
-                        message: 'Alphanumeric characters only'
-                    }
-                }
             }
         }
     }).on('success.form.bv',function(e){
         e.preventDefault();
         e.stopImmediatePropagation();
+    }).on('status.field.bv', function(e, data) {
+        if(data.bv.isValid()){
+            data.bv.disableSubmitButtons(false);
+        }else{
+            data.bv.disableSubmitButtons(true);
+        }
     });  
 }
 
@@ -201,7 +181,7 @@ function addJourneyValidation(){
             userId: {
                 validators: {
                     notEmpty: {
-                        message: 'User Mobile is required'
+                        message: 'User ID is required'
                     },
                     digits: {
                         message: 'A valid ID is required'
@@ -264,27 +244,17 @@ function addJourneyValidation(){
                         message: 'Incorrect format, use 00:00:00'
                     }
                 }
-            },
-            account: {
-                validators: {
-                    regexp: {
-                        regexp: validation.alphaNum,
-                        message: 'Alphanumeric characters only'
-                    }
-                }
-            },
-            comment: {
-                validators: {
-                    regexp: {
-                        regexp: validation.alphaNum,
-                        message: 'Alphanumeric characters only'
-                    }
-                }
             }
         }
     }).on('success.form.bv',function(e){
         e.preventDefault();
         e.stopImmediatePropagation();
+    }).on('status.field.bv', function(e, data) {
+        if(data.bv.isValid()){
+            data.bv.disableSubmitButtons(false);
+        }else{
+            data.bv.disableSubmitButtons(true);
+        }
     });
     
 }
@@ -346,27 +316,17 @@ function editJourneyValidation(){
                         message: 'Incorrect format, use 00:00:00'
                     }
                 }
-            },
-            account: {
-                validators: {
-                    regexp: {
-                        regexp: validation.alphaNum,
-                        message: 'Alphanumeric characters only'
-                    }
-                }
-            },
-            comment: {
-                validators: {
-                    regexp: {
-                        regexp: validation.alphaNum,
-                        message: 'Alphanumeric characters only'
-                    }
-                }
             }
         }
     }).on('success.form.bv',function(e){
         e.preventDefault();
         e.stopImmediatePropagation();
+    }).on('status.field.bv', function(e, data) {
+        if(data.bv.isValid()){
+            data.bv.disableSubmitButtons(false);
+        }else{
+            data.bv.disableSubmitButtons(true);
+        }
     });
     
 }
@@ -459,6 +419,12 @@ function addUserValidation(){
     }).on('success.form.bv',function(e){
         e.preventDefault();
         e.stopImmediatePropagation();
+    }).on('status.field.bv', function(e, data) {
+        if(data.bv.isValid()){
+            data.bv.disableSubmitButtons(false);
+        }else{
+            data.bv.disableSubmitButtons(true);
+        }
     });
 }
 

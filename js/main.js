@@ -614,8 +614,13 @@ require(['jquery',
                     var category = $(row + " td:nth-child(2)").text();
                     var merchant = $(row + " td:nth-child(3)").text();
                     var cost = $(row + " td:nth-child(4)").text();
+                    
                     cost = cost.replace(/[^\d \.]/g, '');
                     cost = cost.trim();
+                    if(cost.indexOf(".") == -1){
+                        cost = cost + ".00";
+                    }
+
                     var status = $(row + " td:nth-child(7)").text();
                     var account = $(row + " td:nth-child(8)").text();
                     var comment = $(row + " td:nth-child(9)").text();
