@@ -294,23 +294,71 @@ class GlideWebAPI extends GlideBaseAPI{
      * Name: isEmailAvail
      * Purpose: Check email address availability
      */
-    public static function isEmailAvail(){
+    // public static function isEmailAvail(){
 
-        $adminEmail = Util::get("adminEmail"); 
-        $log = array();
+    //     $adminEmail = Util::get("adminEmail"); 
+    //     $log = array();
 
-        $database = GlideWebAPI::connectDB();
+    //     $database = GlideWebAPI::connectDB();
 
-        $emailInUse = $database->count("admins", [
-            "admin_email" => $adminEmail
-        ]);
-        if($emailInUse > 0){
-            $log["valid"] = false;
+    //     $emailInUse = $database->count("admins", [
+    //         "admin_email" => $adminEmail
+    //     ]);
+    //     if($emailInUse > 0){
+    //         $log["valid"] = false;
+    //     }else{
+    //         $log["valid"] = true;
+    //     }
+    //     echo json_encode($log);  
+    // }
+
+
+    public static function isAvailable(){
+
+        session_start();
+        
+        if(isset($_SESSION["adminId"])){
+
+            if(Util::get("userMobile") != null){
+                $column = "user_mobile";
+                $table = "users";
+                $data = Util::get("userMobile");
+            }else if(Util::get("adminEmail") != null){
+                $column = "admin_email";
+                $table = "admins";
+                $data = Util::get("adminEmail");
+            }else if(Util::get("userEmail") != null){
+                $column = "user_email";
+                $table = "users";
+                $data = Util::get("userEmail"); 
+            }
+
+            $log = array();
+            $adminId = $_SESSION["adminId"];
+            $database = GlideWebAPI::connectDB();
+
+            $inUse = $database->count($table, [
+                "AND" => [
+                    $column => $data,
+                    "is_deleted" => 0,
+                    "admin_id" => $adminId 
+                ]
+            ]);
+
+            if($inUse > 0){
+                $log["valid"] = false;
+            }else{
+                $log["valid"] = true;
+            }
+            echo json_encode($log); 
+
         }else{
-            $log["valid"] = true;
+            echo json_encode(array("error" => "Admin ID not set"));
         }
-        echo json_encode($log);  
+
     }
+
+
 
 
     /**
@@ -549,34 +597,54 @@ class GlideWebAPI extends GlideBaseAPI{
             $userType = Util::get("userType");
             $log = array();
             $log["type"] = "addUser";
+            $log["table"] = "users";
             $log["errors"] = array();
             $database = GlideWebAPI::connectDB();
 
             $adminId = $_SESSION["adminId"];
 
-            $emailExists = $database->count("users", [
-                "AND" => [
-                    "user_email" => $userEmail,
-                    "admin_id" => $adminId
-                ]
-            ]);
+            if(empty($userName)){
+                $log["errors"]["userName"] = "User Name is required";
+            }
 
-            $mobileExists = $database->count("users", [
-                "AND" => [
-                    "user_mobile" => $userMobile,
-                    "admin_id" => $adminId
-                ]
-            ]);
-
-            if($emailExists == 1){
-                $log["errors"]["email"] = "User email already exists";
-                echo json_encode($log);   
-            
-            }else if($mobileExists == 1){
-                $log["errors"]["mobile"] = "User mobile already exists";
-                echo json_encode($log);
-            
+            if(empty($userEmail)){
+                $log["errors"]["email"] = "Email is required";
             }else{
+                $emailExists = $database->count("users", [
+                    "AND" => [
+                        "user_email" => $userEmail,
+                        "admin_id" => $adminId
+                    ]
+                ]);
+
+                if($emailExists == 1){
+                    $log["errors"]["email"] = "User email already exists";
+                }
+            }
+
+            if(empty($userMobile)){
+                $log["errors"]["mobile"] = "Mobile number is required";
+            }else{
+                $mobileExists = $database->count("users", [
+                    "AND" => [
+                        "user_mobile" => $userMobile,
+                        "admin_id" => $adminId
+                    ]
+                ]);
+
+                if($emailExists == 1){
+                    $log["errors"]["mobile"] = "Mobile number already exists";
+                }
+
+            }
+
+            if(empty($userType)){
+                $log["errors"]["type"] = "User Type is required";
+            }
+
+            $errorCount = count($log["errors"]);
+
+            if($errorCount == 0){ 
 
                 //generate password
                 $password = GlideWebAPI::generatePassword(10);
@@ -598,7 +666,9 @@ class GlideWebAPI extends GlideBaseAPI{
                 $message = 'LOGIN DETAILS  Email : '.$userEmail.' Instance ID :  '.$adminId.' Password : '.$password;
                 $response = GlideWebAPI::sendText("353871272117", $message);
 
-                echo json_encode(array("table" => "users", "status" => $response));     
+                echo json_encode($log);     
+            }else{
+                echo json_encode($log);
             }
 
         }else{
@@ -623,6 +693,10 @@ class GlideWebAPI extends GlideBaseAPI{
             $userEmail = Util::get("userEmail");
             $userMobile = Util::get("userMobile");
             $userType = Util::get("userType");
+            $log = array();
+            $log["table"] = "users";
+            $log["errors"] = array();
+
             $database = GlideWebAPI::connectDB();
 
             $database->update("users", [
@@ -634,7 +708,7 @@ class GlideWebAPI extends GlideBaseAPI{
                 "user_id" => $userId
             ]);
 
-            echo json_encode(array("table" => "users", "status" => "User details updated...")); 
+            echo json_encode($log); 
 
         }else{
             echo json_encode(array("error" => "Admin ID not set"));

@@ -39,9 +39,11 @@ if(isset($_POST["action"])){
 	    break;
 	    case "pmSignIn" : GlideWebAPI::pmSignIn();
 	    break;
-	    case "isEmailAvail" : GlideWebAPI::isEmailAvail();
-		break;
+	 //    case "isEmailAvail" : GlideWebAPI::isEmailAvail();
+		// break;
 	    case "doesUserExist" : GlideWebAPI::doesUserExist();
+	    break;
+	    case "isAvailable" : GlideWebAPI::isAvailable();
 	    break;
 	}
 }

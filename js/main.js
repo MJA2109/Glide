@@ -181,9 +181,13 @@ require(['jquery',
                                     console.log(JSON.stringify(log));
                                 }
                             }else if(log.table == "users"){
-                                resetButtons();
-                                refreshTable("#usersTable", "getUsersData");
-                                $.modal.close();  
+                                if(errorCount == 0){
+                                    resetButtons();
+                                    refreshTable("#usersTable", "getUsersData");
+                                    $.modal.close();
+                                }else{
+                                    console.log(JSON.stringify(log));
+                                }  
                             }
                             
                         },

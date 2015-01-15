@@ -59,25 +59,50 @@
 		<input type = 'hidden' name = 'action' value = 'addUser' />
 		<div class = "modalCloseIm"></div>
 		<h4><span class="glyphicon glyphicon-user"></span>Add User</h4>
-		<div class = "modalInput">
-			<input type = "text" name = "userName" placeholder = "User Name" class = "form-control"/>	
+		
+
+		<div class = "form-group">
+			 <div class="input-group">	
+		 		<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+				<input type = "text" name = "userName" placeholder = "User Name" class = "form-control"/>	
+			</div>
 		</div>
-		<div class = "modalInput">
-			<input type = "text" name = "userMobile" placeholder = "User Mobile" class = "form-control"/>	
+
+
+		<div class = "form-group">
+			 <div class="input-group">	
+		 		<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+				<input type = "text" name = "userEmail" placeholder = "Email" class = "form-control"/>
+			</div>	
 		</div>
-		<div class = "modalInput">
-			<input type = "text" name = "retypeMobile" placeholder = "Retype Mobile" class = "form-control"/>	
+
+
+		<div class = "form-group">
+			 <div class="input-group">	
+		 		<span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
+				<input type = "text" name = "userMobile" placeholder = "User Mobile" class = "form-control"/>	
+			</div>
 		</div>
-		<div class = "modalInput">
-			<input type = "text" name = "userEmail" placeholder = "Email" class = "form-control"/>	
+
+
+		<div class = "form-group">
+			 <div class="input-group">	
+		 		<span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
+				<input type = "text" name = "retypeMobile" placeholder = "Confirm Mobile" class = "form-control"/>	
+			</div>
 		</div>
-		<div class = "modalInput">
-			<select class = "form-control" name = "userType">
-				<option value = "">User Type</option>
-				<option value = "Project Manager">Project Manager</option>
-				<option value = "Standard User">Standard User</option>
-			</select>
+
+		<div class = "form-group">
+			 <div class="input-group">	
+		 		<span class="input-group-addon"><i class="glyphicon glyphicon-cog"></i></span>
+				<select class = "form-control" name = "userType">
+					<option value = "">Select User Type</option>
+					<option value = "Project Manager">Project Manager</option>
+					<option value = "Standard User">Standard User</option>
+				</select>
+			</div>
 		</div>
+
 		<div class = "modalInput">
 			<input type = 'submit' value = 'Submit' class = "btn btn-default" id = "btnSubmitUser"/>
 		</div>
@@ -92,22 +117,43 @@
 		<input id = "userId" type = "hidden" name = "userId" value = "" />
 		<div class = "modalCloseIm"></div>
 		<h4><span class="glyphicon glyphicon-user"></span>Edit User</h4>
-		<div class = "modalInput">
-			<input type = "text" name = "userName" placeholder = "User Name" class = "form-control" readonly="readonly"/>	
+		
+
+		<div class = "form-group">
+			<div class="input-group">	
+		 		<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+				<input type = "text" name = "userName" placeholder = "User Name" class = "form-control" readonly="readonly"/>
+			</div>	
 		</div>
-		<div class = "modalInput">
-			<input type = "text" name = "userEmail" placeholder = "Email" class = "form-control" readonly="readonly"/>	
+
+
+		<div class = "form-group">
+			 <div class="input-group">	
+		 		<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+				<input type = "text" name = "userEmail" placeholder = "Email" class = "form-control" readonly="readonly"/>
+			</div>	
 		</div>
-		<div class = "modalInput">
-			<input type = "text" name = "userMobile" placeholder = "Mobile" class = "form-control" readonly="readonly"/>	
+
+
+		<div class = "form-group">
+			 <div class="input-group">	
+		 		<span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
+				<input type = "text" name = "userMobile" placeholder = "Mobile" class = "form-control" readonly="readonly"/>
+			</div>	
 		</div>
-		<div class = "modalInput">
-			<select class = "form-control" name = "userType">
-				<option value = "">User Type</option>
-				<option value = "Project Manager">Project Manager</option>
-				<option value = "Standard User">Standard User</option>
-			</select>
+
+
+		<div class = "form-group">
+			 <div class="input-group">	
+		 		<span class="input-group-addon"><i class="glyphicon glyphicon-cog"></i></span>
+				<select class = "form-control" name = "userType">
+					<option value = "" disabled>User Type</option>
+					<option value = "Project Manager">Project Manager</option>
+					<option value = "Standard User">Standard User</option>
+				</select>
+			</div>
 		</div>
+
 		<div class = "modalInput">
 			<input type = 'submit' value = 'Submit' class = "btn btn-default" id = "btnSubmitEditUser"/>
 		</div>

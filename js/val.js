@@ -18,6 +18,8 @@ function attachValEvent(div){
         break;
         case "#modalEditJourney" : editJourneyValidation();
         break;
+        case "#modalAddUser" : addUserValidation();
+        break;
     }
 }
 
@@ -31,6 +33,8 @@ function addExpenseValidation(){
             invalid: 'glyphicon glyphicon-remove',
             validating: 'glyphicon glyphicon-refresh'
         },
+        live: 'enabled',
+        trigger: null,
         fields: {
             userName: {
                 validators: {
@@ -197,10 +201,10 @@ function addJourneyValidation(){
             userId: {
                 validators: {
                     notEmpty: {
-                        message: 'User ID is required'
+                        message: 'User Mobile is required'
                     },
-                    integer: {
-                        message: 'The value is not an integer'
+                    digits: {
+                        message: 'A valid ID is required'
                     },
                     remote: {
                         url: validation.server,
@@ -368,6 +372,97 @@ function editJourneyValidation(){
 }
 
 
+function addUserValidation(){
+
+    $('#modalUserForm').bootstrapValidator({
+
+        framework: 'bootstrap',
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            userName: {
+                validators: {
+                    stringLength: {
+                        message : "User Name must be at least 3 characters",
+                        min : 3
+                    },
+                    notEmpty: {
+                        message: 'User Name is required'
+                    }
+                }
+            },
+            userMobile: {
+                validators: {
+                    digits: {
+                        message : "Must be a valid mobile number"
+                    },
+                    notEmpty: {
+                        message: 'User Mobile is required'
+                    },
+                    stringLength: {
+                        min : 10,
+                        message : "Must be a valid mobile number"
+                    },
+                    remote: {
+                        url: validation.server,
+                        data: {
+                            action : "isAvailable"
+                        },
+                        message: "Mobile number is already in use",
+                        type: 'POST'
+                    }
+
+                }
+            },
+            retypeMobile: {
+                validators: {
+                    notEmpty: {
+                        message: 'Comfirm User Mobile',
+                    },
+                    identical:{
+                        field: 'userMobile',
+                        message: "Mobile numbers do not match"
+                    }
+
+                }
+            },
+            userEmail: {
+                validators: {
+                    notEmpty: {
+                        message: 'User Email is required',
+                    },
+                    emailAddress: {
+                        message: 'The given Email address is not valid'
+                    },
+                    remote: {
+                        url: validation.server,
+                        data: {
+                            action : "isAvailable"
+                        },
+                        message: "Email address already in use",
+                        type: 'POST'
+                    }
+                    
+                }
+            },
+            userType: {
+                validators: {
+                    notEmpty: {
+                        message: 'User Type is required',
+                    }
+                }
+            }
+        }
+    }).on('success.form.bv',function(e){
+        e.preventDefault();
+        e.stopImmediatePropagation();
+    });
+}
+
+
 
 
 
@@ -403,7 +498,7 @@ $(document).ready(function(){
                             message: 'Email address already exists on our system',
                             url: validation.server,
                             data: {
-                                action: 'isEmailAvail'
+                                action: 'isAvailable'
                             },
                             type : 'POST'
                         }
