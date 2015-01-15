@@ -737,7 +737,7 @@ require(['jquery',
                         $(event.target).parent().removeClass("selected");
                     }
                     
-                    //alert(selectedIdStack);
+                    alert(selectedIdStack);
                 
                     //disable endable deletion, add and edit buttons
                     if(selectedIdStack.length == 0){

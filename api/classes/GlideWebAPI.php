@@ -723,7 +723,7 @@ class GlideWebAPI extends GlideBaseAPI{
     public static function deleteData(){
 
         session_start();
-        $ids = Array();
+        $ids = array();
         
         if(isset($_SESSION["adminId"])){
             $ids = $_POST["rowIds"];
@@ -742,6 +742,7 @@ class GlideWebAPI extends GlideBaseAPI{
             $adminId = $_SESSION["adminId"];
 
             for($x = 0; $x < sizeof($ids); $x++){
+
                 $database->update($table,[
                     "is_deleted" => 1
                 ],[
@@ -772,7 +773,7 @@ class GlideWebAPI extends GlideBaseAPI{
                 }
             }
 
-            echo json_encode(array("Table" => $table));
+            echo json_encode(array("Table" => $table, "ID of deleted records" => $ids));
 
         }else{
             echo json_encode(array("error" => "Admin ID not set"));
