@@ -504,11 +504,13 @@ class GlideWebAPI extends GlideBaseAPI{
                 "user_name",
                 "user_email",
                 "user_type",
-                "user_mobile"
+                "user_mobile",
+                "user_mileage_rate"
                 ],[ "AND" => [
                     "admin_id" => $adminId,
                     "is_deleted" => 0
-            ]]);
+                ]
+            ]);
 
 
 
@@ -595,6 +597,7 @@ class GlideWebAPI extends GlideBaseAPI{
             $userEmail = Util::get("userEmail");
             $userMobile = Util::get("userMobile");
             $userType = Util::get("userType");
+            $userMileageRate = Util::get("userMileageRate");
             $log = array();
             $log["type"] = "addUser";
             $log["table"] = "users";
@@ -642,6 +645,10 @@ class GlideWebAPI extends GlideBaseAPI{
                 $log["errors"]["type"] = "User Type is required";
             }
 
+            if(empty($userMileageRate)){
+                $log["errors"]["mileageRate"] = "User Mileage Rate is required";    
+            }
+
             $errorCount = count($log["errors"]);
 
             if($errorCount == 0){ 
@@ -656,6 +663,7 @@ class GlideWebAPI extends GlideBaseAPI{
                     "user_email" => $userEmail,
                     "user_mobile" => $userMobile,
                     "user_type" => $userType,
+                    "user_mileage_rate" => $userMileageRate,
                     "user_password" => $hashedPassword 
                 ]);
 
@@ -692,6 +700,7 @@ class GlideWebAPI extends GlideBaseAPI{
             $userName = Util::get("userName");
             $userEmail = Util::get("userEmail");
             $userMobile = Util::get("userMobile");
+            $userRate = Util::get("userMileageRate");
             $userType = Util::get("userType");
             $log = array();
             $log["table"] = "users";
@@ -699,16 +708,28 @@ class GlideWebAPI extends GlideBaseAPI{
 
             $database = GlideWebAPI::connectDB();
 
-            $database->update("users", [
-                "user_name" => $userName,
-                "user_email" => $userEmail,
-                "user_mobile" => $userMobile,
-                "user_type" => $userType
-            ], [
-                "user_id" => $userId
-            ]);
+            if(empty($userRate)){
+                $log["errors"]["mileageRate"] = "User Mileage Rate is required";    
+            }
 
-            echo json_encode($log); 
+            $errorCount = count($log["errors"]);
+
+            if($errorCount == 0){ 
+
+                $database->update("users", [
+                    "user_name" => $userName,
+                    "user_email" => $userEmail,
+                    "user_mobile" => $userMobile,
+                    "user_mileage_rate" => $userRate,
+                    "user_type" => $userType
+                ], [
+                    "user_id" => $userId
+                ]);
+
+                echo json_encode($log);
+            }else{
+                echo json_encode($log);   
+            } 
 
         }else{
             echo json_encode(array("error" => "Admin ID not set"));

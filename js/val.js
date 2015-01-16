@@ -20,6 +20,8 @@ function attachValEvent(div){
         break;
         case "#modalAddUser" : addUserValidation();
         break;
+        case "#modalEditUser" : editUserValidation();
+        break;
     }
 }
 
@@ -408,6 +410,18 @@ function addUserValidation(){
                     
                 }
             },
+            userMileageRate : {
+                validators: {
+                    notEmpty: {
+                        message: 'Mileage Rate is required',
+                    },
+                    regexp: {
+                        regexp: validation.costFormat,
+                        message: 'Incorrect format, use 00.00'
+                    }
+                }
+
+            },
             userType: {
                 validators: {
                     notEmpty: {
@@ -415,6 +429,43 @@ function addUserValidation(){
                     }
                 }
             }
+        }
+    }).on('success.form.bv',function(e){
+        e.preventDefault();
+        e.stopImmediatePropagation();
+    }).on('status.field.bv', function(e, data) {
+        if(data.bv.isValid()){
+            data.bv.disableSubmitButtons(false);
+        }else{
+            data.bv.disableSubmitButtons(true);
+        }
+    });
+}
+
+
+function editUserValidation(){
+
+    $('#modalEditUserForm').bootstrapValidator({
+
+        framework: 'bootstrap',
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            userMileageRate : {
+                validators: {
+                    notEmpty: {
+                        message: 'Mileage Rate is required',
+                    },
+                    regexp: {
+                        regexp: validation.costFormat,
+                        message: 'Incorrect format, use 00.00'
+                    }
+                }
+
+            }  
         }
     }).on('success.form.bv',function(e){
         e.preventDefault();

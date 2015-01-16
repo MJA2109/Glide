@@ -355,6 +355,12 @@ require(['jquery',
                         {"data": "user_name"},
                         {"data": "user_mobile"},
                         {"data": "user_email"},
+                         {
+                            "data": "user_mileage_rate",
+                            "render" : function(data){
+                                return "€ " + data;
+                            }
+                        },
                         {"data": "user_type"}
                     ]
                 });
@@ -508,10 +514,37 @@ require(['jquery',
                 });
             }
 
+
+            /**
+             * Name: errorFeedback
+             * Purpose: Add red colour to selected divs.
+             */
             function errorFeedback(){
                 $(".input-group-addon").addClass("err");
                 $(".input-group-addon").addClass("err");
                 $("input[type = 'text'], input[type = 'email'], input[type = 'password']").addClass("errBorder");
+            }
+
+
+
+            /**
+             * Name: formatDecimal
+             * Purpose: Remove € sign and add .00 to number if doesn't exist.
+             * @params: data - Int : Int to process
+             * @return: data - Int : formatted int
+             */
+            function formatDecimal(data){
+                data = data.replace(/[^\d \.]/g, '');
+                data = data.trim();
+                if(data.indexOf(".") == -1){
+                    data = data + ".00";
+                }
+                return data;
+            }
+
+
+            function transition(){
+                $("#ajaxContent").hide().fadeIn();
             }
 
 
@@ -548,21 +581,25 @@ require(['jquery',
                 $("#navHome").click(function(){
                     setLinkColour(this);
                     getPage("../root/overview.php", "standard");
+                    transition();
                 });
                 $("#navExpenses").click(function(){
                     setLinkColour(this);
                     selectedIdStack = new Array(); //reset array
                     getPage("../root/expenses.php", "getExpensesData", "datatable");
+                    transition();
                 });
                 $("#navJourneys").click(function(){
                     setLinkColour(this);
                     selectedIdStack = new Array(); //reset array
                     getPage("../root/journeys.php", "getJourneysData", "datatable");
+                    transition();
                 });
                 $("#navUsers").click(function(){
                     setLinkColour(this);
                     selectedIdStack = new Array(); //reset array
                     getPage("../root/users.php", "getUsersData", "datatable");
+                    transition();
                 });
                 $("#navAdmin").click(function(){
                     setLinkColour(this);
@@ -615,11 +652,7 @@ require(['jquery',
                     var merchant = $(row + " td:nth-child(3)").text();
                     var cost = $(row + " td:nth-child(4)").text();
                     
-                    cost = cost.replace(/[^\d \.]/g, '');
-                    cost = cost.trim();
-                    if(cost.indexOf(".") == -1){
-                        cost = cost + ".00";
-                    }
+                    cost = formatDecimal(cost);
 
                     var status = $(row + " td:nth-child(7)").text();
                     var account = $(row + " td:nth-child(8)").text();
@@ -677,13 +710,16 @@ require(['jquery',
                     var userName = $(row + " td:nth-child(2)").text();
                     var userMobile = $(row + " td:nth-child(3)").text();
                     var userEmail = $(row + " td:nth-child(4)").text();
-                    var userType = $(row + " td:nth-child(5)").text();
+                    var userRate = $(row + " td:nth-child(5)").text();
+                    var userType = $(row + " td:nth-child(6)").text();
                     
+                    userRate = formatDecimal(userRate);
 
                     $(form + " #userId").val(dataId);
                     $(form + " input[name = 'userName']").val(userName);
                     $(form + " input[name = 'userMobile']").val(userMobile);
                     $(form + " input[name = 'userEmail']").val(userEmail);
+                    $(form + " input[name = 'userMileageRate']").val(userRate);
                     $(form + " option[value = '" + userType + "']").prop("selected", true);
 
                     displayModal("#modalEditUser");

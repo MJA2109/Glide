@@ -44,6 +44,7 @@
 					<th>User Name</th>
 					<th>Mobile</th>
 					<th>E-mail</th>
+					<th>Rate</th>
 					<th>User Type</th>
 				</tr>
 			</thead>
@@ -89,6 +90,13 @@
 			 <div class="input-group">	
 		 		<span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
 				<input type = "text" name = "retypeMobile" placeholder = "Confirm Mobile" class = "form-control"/>	
+			</div>
+		</div>
+
+		<div class = "form-group">
+			 <div class="input-group">	
+		 		<span class="input-group-addon"><i class="glyphicon glyphicon-euro"></i></span>
+				<input type = "text" name = "userMileageRate" placeholder = "Mileage Rate" class = "form-control"/>	
 			</div>
 		</div>
 
@@ -142,6 +150,12 @@
 			</div>	
 		</div>
 
+		<div class = "form-group">
+			 <div class="input-group">	
+		 		<span class="input-group-addon"><i class="glyphicon glyphicon-euro"></i></span>
+				<input type = "text" name = "userMileageRate" placeholder = "Mileage Rate" class = "form-control"/>	
+			</div>
+		</div>
 
 		<div class = "form-group">
 			 <div class="input-group">	
