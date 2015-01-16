@@ -59,7 +59,7 @@
 			</div>
 			<div class = "searchInput input-group">
 				<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-				<input type = "text" name = "searchDate" placeholder = "Date" class = "form-control"/>
+				<input type = "text" name = "searchDate" placeholder = "Date" class = "form-control searchDatePicker"/>
 			</div>
 			<div class = "searchInput">
 				<input type = 'submit' value = 'Search' class = "btn btn-default" id = "btnSearchExpenses"/>
@@ -78,7 +78,7 @@
 					<th>Merchant</th>
 					<th>Cost</th>
 					<th>Receipt</th>
-					<th>Date</th>
+					<th>Date / Time</th>
 					<th>Status</th>
 					<th>Account</th>
 					<th>Comment</th>

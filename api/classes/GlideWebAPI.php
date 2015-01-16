@@ -866,6 +866,10 @@ class GlideWebAPI extends GlideBaseAPI{
                 $sql .= "AND ex.account = '$accountName' ";
             }
 
+            if($date){
+               $sql .= "AND ex.expense_date LIKE '%$date%' "; 
+            }
+
             $sql .= "ORDER BY ex.expense_id Desc"; 
 
             unset($userName, $merchant, $date, $status, $category);             
@@ -937,6 +941,10 @@ class GlideWebAPI extends GlideBaseAPI{
 
             if($accountName){
                 $sql .= "AND journeys.account = '$accountName' ";
+            }
+
+            if($date){
+               $sql .= "AND journeys.date LIKE '%$date%' "; 
             }
 
 

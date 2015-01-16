@@ -52,7 +52,7 @@
 			</div>
 			<div class = "searchInput input-group">
 				<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-				<input type = "text" name = "date" placeholder = "Date" class = "form-control"/>
+				<input type = "text" name = "date" placeholder = "Date" class = "form-control searchDatePicker"/>
 			</div>
 			<div class = "searchInput">
 				<input type = 'submit' value = 'Search' class = "btn btn-default" id = "btnSearchJourneys"/>
@@ -71,7 +71,7 @@
 					<th>Destination</th>
 					<th>Distance</th>
 					<th>Journey Time</th>
-					<th>Date</th>
+					<th>Date / Time</th>
 					<th>Status</th>
 					<th>Account</th>
 					<th>Comment</th>

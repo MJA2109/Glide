@@ -12,7 +12,9 @@ requirejs.config({
         'modal' : ['../../js/vendor/jquery.simplemodal.1.4.4.min'],
         'validator' : ['//cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.3/js/bootstrapValidator.min'],
         'val' : ['../../js/val'],
-        'notify' : ['../../js/vendor/notify.min']
+        'notify' : ['../../js/vendor/notify.min'],
+        'moment' : ["../../js/vendor/moment"],
+        'datepicker' : ["../../js/vendor/bootstrap-datepicker"]
     },
     shim:{
     	'bootstrap': ['jquery'],
@@ -20,7 +22,9 @@ requirejs.config({
         'modal': ['jquery'],
         'validator' : ['jquery'],
         'val' : ['validator'],
-        'notify' : ['jquery']
+        'notify' : ['jquery'],
+        'moment' : ['jquery'],
+        'datepicker' : ['jquery']
     }
 });
 
@@ -34,7 +38,9 @@ require(['jquery',
          'modal',
          'validator',
          'val',
-         'notify'], function($) {
+         'notify',
+         'moment',
+         'datepicker'], function($) {
 
             
             //Contains global variables
@@ -333,7 +339,12 @@ require(['jquery',
                             }
 
                         },
-                        {"data": "expense_date"},
+                        {
+                            "data": "expense_date",
+                            "render" : function(data){
+                                return moment(data).format('MMMM Do YYYY, h:mm:ss a');
+                            }
+                        },
                         {"data": "expense_status"},
                         {"data": "account"},
                         {"data": "expense_comment"}
@@ -393,7 +404,12 @@ require(['jquery',
                             }
 
                         },
-                        {"data": "date"},
+                        {
+                            "data": "date",
+                            "render" : function(data){
+                                return moment(data).format('MMMM Do YYYY, h:mm:ss a');
+                            }
+                        },
                         {"data": "status"},
                         {"data": "account"},
                         {"data": "comment"}
@@ -818,6 +834,16 @@ require(['jquery',
                     displayModal(".modalReceiptImage");
                     event.stopImmediatePorpagtion();
                 });
+
+                //initialise datapicker
+                $("body").delegate(".searchDatePicker", "focus", function(){
+                    $(".searchDatePicker").datepicker({
+                        format: 'yyyy-mm-dd'
+                    }).on('changeDate', function(e){
+                        $(this).datepicker('hide');
+                    });;
+                });
+                
             }
 
             initialiseEvents();              
