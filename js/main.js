@@ -844,15 +844,43 @@ require(['jquery',
                     });;
                 });
 
-                // $("body").delegate(".simplemodal-close", "click", function(){
-                //     selectedIdStack = new Array();
-                //     alert(selectedIdStack);    
-                // });
+                //initialise html and style for notifications
+                $.notify.addStyle('glide', {
+                  html: "<div>" +
+                            "<div class ='time'><span data-notify-text = 'time'/></div>" +
+                            "<div class='name'><span class='glyphicon glyphicon-user'></span></span><span data-notify-text = 'name'/></div>" +
+                            "<div class='message'><span class='glyphicon glyphicon-upload'></span><span data-notify-text = 'message'/></div>" +
+                        "</div>"
+                });
+
+                $("#btnNotifications").click(function(){
+                    $(".notifyjs-corner").toggle(0, function(){
+                        $("#btnNotifications").toggleClass("notifyNotActive");    
+                    });
+                });               
                 
             }
 
             initialiseEvents();              
 });
+
+
+function notification(name, message, time){
+    
+    $.notify({
+        time : time,
+        name : name,
+        message : message
+    }, {
+        style: 'glide',
+        globalPosition: 'bottom right',
+        hideDuration: 700,
+        autoHideDelay: 20000,
+        gap:10
+    });
+}
+
+
 
 
 
