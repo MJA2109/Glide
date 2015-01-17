@@ -655,6 +655,38 @@ require(['jquery',
                     displayModal("#modalDeleteConfirmation"); 
                 });
 
+
+                //sumbit update form
+                $("body").delegate("#btnSubmitEditExpense", "click", function(){
+                    selectedIdStack = new Array(); //reset array
+                    submitModalForm("#modalEditExpenseForm");
+                });
+
+                $("body").delegate("#btnSubmitEditJourney", "click", function(){
+                    selectedIdStack = new Array(); //reset array
+                    submitModalForm("#modalEditJourneyForm");
+                });
+
+                $("body").delegate("#btnSubmitEditUser", "click", function(){
+                    selectedIdStack = new Array(); //reset array
+                    submitModalForm("#modalEditUserForm");
+                });
+
+
+
+                //search database 
+                $("body").delegate("#btnSearchExpenses", "click", function(){
+                    searchForm("#searchExpensesForm");
+                });
+
+                $("body").delegate("#btnSearchJourneys", "click", function(){
+                    searchForm("#searchJourneysForm");
+                });
+
+                $("body").delegate("#btnSearchUsers", "click", function(){
+                    searchForm("#searchUsersForm");
+                });
+
                 
                 //display update data modal
                 $("body").delegate("#btnEditExpense", "click", function(){
@@ -742,38 +774,6 @@ require(['jquery',
                 });
 
 
-
-                //sumbit update form
-                $("body").delegate("#btnSubmitEditExpense", "click", function(){
-                    selectedIdStack = new Array(); //reset array
-                    submitModalForm("#modalEditExpenseForm");
-                });
-
-                $("body").delegate("#btnSubmitEditJourney", "click", function(){
-                    selectedIdStack = new Array(); //reset array
-                    submitModalForm("#modalEditJourneyForm");
-                });
-
-                $("body").delegate("#btnSubmitEditUser", "click", function(){
-                    selectedIdStack = new Array(); //reset array
-                    submitModalForm("#modalEditUserForm");
-                });
-
-
-
-                //search database 
-                $("body").delegate("#btnSearchExpenses", "click", function(){
-                    searchForm("#searchExpensesForm");
-                });
-
-                $("body").delegate("#btnSearchJourneys", "click", function(){
-                    searchForm("#searchJourneysForm");
-                });
-
-                $("body").delegate("#btnSearchUsers", "click", function(){
-                    searchForm("#searchUsersForm");
-                });
-
                
 
                 //add selected rows to array for deleting, submitting or updating
@@ -788,8 +788,8 @@ require(['jquery',
                         selectedIdStack.splice($.inArray(rowId, selectedIdStack), 1);
                         $(event.target).parent().removeClass("selected");
                     }
-                    
-                    alert(selectedIdStack);
+
+                    // alert(selectedIdStack);
                 
                     //disable endable deletion, add and edit buttons
                     if(selectedIdStack.length == 0){
@@ -843,6 +843,11 @@ require(['jquery',
                         $(this).datepicker('hide');
                     });;
                 });
+
+                // $("body").delegate(".simplemodal-close", "click", function(){
+                //     selectedIdStack = new Array();
+                //     alert(selectedIdStack);    
+                // });
                 
             }
 
