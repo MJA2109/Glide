@@ -7,9 +7,58 @@ function initialiseChart(table, type){
         break;
         case "pie" : drawPieChart(table);
         break;
+        case "line" : drawLineChart(table);
+        break;
       }
 
     }});  
+}
+
+
+function drawLineChart(table){
+
+
+      var data = processData(table);
+
+      var formattedData = google.visualization.arrayToDataTable([
+          ['Month', '€'],
+          [data.col_1, data.val_1],
+          [data.col_2, data.val_2],
+          [data.col_3, data.val_3],
+          [data.col_4, data.val_4],
+          [data.col_5, data.val_5],
+          [data.col_6, data.val_6],
+          [data.col_7, data.val_7],
+          [data.col_8, data.val_8],
+          [data.col_9, data.val_9],
+          [data.col_10, data.val_10],
+          [data.col_11, data.val_11],
+          [data.col_12, data.val_12]
+
+        ]);
+
+      var options = {
+        width: 1200,
+        height: 563,
+        hAxis: {
+          title: 'Time'
+        },
+        vAxis: {
+          title: 'Total Expenditure'
+        },
+        backgroundColor: "#EDF1F3",
+        series: {
+            0: { color: '#273a45' }
+        },
+        tooltip: {isHtml: true},
+        lineWidth: 1,
+        line: {groupWidth: "5%"},
+      };
+
+      var chart = new google.visualization.LineChart(document.getElementById('mainView'));
+
+      chart.draw(formattedData, options);
+
 }
 
 
@@ -24,7 +73,10 @@ function drawPieChart(table){
           [data.col_2, data.val_2],
           [data.col_3, data.val_3],
           [data.col_4, data.val_4],
-          [data.col_5, data.val_5]
+          [data.col_5, data.val_5],
+          [data.col_6, data.val_6],
+          [data.col_7, data.val_7],
+          [data.col_8, data.val_8]
         ]);
 
         var options = {
@@ -38,7 +90,9 @@ function drawPieChart(table){
             2: { color: '#273a45' },
             3: { color: '#839ead' },
             4: { color: '#47697c' },
-            5: { color: '#273a45' }
+            5: { color: '#273a45' },
+            6: { color: '#172329' },
+            7: { color: '#b8c7d0' },
           }
         };
 
@@ -113,14 +167,6 @@ function drawBarChart(table){
       tableData.val_3 = parseFloat(table.data[2].colValue);
     }
 
-    if(table.data[5] == undefined){
-      tableData.col_6 = "";
-      tableData.val_6 = 1;
-    }else{
-      tableData.col_6 = table.data[5].column;
-      tableData.val_6 = parseFloat(table.data[5].colValue);
-    }
-
     if(table.data[3] == undefined){
       tableData.col_4 = "";
       tableData.val_4 = 1;
@@ -136,6 +182,64 @@ function drawBarChart(table){
       tableData.col_5 = table.data[4].column;
       tableData.val_5 = parseFloat(table.data[4].colValue);
     }
+
+    if(table.data[5] == undefined){
+      tableData.col_6 = "";
+      tableData.val_6 = 1;
+    }else{
+      tableData.col_6 = table.data[5].column;
+      tableData.val_6 = parseFloat(table.data[5].colValue);
+    }
+
+
+    if(table.data[6] == undefined){
+      tableData.col_7 = "";
+      tableData.val_7 = 1;
+    }else{
+      tableData.col_7 = table.data[6].column;
+      tableData.val_7 = parseFloat(table.data[6].colValue);
+    }
+
+    if(table.data[7] == undefined){
+      tableData.col_8 = "";
+      tableData.val_8 = 1;
+    }else{
+      tableData.col_8 = table.data[7].column;
+      tableData.val_8 = parseFloat(table.data[7].colValue);
+    }
+
+    if(table.data[8] == undefined){
+      tableData.col_9 = "";
+      tableData.val_9 = 1;
+    }else{
+      tableData.col_9 = table.data[8].column;
+      tableData.val_9 = parseFloat(table.data[8].colValue);
+    }
+
+    if(table.data[9] == undefined){
+      tableData.col_10 = "";
+      tableData.val_10 = 1;
+    }else{
+      tableData.col_10 = table.data[9].column;
+      tableData.val_10 = parseFloat(table.data[9].colValue);
+    }
+
+    if(table.data[10] == undefined){
+      tableData.col_11 = "";
+      tableData.val_11 = 1;
+    }else{
+      tableData.col_11 = table.data[10].column;
+      tableData.val_11 = parseFloat(table.data[10].colValue);
+    }
+
+    if(table.data[11] == undefined){
+      tableData.col_12 = "";
+      tableData.val_12 = 1;
+    }else{
+      tableData.col_12 = table.data[11].column;
+      tableData.val_12 = parseFloat(table.data[11].colValue);
+    }
+    
 
 
     return tableData;

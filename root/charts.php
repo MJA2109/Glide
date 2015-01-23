@@ -36,7 +36,8 @@
 				<select class = "form-control" name = "time">
 					<option value = "" disabled>Time</option>
 					<option value = "1 MONTH">1 Month</option>
-					<option value = "3 MONTH">3 Months</option>
+					<option value = "1 MONTH">2 Month</option>
+					<option value = "3 MONTH">4 Months</option>
 					<option value = "6 MONTH">6 Months</option>
 					<option value = "1 YEAR">1 Year</option>
 					<!-- <option value = "all">All</option> -->

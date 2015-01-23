@@ -327,6 +327,8 @@ require(['jquery',
                                 break;
                                 case "pie" : initialiseChart(results, "pie");
                                 break;
+                                case "line" : initialiseChart(results, "line");
+                                break;
                             }
                            
                             // console.log(data);
@@ -752,7 +754,9 @@ require(['jquery',
                 });
 
                 $("body").delegate("#arrowIcon", "click", function(){
-                    alert("show arrow chart");
+                    var emptySet = {data : Array}
+                    $("#getChartDataForm input[name = 'chartType']").val("lineChart");
+                    initialiseChart(emptySet, "line");  
                 });
 
 

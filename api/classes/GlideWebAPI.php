@@ -1159,6 +1159,8 @@ class GlideWebAPI extends GlideBaseAPI{
             break;
             case "pieChart" : GlideWebAPI::getPieChartData();
             break;
+            case "lineChart" : GlideWebAPI::getLineChartData();
+            break;
         }    
     }
 
@@ -1211,7 +1213,7 @@ class GlideWebAPI extends GlideBaseAPI{
                 }
                 $sql_1 .= " GROUP BY merchant_name
                             ORDER BY expense_cost DESC 
-                            LIMIT 6";
+                            LIMIT 8";
 
                 $merchantCost = $database->query($sql_1)->fetchAll();
 
@@ -1338,6 +1340,77 @@ class GlideWebAPI extends GlideBaseAPI{
         }else{
             echo json_encode(array("error" => "Admin ID not set"));
         }          
+    }
+
+
+     /**
+     * Name: getLineChartData
+     * Purpose: Get total expenditure to generate Google bar chart. 
+     */
+    static function getLineChartData(){
+        
+        session_start();
+
+        if(isset($_SESSION["adminId"])){
+            $database = GlideWebAPI::connectDB();
+            $adminId = $_SESSION["adminId"];
+            $time = Util::get("time");
+            $log = array();
+            $log["type"] = "getChartData"; 
+            $log["table"] = "expenses";
+            $log["chartType"] = "line";
+            $log["errors"] = array();
+            $chartData = array();
+
+
+            $option = $_POST["searchOption"];
+
+            if($option == "singleUser"){
+
+                $userEmail = Util::get("userEmail");
+                $userId = GlideWebAPI::getUserId($userEmail, $adminId);
+                if(!$userId){
+                    $log["errors"]["user ID"] = "ID not set";
+                }
+            }
+
+            $errorCount = count($log["errors"]);
+
+            if($errorCount != 0){
+                echo json_encode($log);
+            }else{
+
+                //query expense table 
+                $sql_1 = "SELECT DATE_FORMAT(expense_date, '%b') as month, ROUND(SUM(expense_cost), 2) as total_cost
+                          FROM expenses
+                          WHERE expense_date >= DATE_SUB(CURDATE(), INTERVAL ".$time.")
+                          AND admin_id = $adminId
+                          AND is_deleted = 0 ";
+                
+                //add for single user only
+                if($option == "singleUser"){
+                    $sql_1 .= " AND user_id = $userId[0] ";
+                }
+                $sql_1 .= "GROUP BY MONTH(expense_date)
+                           ORDER BY expense_date ASC";
+
+                $totalCost = $database->query($sql_1)->fetchAll();
+                $index = 0;
+
+                foreach($totalCost as $data){
+                    $chartData[$index] = array();
+                    $chartData[$index]["column"] = $data["month"];
+                    $chartData[$index]["colValue"] = $data["total_cost"];
+                    $index++;
+                }
+
+                $log["data"] = $chartData;
+                echo json_encode($log);
+            }
+
+        }else{
+            echo json_encode(array("error" => "Admin ID not set"));
+        }     
     }
     
 
