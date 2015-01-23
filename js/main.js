@@ -321,7 +321,14 @@ require(['jquery',
                         success: function (data) {
                             results = JSON.parse(data);
                             console.log(JSON.stringify(results));
-                            initialiseBarChart(results);
+                            var type = results.chartType;
+                            switch(type){
+                                case "bar" :  initialiseChart(results, "bar");
+                                break;
+                                case "pie" : initialiseChart(results, "pie");
+                                break;
+                            }
+                           
                             // console.log(data);
                         },
                         error: function(){
@@ -734,11 +741,14 @@ require(['jquery',
 
                 $("body").delegate("#barIcon", "click", function(){
                     var emptySet = {data : Array} //pass in empty object to initialise chart
-                    initialiseBarChart(emptySet);
+                    $("#getChartDataForm input[name = 'chartType']").val("barChart");
+                    initialiseChart(emptySet, "bar");
                 });
 
                 $("body").delegate("#pieIcon", "click", function(){
-                    alert("show pie chart");
+                    var emptySet = {data : Array}
+                    $("#getChartDataForm input[name = 'chartType']").val("pieChart");
+                    initialiseChart(emptySet, "pie");
                 });
 
                 $("body").delegate("#arrowIcon", "click", function(){

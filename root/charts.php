@@ -16,7 +16,8 @@
 	<div id = "search">
 		<form method = "POST" id = "getChartDataForm" >
 			<input type = 'hidden' name = 'action' value = 'getChartData' />
-
+			<input type = "hidden" name = "chartType" value = "barChart" />
+			
 			<div class = "searchInput input-group">
 				<span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
 				<select class = "form-control" name = "searchOption" id = "chartDisplayOptions">

@@ -1152,12 +1152,18 @@ class GlideWebAPI extends GlideBaseAPI{
     }
 
 
-
-    /**
-     * Name: getChartData
-     * Purpose: Get category totals to generate Google bar chart. 
-     */
     public static function getChartData(){
+        $chartType = $_POST["chartType"];
+        switch($chartType){
+            case "barChart" : GlideWebAPI::getBarChartData();
+            break;
+            case "pieChart" : GlideWebAPI::getPieChartData();
+            break;
+        }    
+    }
+
+
+    static function getPieChartData(){
 
         session_start();
 
@@ -1168,39 +1174,96 @@ class GlideWebAPI extends GlideBaseAPI{
             $log = array();
             $log["type"] = "getChartData"; 
             $log["table"] = "expenses";
-            $log["errors"] = array();
-            $userId;
+            $log["chartType"] = "pie";
+            $log["errors"] = array(); 
+            $chartData = array();
 
 
             $option = $_POST["searchOption"];
-            $log["logs"]["option"] = $option;
 
             if($option == "singleUser"){
 
                 $userEmail = Util::get("userEmail");
-            
-                if(empty($userEmail)){
-                    $log["errors"]["userEmailErr"] = "User E-mail address required";
-                }else{
+                $userId = GlideWebAPI::getUserId($userEmail, $adminId);
+                if(!$userId){
+                    $log["errors"]["user ID"] = "ID not set";
+                }
+            }
 
-                    $validAdminEmail = Util::validateEmail($userEmail);
+            $errorCount = count($log["errors"]);
+
+            if($errorCount != 0){
+                echo json_encode($log);
+            }else{
+
+                //query expense table 
+                $sql_1 = "SELECT merchant_name, ROUND(SUM(expense_cost), 2) as total_spend
+                          FROM merchants mc, expenses ex
+                          WHERE expense_date >= DATE_SUB(CURDATE(), INTERVAL ".$time.")
+                          AND ex.admin_id = $adminId
+                          AND ex.merchant_id = mc.merchant_id
+                          AND ex.is_deleted = 0
+                          AND mc.is_deleted = 0";
                 
-                    if($validAdminEmail === false){
-                        $log["errors"]["validEmail"] = "User E-mail is not valid";
-                    }else{
-                        
-                        $userId = $database->select("users", "user_id",[
-                            "AND" => [
-                                "user_email" => $userEmail,
-                                "admin_id" => $adminId,
-                                "is_deleted" => 0
-                            ]
-                        ]);
+                //add for single user only
+                if($option == "singleUser"){
+                    $sql_1 .= " AND user_id = $userId[0] ";
+                }
+                $sql_1 .= " GROUP BY merchant_name
+                            ORDER BY expense_cost DESC 
+                            LIMIT 6";
 
-                        if(!$userId){
-                            $log["errors"]["user"] = "User does not exist";   
-                        }
-                    }
+                $merchantCost = $database->query($sql_1)->fetchAll();
+
+                $index = 0;
+
+                foreach($merchantCost as $data){
+                    $chartData[$index] = array();
+                    $chartData[$index]["column"] = $data["merchant_name"];
+                    $chartData[$index]["colValue"] = $data["total_spend"];
+                    $index++;
+                }
+
+                $log["data"] = $chartData;                
+
+                echo json_encode($log);
+
+            }
+        }else{
+            echo json_encode(array("error" => "Admin ID not set"));
+        }      
+    }
+
+
+    /**
+     * Name: getBarChartData
+     * Purpose: Get category totals to generate Google bar chart. 
+     */
+    static function getBarChartData(){
+
+        session_start();
+
+        if(isset($_SESSION["adminId"])){
+            $database = GlideWebAPI::connectDB();
+            $adminId = $_SESSION["adminId"];
+            $time = Util::get("time");
+            $log = array();
+            $log["type"] = "getChartData"; 
+            $log["table"] = "expenses";
+            $log["chartType"] = "bar";
+            $log["errors"] = array();
+            $chartData = array();
+            $userId;
+
+
+            $option = $_POST["searchOption"];
+
+            if($option == "singleUser"){
+
+                $userEmail = Util::get("userEmail");
+                $userId = GlideWebAPI::getUserId($userEmail, $adminId);
+                if(!$userId){
+                    $log["errors"]["user ID"] = "ID not set";
                 }
             }
 
@@ -1257,15 +1320,15 @@ class GlideWebAPI extends GlideBaseAPI{
 
                 foreach($categoryCost as $data){
                     $chartData[$index] = array();
-                    $chartData[$index]["expense_category"] = $data["expense_category"];
-                    $chartData[$index]["total_cost"] = $data["total_cost"];
+                    $chartData[$index]["column"] = $data["expense_category"];
+                    $chartData[$index]["colValue"] = $data["total_cost"];
                     $index++;
                     $last = $index;
                 }
 
                 //append mileage cost onto chartData
-                $chartData[$last]["expense_category"] = "Mileage Cost";
-                $chartData[$last]["total_cost"] = $mileageCost[0]["mileage"]; 
+                $chartData[$last]["column"] = "Mileage Cost";
+                $chartData[$last]["colValue"] = $mileageCost[0]["mileage"]; 
 
                 $log["data"] = $chartData;                
 
@@ -1275,6 +1338,52 @@ class GlideWebAPI extends GlideBaseAPI{
         }else{
             echo json_encode(array("error" => "Admin ID not set"));
         }          
+    }
+    
+
+    /**
+     * Name: getUserId
+     * Purpose: Get user ID associated with a given email address.
+     * @param $userEmail - String : Email address
+     * @param $adminId - Int : Administrators ID
+     * @return $userId 
+     */
+    static function getUserId($userEmail, $adminId){
+
+        $database = GlideWebAPI::connectDB();
+        $log["errors"] = array();
+
+        if(empty($userEmail)){
+            $log["errors"]["userEmailErr"] = "User E-mail address required";
+        }else{
+
+            $validAdminEmail = Util::validateEmail($userEmail);
+        
+            if($validAdminEmail === false){
+                $log["errors"]["validEmail"] = "User E-mail is not valid";
+            }else{
+                
+                $userId = $database->select("users", "user_id",[
+                    "AND" => [
+                        "user_email" => $userEmail,
+                        "admin_id" => $adminId,
+                        "is_deleted" => 0
+                    ]
+                ]);
+
+                if(!$userId){
+                    $log["errors"]["user"] = "User does not exist";   
+                }
+            }
+        }
+
+        $errorCount = count($log["errors"]);
+
+        if($errorCount != 0){
+            return false;
+        }else{
+            return $userId;
+        }
     }
 
 } //class
