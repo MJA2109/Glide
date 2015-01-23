@@ -43,6 +43,8 @@ if(isset($_POST["action"])){
 	    break;
 	    case "isAvailable" : GlideWebAPI::isAvailable();
 	    break;
+	    case "getChartData" : GlideWebAPI::getChartData();
+	    break;
 	}
 }
 

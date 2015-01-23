@@ -14,7 +14,9 @@ requirejs.config({
         'val' : ['../../js/val'],
         'notify' : ['../../js/vendor/notify.min'],
         'moment' : ["../../js/vendor/moment"],
-        'datepicker' : ["../../js/vendor/bootstrap-datepicker"]
+        'datepicker' : ["../../js/vendor/bootstrap-datepicker"],
+        //NB - google charts included at top of head.php template
+        'charts' : ['../../js/charts']
     },
     shim:{
     	'bootstrap': ['jquery'],
@@ -40,7 +42,8 @@ require(['jquery',
          'val',
          'notify',
          'moment',
-         'datepicker'], function($) {
+         'datepicker',
+         'charts'], function($) {
 
             
             //Contains global variables
@@ -298,6 +301,34 @@ require(['jquery',
                     error: function(){
                         console.log("Error: Ajax request unsuccessful");   
                     }
+                });
+            }
+
+
+            /**
+             * Name: getChartData
+             * Purpose: Get data user expenditure data to populate Google chart.
+             */
+            function getChartData(){   
+                var frm = $("#getChartDataForm");
+                frm.submit(function (ev) {
+                    var data = frm.serialize();
+                    console.log("Data for server : " + data);
+                    $.ajax({
+                        type: frm.attr('method'),
+                        url: appData.api,
+                        data: data,
+                        success: function (data) {
+                            results = JSON.parse(data);
+                            console.log(JSON.stringify(results));
+                            initialiseBarChart(results);
+                            // console.log(data);
+                        },
+                        error: function(){
+                            console.log("Error: Ajax request unsuccessful");
+                        }
+                    });
+                    ev.preventDefault();
                 });
             }
 
@@ -617,6 +648,13 @@ require(['jquery',
                     getPage("../root/users.php", "getUsersData", "datatable");
                     transition();
                 });
+                $("#navCharts").click(function(){
+                    setLinkColour(this);
+                    selectedIdStack = new Array(); //reset array
+                    getPage("../root/charts.php", null, "chart");
+                    transition();
+                });
+
                 $("#navAdmin").click(function(){
                     setLinkColour(this);
                     getPage("../root/admin.php", "standard");
@@ -686,6 +724,29 @@ require(['jquery',
                 $("body").delegate("#btnSearchUsers", "click", function(){
                     searchForm("#searchUsersForm");
                 });
+
+
+
+                //get chart data
+                $("body").delegate("#btnGetChartData", "click", function(){
+                    getChartData();
+                });
+
+                $("body").delegate("#barIcon", "click", function(){
+                    var emptySet = {data : Array} //pass in empty object to initialise chart
+                    initialiseBarChart(emptySet);
+                });
+
+                $("body").delegate("#pieIcon", "click", function(){
+                    alert("show pie chart");
+                });
+
+                $("body").delegate("#arrowIcon", "click", function(){
+                    alert("show arrow chart");
+                });
+
+
+
 
                 
                 //display update data modal
@@ -853,11 +914,24 @@ require(['jquery',
                         "</div>"
                 });
 
+                //notification on/off
                 $("#btnNotifications").click(function(){
                     $(".notifyjs-corner").toggle(0, function(){
                         $("#btnNotifications").toggleClass("notifyNotActive");    
                     });
-                });               
+                });
+
+                //show display user email input on charts.php
+                $("body").delegate("#chartDisplayOptions", "change", function(){
+                    var option = $(this).find("option:selected").val();
+                    if(option == "allUsers"){
+                        $("#getChartDataForm input[name = 'userEmail']").attr("disabled", true).val("");
+                    }else{
+                        $("#getChartDataForm input[name = 'userEmail']").attr("disabled", false);   
+                    }
+                });
+
+
                 
             }
 

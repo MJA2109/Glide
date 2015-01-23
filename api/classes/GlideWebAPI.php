@@ -291,28 +291,9 @@ class GlideWebAPI extends GlideBaseAPI{
 
 
     /**
-     * Name: isEmailAvail
-     * Purpose: Check email address availability
+     * Name: doesUserExist
+     * Purpose: Check user is user mobile, admin email or user email available
      */
-    // public static function isEmailAvail(){
-
-    //     $adminEmail = Util::get("adminEmail"); 
-    //     $log = array();
-
-    //     $database = GlideWebAPI::connectDB();
-
-    //     $emailInUse = $database->count("admins", [
-    //         "admin_email" => $adminEmail
-    //     ]);
-    //     if($emailInUse > 0){
-    //         $log["valid"] = false;
-    //     }else{
-    //         $log["valid"] = true;
-    //     }
-    //     echo json_encode($log);  
-    // }
-
-
     public static function isAvailable(){
 
         session_start();
@@ -1172,7 +1153,131 @@ class GlideWebAPI extends GlideBaseAPI{
 
 
 
-}
+    /**
+     * Name: getChartData
+     * Purpose: Get category totals to generate Google bar chart. 
+     */
+    public static function getChartData(){
+
+        session_start();
+
+        if(isset($_SESSION["adminId"])){
+            $database = GlideWebAPI::connectDB();
+            $adminId = $_SESSION["adminId"];
+            $time = Util::get("time");
+            $log = array();
+            $log["type"] = "getChartData"; 
+            $log["table"] = "expenses";
+            $log["errors"] = array();
+            $userId;
+
+
+            $option = $_POST["searchOption"];
+            $log["logs"]["option"] = $option;
+
+            if($option == "singleUser"){
+
+                $userEmail = Util::get("userEmail");
+            
+                if(empty($userEmail)){
+                    $log["errors"]["userEmailErr"] = "User E-mail address required";
+                }else{
+
+                    $validAdminEmail = Util::validateEmail($userEmail);
+                
+                    if($validAdminEmail === false){
+                        $log["errors"]["validEmail"] = "User E-mail is not valid";
+                    }else{
+                        
+                        $userId = $database->select("users", "user_id",[
+                            "AND" => [
+                                "user_email" => $userEmail,
+                                "admin_id" => $adminId,
+                                "is_deleted" => 0
+                            ]
+                        ]);
+
+                        if(!$userId){
+                            $log["errors"]["user"] = "User does not exist";   
+                        }
+                    }
+                }
+            }
+
+            $errorCount = count($log["errors"]);
+
+            if($errorCount != 0){
+                echo json_encode($log);
+            }else{
+                
+                   
+                //query expense table 
+                $sql_1 = "SELECT expense_category, ROUND(SUM(expense_cost), 2) as total_cost
+                          FROM expenses
+                          WHERE expense_date >= DATE_SUB(CURDATE(), INTERVAL ".$time.")
+                          AND admin_id = $adminId
+                          AND is_deleted = 0 ";
+                
+                //add for single user only
+                if($option == "singleUser"){
+                    $sql_1 .= " AND user_id = $userId[0] ";
+                }
+                $sql_1 .= " GROUP BY expense_category ";
+
+                //calculate mileage for single user only
+                if($option == "singleUser"){
+                    $sql_2 = "SELECT (ROUND(SUM(distance), 2) * user_mileage_rate) as mileage
+                              FROM users ur, journeys jn
+                              WHERE date >= DATE_SUB(CURDATE(), INTERVAL ".$time.")
+                              AND ur.user_id = jn.user_id
+                              AND ur.admin_id = $adminId
+                              AND jn.is_deleted = 0
+                              AND ur.is_deleted = 0 
+                              AND ur.user_mileage_rate > 0
+                              AND jn.user_id = $userId[0] ";
+                
+
+                }else{
+                    //calculate all mileage costs
+                    $sql_2 = "SELECT ROUND(SUM(distance * user_mileage_rate), 2) as mileage
+                              FROM users ur, journeys jn
+                              WHERE date >= DATE_SUB(CURDATE(), INTERVAL ".$time.")
+                              AND ur.user_id = jn.user_id
+                              AND ur.admin_id = $adminId
+                              AND jn.is_deleted = 0
+                              AND ur.is_deleted = 0 
+                              AND ur.user_mileage_rate > 0 ";
+                }
+
+                $categoryCost = $database->query($sql_1)->fetchAll();
+                $mileageCost = $database->query($sql_2)->fetchAll();
+
+                $index = 0;
+                $last; //used to append mileage to last position of array
+
+                foreach($categoryCost as $data){
+                    $chartData[$index] = array();
+                    $chartData[$index]["expense_category"] = $data["expense_category"];
+                    $chartData[$index]["total_cost"] = $data["total_cost"];
+                    $index++;
+                    $last = $index;
+                }
+
+                //append mileage cost onto chartData
+                $chartData[$last]["expense_category"] = "Mileage Cost";
+                $chartData[$last]["total_cost"] = $mileageCost[0]["mileage"]; 
+
+                $log["data"] = $chartData;                
+
+                echo json_encode($log);
+            }
+
+        }else{
+            echo json_encode(array("error" => "Admin ID not set"));
+        }          
+    }
+
+} //class
 
 
 ?>

@@ -12,6 +12,7 @@ echo "
 					<li><a id = 'navExpenses'>Expenses</a></li>
 					<li><a id = 'navJourneys'>Journeys</a></li>
 					<li><a id = 'navUsers'>Users</a></li>
+					<li><a id = 'navCharts'>Charts</a></li>
 				</ul>
 		  	</nav>
 		</div>
