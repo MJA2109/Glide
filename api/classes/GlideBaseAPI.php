@@ -120,6 +120,7 @@ class GlideBaseAPI{
             $account = Util::get("account");
             $receiptId = Util::get("receiptId");
             $comment = Util::get("comment");
+            $approved = Util::get("approved");
             $log = array();
             $log["table"] = "expenses";
             $log["type"] = "addExpense";
@@ -128,6 +129,10 @@ class GlideBaseAPI{
 
             if($receiptId == ""){
                 $receiptId = 1;
+            }
+
+            if(empty($approved)){
+                $approved = "Awaiting...";
             }
 
             if(empty($userName)){
@@ -174,7 +179,8 @@ class GlideBaseAPI{
                     "expense_category" => $category,
                     "expense_cost" => $cost,
                     "account" => $account,
-                    "expense_comment" => $comment
+                    "expense_comment" => $comment,
+                    "expense_approved" => $approved
                     
                 ]); 
 

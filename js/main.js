@@ -385,8 +385,9 @@ require(['jquery',
                                 return moment(data).format('MMMM Do YYYY, h:mm:ss a');
                             }
                         },
-                        {"data": "expense_status"},
                         {"data": "account"},
+                        {"data": "expense_status"},
+                        {"data": "expense_approved"},
                         {"data": "expense_comment"}
                     ]
                 });
@@ -705,6 +706,7 @@ require(['jquery',
 
                 //sumbit update form
                 $("body").delegate("#btnSubmitEditExpense", "click", function(){
+                    $("#statusInput").attr("disabled", false);
                     selectedIdStack = new Array(); //reset array
                     submitModalForm("#modalEditExpenseForm");
                 });
@@ -773,16 +775,28 @@ require(['jquery',
                     var name = $(row + " td:nth-child(1)").text();
                     var category = $(row + " td:nth-child(2)").text();
                     var merchant = $(row + " td:nth-child(3)").text();
-                    var cost = $(row + " td:nth-child(4)").text();
-                    
+                    var cost = $(row + " td:nth-child(4)").text(); 
                     cost = formatDecimal(cost);
+                    var status = $(row + " td:nth-child(8)").text();
+                    var account = $(row + " td:nth-child(7)").text();
+                    var approved = $(row + " td:nth-child(9)").text();
+                    var comment = $(row + " td:nth-child(10)").text();
 
-                    var status = $(row + " td:nth-child(7)").text();
-                    var account = $(row + " td:nth-child(8)").text();
-                    var comment = $(row + " td:nth-child(9)").text();
-
+                    //hide option if already approved
+                    if(approved == "Yes"){
+                        $("#approvalInput").hide();
+                        $("#statusInput").attr("disabled", false); 
+                    }else if(approved == "Awaiting..."){
+                        approved = "";
+                        $("#statusInput").attr("disabled", true);
+                    }else{
+                        $("#statusInput").attr("disabled", false);  
+                    }
+                    
+                    //populate modal with row values
                     $(form + " #expenseId").val(dataId);
                     $(form + " input[name = 'userName']").val(name);
+                    $(form + " option[value = '" + approved + "']").prop("selected", true);
                     $(form + " option[value = '" + status + "']").prop("selected", true);
                     $(form + " option[value = '" + category + "']").prop("selected", true);
                     $(form + " input[name = 'merchant']").val(merchant);
@@ -790,6 +804,9 @@ require(['jquery',
                     $(form + " input[name = 'status']").val(status);
                     $(form + " input[name = 'account']").val(account);
                     $(form + " input[name = 'comment']").val(comment);
+                
+                
+
 
                     displayModal("#modalEditExpense");   
                 });

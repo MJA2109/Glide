@@ -424,14 +424,16 @@ class GlideWebAPI extends GlideBaseAPI{
                     ex.expense_status,
                     re.receipt_image, 
                     ex.expense_comment,
-                    ex.account
+                    ex.account,
+                    ex.expense_approved
                     FROM users u
                     JOIN expenses ex on ex.user_id = u.user_id
                     JOIN merchants mer on mer.merchant_id = ex.merchant_id
                     LEFT JOIN receipts re on re.receipt_id = ex.receipt_id
                     where
                     ex.admin_id = '$adminId'
-                    AND ex.is_deleted = 0 ";
+                    AND ex.is_deleted = 0 
+                    AND ex.expense_approved <> 'No' ";
 
             if($accountName){
                 $sql .="AND ex.account = '$accountName'";
@@ -454,6 +456,7 @@ class GlideWebAPI extends GlideBaseAPI{
                 $expense[$index]["expense_date"] = $data["expense_date"];
                 $expense[$index]["account"] = $data["account"];
                 $expense[$index]["expense_comment"] = $data["expense_comment"];
+                $expense[$index]["expense_approved"] = $data["expense_approved"];
                 $index++;
             }
 
@@ -816,12 +819,14 @@ class GlideWebAPI extends GlideBaseAPI{
                       ex.expense_date,
                       ex.expense_status,
                       ex.account,
-                      ex.expense_comment 
+                      ex.expense_comment,
+                      ex.expense_approved 
                       FROM users u
                            JOIN expenses ex on ex.user_id = u.user_id
                            JOIN merchants mer on mer.merchant_id = ex.merchant_id
                            LEFT JOIN receipts re on re.receipt_id = ex.receipt_id
-                           where ex.admin_id = '$adminId' AND ex.is_deleted = 0 ";
+                           where ex.admin_id = '$adminId' AND ex.is_deleted = 0 
+                           AND ex.expense_approved <> 'No' ";
 
             if($userName){
                 $sql .= "AND u.user_name LIKE '%$userName%' ";
@@ -991,6 +996,7 @@ class GlideWebAPI extends GlideBaseAPI{
             $cost = $_POST["cost"];
             $account = Util::get("account");
             $comment = Util::get("comment");
+            $approved = Util::get("approved");
             $log = array();
             $log["type"] = "editExpense"; 
             $log["table"] = "expenses";
@@ -1017,7 +1023,8 @@ class GlideWebAPI extends GlideBaseAPI{
                     "expense_cost" => $cost,
                     "expense_status" => $status,
                     "account" => $account,
-                    "expense_comment" => $comment
+                    "expense_comment" => $comment,
+                    "expense_approved" => $approved
                 ], [
                     "expense_id" => $expenseId
                 ]);
@@ -1205,7 +1212,8 @@ class GlideWebAPI extends GlideBaseAPI{
                           AND ex.admin_id = $adminId
                           AND ex.merchant_id = mc.merchant_id
                           AND ex.is_deleted = 0
-                          AND mc.is_deleted = 0";
+                          AND mc.is_deleted = 0
+                          AND ex.expense_approved <> 'No' ";
                 
                 //add for single user only
                 if($option == "singleUser"){
@@ -1281,7 +1289,8 @@ class GlideWebAPI extends GlideBaseAPI{
                           FROM expenses
                           WHERE expense_date >= DATE_SUB(CURDATE(), INTERVAL ".$time.")
                           AND admin_id = $adminId
-                          AND is_deleted = 0 ";
+                          AND is_deleted = 0 
+                          AND expenses.expense_approved <> 'No' ";
                 
                 //add for single user only
                 if($option == "singleUser"){
@@ -1328,9 +1337,13 @@ class GlideWebAPI extends GlideBaseAPI{
                     $last = $index;
                 }
 
-                //append mileage cost onto chartData
-                $chartData[$last]["column"] = "Mileage Cost";
-                $chartData[$last]["colValue"] = $mileageCost[0]["mileage"]; 
+                $log["sql"] = $mileageCost;
+
+                if($mileageCost[0]["mileage"] != null){
+                    //append mileage cost onto chartData
+                    $chartData[$last]["column"] = "Mileage Cost";
+                    $chartData[$last]["colValue"] = $mileageCost[0]["mileage"];
+                } 
 
                 $log["data"] = $chartData;                
 
@@ -1385,7 +1398,8 @@ class GlideWebAPI extends GlideBaseAPI{
                           FROM expenses
                           WHERE expense_date >= DATE_SUB(CURDATE(), INTERVAL ".$time.")
                           AND admin_id = $adminId
-                          AND is_deleted = 0 ";
+                          AND is_deleted = 0 
+                          AND expenses.expense_approved <> 'No' ";
                 
                 //add for single user only
                 if($option == "singleUser"){
