@@ -139,6 +139,8 @@ require(['jquery',
                 $("#ajaxContent").html(loader).load(url, function(){
                     if(pageType == "datatable"){
                         getTableData(action);
+                    }else if(pageType == "chart"){
+                        attachValEvent("#search"); //attach validation to ajax loaded content
                     }
                 });  
             }
@@ -675,7 +677,6 @@ require(['jquery',
                 $("#navCharts").click(function(){
                     setLinkColour(this);
                     selectedIdStack = new Array(); //reset array
-                    attachValEvent("#search"); //attach validation to ajax loaded content
                     getPage("../root/charts.php", null, "chart");
                     transition();
                 });
@@ -970,10 +971,16 @@ require(['jquery',
                     var option = $(this).find("option:selected").val();
                     if(option == "allUsers"){
                         $("#getChartDataForm input[name = 'userEmail']").attr("disabled", true).val("");
+                        $(".hideShowEmail").hide();
                     }else{
-                        $("#getChartDataForm input[name = 'userEmail']").attr("disabled", false);   
+                        $("#getChartDataForm input[name = 'userEmail']").attr("disabled", false);
+                        $(".hideShowEmail").show();
+
                     }
+                    $("#btnGetChartData").attr("disabled", false);
                 });
+
+
 
 
                 

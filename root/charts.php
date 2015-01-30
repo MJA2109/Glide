@@ -18,19 +18,24 @@
 			<input type = 'hidden' name = 'action' value = 'getChartData' />
 			<input type = "hidden" name = "chartType" value = "barChart" />
 			
-			<div class = "searchInput input-group">
-				<span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
-				<select class = "form-control" name = "searchOption" id = "chartDisplayOptions">
-					<option value = "" disabled>Display</option>
-					<option value = "singleUser">User</option>
-					<option value = "allUsers">All Users</option>
-				</select>
+			<div class = "form-group">
+				<div class = "searchInput input-group">
+					<span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
+					<select class = "form-control" name = "searchOption" id = "chartDisplayOptions">
+						<option value = "" disabled>Display</option>
+						<option value = "singleUser">User</option>
+						<option value = "allUsers">All Users</option>
+					</select>
+				</div>
 			</div>
-			
-			<div class = "searchInput input-group">
-				<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-				<input type = "text" name = "userEmail" placeholder = "User email" class = "form-control"/>
+		
+			<div class = "form-group hideShowEmail">
+				<div class = "searchInput input-group">
+					<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+					<input type = "text" name = "userEmail" placeholder = "User email" class = "form-control"/>
+				</div>
 			</div>
+
 			<div class = "searchInput input-group">
 				<span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
 				<select class = "form-control" name = "time">

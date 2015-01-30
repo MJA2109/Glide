@@ -224,6 +224,8 @@ function addJourneyValidation(){
 
 function editJourneyValidation(){
 
+    alert("edit journey working !!");
+
     $('#modalEditJourneyForm').bootstrapValidator({
 
         framework: 'bootstrap',
@@ -463,13 +465,15 @@ function getChartDataForm(){
                         data: {
                             action : "doesUserExist"
                         },
-                        message: "User does not exist, try again.",
+                        message: "User does not exist.",
                         type: 'POST'
                     }
                     
                 }
             }
         }
+    }).on('status.field.bv', function(e, data) {
+        data.bv.disableSubmitButtons(false);
     });
 }
 
