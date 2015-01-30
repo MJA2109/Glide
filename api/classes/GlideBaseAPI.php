@@ -112,8 +112,7 @@ class GlideBaseAPI{
 
         if($adminId){
 
-            $userName = Util::get("userName");
-            $userId = Util::get("userId");
+            $userEmail = Util::get("userEmail");
             $category = Util::get("category");
             $merchant = Util::get("merchant");
             $cost = Util::get("cost");
@@ -135,23 +134,16 @@ class GlideBaseAPI{
                 $approved = "Awaiting...";
             }
 
-            if(empty($userName)){
-                $log["errors"]["userName"] = "User Name is required";   
+            if(empty($userEmail)){
+                $log["errors"]["userEmail"] = "User Email is required";   
             }else{
-                $userExists = $database->count("users", [
-                "AND" => [
-                    "user_id" => $userId,
-                    "user_name" => $userName,
-                    "admin_id" => $adminId
-                    ]
-                ]);
-                if($userExists == 0){
-                    $log["errors"]["userName"] = "User Name doesn't exist";   
-                }
-            }
-
-            if(empty($userId)){
-                $log["errors"]["userId"] = "User ID is required";
+                
+                $userId = $database->select("users", "user_id", [
+                    "AND" => [
+                        "user_email" => $userEmail,
+                        "admin_id" => $adminId
+                        ]
+                    ]);
             }
 
             if(empty($merchant)){
@@ -173,7 +165,7 @@ class GlideBaseAPI{
 
                 $lastExpenseId = $database->insert("expenses", [
                     "admin_id" => intval($adminId),
-                    "user_id" => intval($userId),
+                    "user_id" => intval($userId[0]),
                     "merchant_id" => $merchantId,
                     "receipt_id" => $receiptId,
                     "expense_category" => $category,

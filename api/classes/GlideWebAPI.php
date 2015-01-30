@@ -351,30 +351,41 @@ class GlideWebAPI extends GlideBaseAPI{
         session_start();
         
         if(isset($_SESSION["adminId"])){
+            // $database = GlideWebAPI::connectDB();
+            // $adminId = $_SESSION["adminId"];
+            // $userName = Util::get("userName");
+
+            // if(Util::get("userId") != null){
+                
+            //     $userId = Util::get("userId");
+                
+            //     $userExists = $database->count("users", [
+            //         "AND" => [
+            //             "user_name" => $userName,
+            //             "admin_id" => $adminId,
+            //             "user_id" => $userId
+            //         ]
+            //     ]);
+            
+            // }else{
+            //     $userExists = $database->count("users", [
+            //         "AND" => [
+            //             "user_name" => $userName,
+            //             "admin_id" => $adminId
+            //         ]
+            //     ]);
+            // }
+
             $database = GlideWebAPI::connectDB();
             $adminId = $_SESSION["adminId"];
-            $userName = Util::get("userName");
+            $userEmail = Util::get("userEmail");
 
-            if(Util::get("userId") != null){
-                
-                $userId = Util::get("userId");
-                
-                $userExists = $database->count("users", [
-                    "AND" => [
-                        "user_name" => $userName,
-                        "admin_id" => $adminId,
-                        "user_id" => $userId
-                    ]
-                ]);
-            
-            }else{
-                $userExists = $database->count("users", [
-                    "AND" => [
-                        "user_name" => $userName,
-                        "admin_id" => $adminId
-                    ]
-                ]);
-            }
+            $userExists = $database->count("users", [
+                                "AND" => [
+                                    "user_email" => $userEmail,
+                                    "admin_id" => $adminId
+                                ]
+                            ]);
 
             if($userExists > 0){
                 $log["valid"] = true;

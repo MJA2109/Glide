@@ -106,16 +106,9 @@
 		<h4><span class="glyphicon glyphicon-plus"></span>Add Expense</h4>
 
 		<div class = "form-group">
-			 <div class="input-group">	
-		 		<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-				<input type = "text" name = "userName" placeholder = "User Name" class = "form-control"/>	
-			</div>
-		</div>
-
-		<div class = "form-group">
 			 <div class="input-group">
 				<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-				<input type = "text" name = "userId" placeholder = "User ID" class = "form-control"/>	
+				<input type = "text" name = "userEmail" placeholder = "User Email" class = "form-control"/>	
 			</div>
 		</div>
 

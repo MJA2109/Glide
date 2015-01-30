@@ -1,6 +1,6 @@
 //Initialize application. Set global variables.
 var app = {
-    server: "http://192.168.1.84/Glide/api/handlers/mobileHandler.php",
+    server: "http://192.168.1.69/Glide/api/handlers/mobileHandler.php",
     //server: "http://ma.pickacab.com/test/test.php",
     map: "",             //google map object
     trackerMarker: "",   //contains tracker marker
@@ -82,7 +82,7 @@ function initializeEvents(){
         $(this).iscrollview("refresh");
     });
 
-    window.localStorage.clear();
+    //window.localStorage.clear();
 
     //check local storage for login details
     checkPreAuth();
@@ -166,6 +166,7 @@ function setFormData(){
     $("#expAdminId").val(window.localStorage.instanceId);
     $("#expUserId").val(window.localStorage.userId);
     $("#expUserName").val(window.localStorage.userName);
+    $("#expUserEmail").val(window.localStorage.email);
 }
 
 

@@ -38,41 +38,20 @@ function addExpenseValidation(){
         live: 'enabled',
         trigger: null,
         fields: {
-            userName: {
+            userEmail: {
                 validators: {
                     notEmpty: {
-                        message: 'User Name is required'
+                        message: 'User Email is required',
                     },
                     remote: {
                         url: validation.server,
                         data: {
                             action : "doesUserExist"
                         },
-                        message: 'User does not exist',
+                        message: "User does not exist, try again.",
                         type: 'POST'
                     }
-
-                }
-            },
-            userId: {
-                validators: {
-                    notEmpty: {
-                        message: 'User ID is required'
-                    },
-                    integer: {
-                        message: 'The value is not an integer'
-                    },
-                    remote: {
-                        url: validation.server,
-                        data: function(validator) {
-                            return {
-                                userName: validator.getFieldElements('userName').val(),
-                                action: "doesUserExist"
-                            };
-                        },
-                        message: "User ID and Name do not match",
-                        type: 'POST'
-                    }
+                    
                 }
             },
             category: {
