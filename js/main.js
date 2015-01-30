@@ -141,6 +141,8 @@ require(['jquery',
                         getTableData(action);
                     }else if(pageType == "chart"){
                         attachValEvent("#search"); //attach validation to ajax loaded content
+                        var emptySet = {data : Array} //pass in empty object to initialise chart
+                        initialiseChart(emptySet, "bar");
                     }
                 });  
             }
