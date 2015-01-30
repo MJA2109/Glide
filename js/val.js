@@ -22,6 +22,8 @@ function attachValEvent(div){
         break;
         case "#modalEditUser" : editUserValidation();
         break;
+        case "#search" : getChartDataForm();
+        break;
     }
 }
 
@@ -143,41 +145,20 @@ function addJourneyValidation(){
             validating: 'glyphicon glyphicon-refresh'
         },
         fields: {
-            userName: {
+            userEmail: {
                 validators: {
                     notEmpty: {
-                        message: 'User Name is required'
+                        message: 'User Email is required',
                     },
                     remote: {
                         url: validation.server,
                         data: {
                             action : "doesUserExist"
                         },
-                        message: 'User does not exist',
+                        message: "User does not exist, try again.",
                         type: 'POST'
                     }
-
-                }
-            },
-            userId: {
-                validators: {
-                    notEmpty: {
-                        message: 'User ID is required'
-                    },
-                    digits: {
-                        message: 'A valid ID is required'
-                    },
-                    remote: {
-                        url: validation.server,
-                        data: function(validator) {
-                            return {
-                                userName: validator.getFieldElements('userName').val(),
-                                action: "doesUserExist"
-                            };
-                        },
-                        message: "User ID and Name do not match",
-                        type: 'POST'
-                    }
+                    
                 }
             },
             origin: {
@@ -461,6 +442,40 @@ function editUserValidation(){
 
 
 
+function getChartDataForm(){
+
+    $('#getChartDataForm').bootstrapValidator({
+        
+        framework: 'bootstrap',
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            userEmail: {
+                validators: {
+                    notEmpty: {
+                        message: 'User Email is required',
+                    },
+                    remote: {
+                        url: validation.server,
+                        data: {
+                            action : "doesUserExist"
+                        },
+                        message: "User does not exist, try again.",
+                        type: 'POST'
+                    }
+                    
+                }
+            }
+        }
+    });
+}
+
+
+
+
 
 
 
@@ -468,63 +483,63 @@ $(document).ready(function(){
 
 	$('#signUpForm').bootstrapValidator({
             
-            framework: 'bootstrap',
-            feedbackIcons: {
-                valid: 'glyphicon glyphicon-ok',
-                invalid: 'glyphicon glyphicon-remove',
-                validating: 'glyphicon glyphicon-refresh'
+        framework: 'bootstrap',
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            companyName: {
+                validators: {
+                    notEmpty: {
+                        message: 'A Comapany Name is required'
+                    }
+                }
             },
-            fields: {
-                companyName: {
-                    validators: {
-                        notEmpty: {
-                            message: 'A Comapany Name is required'
-                        }
+            adminEmail: {
+                validators: {
+                    notEmpty: {
+                        message: 'An Email address is required'
+                    },
+                    emailAddress: {
+                        message: 'The given Email address is not valid'
+                    },
+                    remote: {
+                        message: 'Email address already exists on our system',
+                        url: validation.server,
+                        data: {
+                            action: 'isAvailable'
+                        },
+                        type : 'POST'
                     }
-                },
-                adminEmail: {
-                    validators: {
-                        notEmpty: {
-                            message: 'An Email address is required'
-                        },
-                        emailAddress: {
-                            message: 'The given Email address is not valid'
-                        },
-                        remote: {
-                            message: 'Email address already exists on our system',
-                            url: validation.server,
-                            data: {
-                                action: 'isAvailable'
-                            },
-                            type : 'POST'
-                        }
+                }
+            },
+            adminPassword: {
+                validators: {
+                    notEmpty: {
+                        message: 'A Password is required'
+                    },
+                    stringLength: {
+                        message : "Password must be at least 8 characters",
+                        min : 8
                     }
-                },
-                adminPassword: {
-                    validators: {
-                        notEmpty: {
-                            message: 'A Password is required'
-                        },
-                        stringLength: {
-                            message : "Password must be at least 8 characters",
-                            min : 8
-                        }
 
-                    }
-                },
-                adminRePassword: {
-                    validators: {
-                        notEmpty: {
-                            message: 'Confirm Password is required'
-                        },
-                        identical:{
-                            field: 'adminPassword',
-                            message: "Passwords do not match"
-                        }
+                }
+            },
+            adminRePassword: {
+                validators: {
+                    notEmpty: {
+                        message: 'Confirm Password is required'
+                    },
+                    identical:{
+                        field: 'adminPassword',
+                        message: "Passwords do not match"
                     }
                 }
             }
-        });
+        }
+    });
 
 });
 

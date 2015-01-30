@@ -95,6 +95,14 @@
 
 
 		<div class = "form-group">
+			 <div class="input-group">
+				<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+				<input type = "text" name = "userEmail" placeholder = "User Email" class = "form-control"/>	
+			</div>
+		</div>
+
+
+		<!-- <div class = "form-group">
 			<div class="input-group">	
 		 		<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
 				<input type = "text" name = "userName" placeholder = "User Name" class = "form-control"/>	
@@ -107,7 +115,7 @@
 		 		<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
 				<input type = "text" name = "userId" placeholder = "User ID" class = "form-control"/>
 			</div>	
-		</div>
+		</div> -->
 
 
 		<div class = "form-group">

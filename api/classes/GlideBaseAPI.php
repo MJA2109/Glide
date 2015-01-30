@@ -194,8 +194,8 @@ class GlideBaseAPI{
         $adminId = GlideBaseAPI::getAdminId(); 
         
         if($adminId){
-            $userName = Util::get("userName");
-            $userId = Util::get("userId");
+
+            $userEmail = Util::get("userEmail");
             $origin = Util::get("origin");
             $destination = Util::get("destination");
             $distance = Util::get("distance");
@@ -216,24 +216,17 @@ class GlideBaseAPI{
                 $approved = "Awaiting...";
             }
             
-            if(empty($userId)){
-                $log["errors"]["userId"] = "User ID is required";
+            if(empty($userEmail)){
+                $log["errors"]["userEmail"] = "User Email is required";
             }else{
-
-                if(empty($userName)){
-                    $log["errors"]["userName"] = "User Name is required";   
-                }else{
-                    $userExists = $database->count("users", [
-                    "AND" => [
-                        "user_id" => $userId,
-                        "user_name" => $userName,
-                        "admin_id" => $adminId
-                        ]
-                    ]);
-                    if($userExists == 0){
-                        $log["errors"]["userName"] = "User Name doesn't exist";   
-                    }
-                }
+                    
+                $userId = $database->select("users", "user_id", [
+                "AND" => [
+                    "user_email" => $userEmail,
+                    "admin_id" => $adminId
+                    ]
+                ]);
+    
             }
 
             if(empty($origin)){
@@ -255,7 +248,7 @@ class GlideBaseAPI{
 
                 $lastJourneyId = $database->insert("journeys", [
                     "admin_id" => intval($adminId),
-                    "user_id" => intval($userId),
+                    "user_id" => intval($userId[0]),
                     "origin" => $origin,
                     "destination" => $destination,
                     "distance" => $distance,

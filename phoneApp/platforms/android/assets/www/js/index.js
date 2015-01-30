@@ -163,6 +163,7 @@ function setFormData(){
     $("#jourAdminId").val(window.localStorage.instanceId);
     $("#jourUserId").val(window.localStorage.userId);
     $("#jourUserName").val(window.localStorage.userName);
+    $("#jourUserEmail").val(window.localStorage.email);
     $("#expAdminId").val(window.localStorage.instanceId);
     $("#expUserId").val(window.localStorage.userId);
     $("#expUserName").val(window.localStorage.userName);

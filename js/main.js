@@ -675,6 +675,7 @@ require(['jquery',
                 $("#navCharts").click(function(){
                     setLinkColour(this);
                     selectedIdStack = new Array(); //reset array
+                    attachValEvent("#search"); //attach validation to ajax loaded content
                     getPage("../root/charts.php", null, "chart");
                     transition();
                 });
