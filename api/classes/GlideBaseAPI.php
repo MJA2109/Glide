@@ -210,6 +210,7 @@ class GlideBaseAPI{
             $journeyTime = Util::get("journeyTime");
             $date = Util::get("date");
             $account = Util::get("account");
+            $approved = Util::get("approved");
             $comment = Util::get("comment");
             $log = array();
             $log["table"] = "journeys";
@@ -218,6 +219,10 @@ class GlideBaseAPI{
             $database = GlideBaseAPI::connectDB();
             
             //$adminId = $_SESSION["adminId"];
+
+            if(empty($approved)){
+                $approved = "Awaiting...";
+            }
             
             if(empty($userId)){
                 $log["errors"]["userId"] = "User ID is required";
@@ -264,7 +269,8 @@ class GlideBaseAPI{
                     "distance" => $distance,
                     "journey_time" => $journeyTime,
                     "account" => $account,
-                    "comment" => $comment  
+                    "comment" => $comment,
+                    "approved" => $approved  
                 ]);
                 
                 echo json_encode($log);  

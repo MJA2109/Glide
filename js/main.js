@@ -451,8 +451,9 @@ require(['jquery',
                                 return moment(data).format('MMMM Do YYYY, h:mm:ss a');
                             }
                         },
-                        {"data": "status"},
                         {"data": "account"},
+                        {"data": "status"},
+                        {"data": "approved"},
                         {"data": "comment"}
                     ]
                 });
@@ -605,6 +606,19 @@ require(['jquery',
             }
 
 
+            function hideDropDown(approved){
+                if(approved == "Yes"){
+                    $("#approvalInput").hide();
+                    $("#statusInput").attr("disabled", false); 
+                }else if(approved == "Awaiting..."){
+                    approved = "";
+                    $("#statusInput").attr("disabled", true);
+                }else{
+                    $("#statusInput").attr("disabled", false);  
+                }
+            }
+
+
             /**
              * Name: initialiseEvents
              * Purpose: Initialise application events
@@ -712,6 +726,7 @@ require(['jquery',
                 });
 
                 $("body").delegate("#btnSubmitEditJourney", "click", function(){
+                    $("#statusInput").attr("disabled", false); //renable statue before submitting journey data
                     selectedIdStack = new Array(); //reset array
                     submitModalForm("#modalEditJourneyForm");
                 });
@@ -782,16 +797,8 @@ require(['jquery',
                     var approved = $(row + " td:nth-child(9)").text();
                     var comment = $(row + " td:nth-child(10)").text();
 
-                    //hide option if already approved
-                    if(approved == "Yes"){
-                        $("#approvalInput").hide();
-                        $("#statusInput").attr("disabled", false); 
-                    }else if(approved == "Awaiting..."){
-                        approved = "";
-                        $("#statusInput").attr("disabled", true);
-                    }else{
-                        $("#statusInput").attr("disabled", false);  
-                    }
+                   //hide approved dropdown box if approval has been granted
+                    hideDropDown(approved);
                     
                     //populate modal with row values
                     $(form + " #expenseId").val(dataId);
@@ -818,18 +825,23 @@ require(['jquery',
 
                     //get data from table and place in form
                     var name = $(row + " td:nth-child(1)").text();
-                    var status = $(row + " td:nth-child(7)").text();
+                    var status = $(row + " td:nth-child(8)").text();
                     var origin = $(row + " td:nth-child(2)").text();
                     var destination = $(row + " td:nth-child(3)").text();
                     var distance = $(row + " td:nth-child(4)").text();
                     distance = distance.replace(/[^\d \.]/g, '');
                     distance = distance.trim();
                     var journeyTime = $(row + " td:nth-child(5)").text();
-                    var account = $(row + " td:nth-child(8)").text();
-                    var comment = $(row + " td:nth-child(9)").text();
+                    var account = $(row + " td:nth-child(7)").text();
+                    var approved = $(row + " td:nth-child(9)").text();
+                    var comment = $(row + " td:nth-child(10)").text();
+
+                    //hide approved dropdown box if approval has been granted
+                    hideDropDown(approved);
 
                     $(form + " #journeyId").val(dataId);
                     $(form + " input[name = 'userName']").val(name);
+                    $(form + " option[value = '" + approved + "']").prop("selected", true);
                     $(form + " option[value = '" + status + "']").prop("selected", true);
                     $(form + " input[name = 'origin']").val(origin);
                     $(form + " input[name = 'destination']").val(destination);

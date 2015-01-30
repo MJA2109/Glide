@@ -72,8 +72,9 @@
 					<th>Distance</th>
 					<th>Journey Time</th>
 					<th>Date / Time</th>
-					<th>Status</th>
 					<th>Account</th>
+					<th>Status</th>
+					<th>Approval</th>
 					<th>Comment</th>
 				</tr>
 			</thead>
@@ -84,9 +85,11 @@
 	</div>
 </div>
 
-<div id = "modalAddJourney" class = "modalStyle">
+<div id = "modalAddJourney" class = "modalStyle long">
 	<form id = "modalJourneyForm" method = "POST" class = "modalForm">
 		<input type = 'hidden' name = 'action' value = 'addJourney' />
+		<input type = "hidden" name = "approved" value = "Yes" />
+
 		<div class = "modalCloseIm"></div>
 		<h4><span class="glyphicon glyphicon-road"></span>Add Journey</h4>
 
@@ -189,10 +192,21 @@
 		<div class = "form-group">
 			 <div class="input-group">	
 		 		<span class="input-group-addon"><i class="glyphicon glyphicon-flag"></i></span>
-				<select class = "form-control" name = "status">
+				<select class = "form-control" name = "status" id = "statusInput">
 					<option value = "" disabled="disabled">Status</option>
 					<option value = "Processed">Processed</option>
 					<option value = "Unprocessed">Unprocessed</option>
+				</select>
+			</div>
+		</div>
+
+		<div class = "form-group" id = "approvalInput">
+			 <div class="input-group">	
+		 		<span class="input-group-addon"><i class="glyphicon glyphicon-flag"></i></span>
+				<select class = "form-control" name = "approved">
+					<option value = "" disabled="disabled">Approval</option>
+					<option value = "Yes">Yes</option>
+					<option value = "No">No</option>
 				</select>
 			</div>
 		</div>

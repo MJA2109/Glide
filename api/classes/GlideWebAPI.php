@@ -532,11 +532,12 @@ class GlideWebAPI extends GlideBaseAPI{
                 $accountName = null;
             }
 
-            $sql = "SELECT id, user_name, origin, destination, distance, journey_time, date, status, account, comment
+            $sql = "SELECT id, user_name, origin, destination, distance, journey_time, date, status, account, comment, approved
                                               FROM users, journeys
                                               WHERE ".$adminId." = journeys.admin_id
                                               AND journeys.user_id = users.user_id
-                                              AND journeys.is_deleted = 0 ";
+                                              AND journeys.is_deleted = 0 
+                                              AND journeys.approved <> 'No' ";
             if($accountName){
                 $sql .= "AND journeys.account = '$accountName' ";
             }
@@ -558,6 +559,7 @@ class GlideWebAPI extends GlideBaseAPI{
                 $journey[$index]["date"] = $data["date"];
                 $journey[$index]["status"] = $data["status"];
                 $journey[$index]["account"] = $data["account"];
+                $journey[$index]["approved"] = $data["approved"];
                 $journey[$index]["comment"] = $data["comment"];
                 $index++;
             }
@@ -895,7 +897,7 @@ class GlideWebAPI extends GlideBaseAPI{
                 $accountName = $_SESSION["account"];
             }
 
-            $sql = "SELECT id as DT_RowId, user_name, origin, destination, distance, journey_time, date, status, account, comment
+            $sql = "SELECT id as DT_RowId, user_name, origin, destination, distance, journey_time, date, status, account, comment, approved
                     FROM users, journeys
                     WHERE ".$adminId." = journeys.admin_id
                     AND journeys.user_id = users.user_id
@@ -1055,6 +1057,7 @@ class GlideWebAPI extends GlideBaseAPI{
             $time = Util::get("journeyTime");
             $account = Util::get("account");
             $comment = Util::get("comment");
+            $approved = Util::get("approved");
             $database = GlideWebAPI::connectDB();
             $log = array();
             $log["type"] = "editJourney"; 
@@ -1091,7 +1094,8 @@ class GlideWebAPI extends GlideBaseAPI{
                     "distance" => $distance,
                     "journey_time" => $time,
                     "account" => $account,
-                    "comment" => $comment
+                    "comment" => $comment,
+                    "approved" => $approved
                 ], [
                     "id" => $journeyId
                 ]);
