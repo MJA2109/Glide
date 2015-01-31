@@ -985,10 +985,7 @@ require(['jquery',
 
 
 
-                alert("test2");
-                
-
-                alert("master branch");
+                alert("master branch rebase");
             }
 
             initialiseEvents();              
