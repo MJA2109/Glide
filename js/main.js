@@ -982,10 +982,6 @@ require(['jquery',
                     $("#btnGetChartData").attr("disabled", false);
                 });
 
-
-
-
-                alert("master branch rebase");
             }
 
             initialiseEvents();              
