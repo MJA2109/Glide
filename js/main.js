@@ -987,6 +987,8 @@ require(['jquery',
 
                 alert("test2");
                 
+
+                alert("master branch");
             }
 
             initialiseEvents();              
