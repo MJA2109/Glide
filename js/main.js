@@ -985,6 +985,7 @@ require(['jquery',
 
 
 
+                alert("test2");
                 
             }
 
