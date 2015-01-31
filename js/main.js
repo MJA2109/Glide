@@ -986,6 +986,8 @@ require(['jquery',
 
 
                 
+
+                alert("master branch");
             }
 
             initialiseEvents();              
