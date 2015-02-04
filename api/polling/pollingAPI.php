@@ -132,6 +132,7 @@
 
             $database = connectDB(); 
             $lastId = $_GET['lastId'];
+            $option = $_GET['option'];
             $timestamp = trim( $_GET['timestamp'] );
             if($timestamp){
                $timestamp = time();
@@ -174,24 +175,45 @@
           
             if( $numNewJourneys >= 1){
 
-               $lastId = $database->max("journeys", "id", [
-                   "admin_id" => $adminId
-               ]);
+               if($option == "notification"){
 
-               $userId = $database->select("journeys", "user_id", [
-                             "AND" => [
-                                 "date[>=]" => $timestamp,
-                                 "id" => $lastId,
-                                 "admin_id" => $adminId,
-                                 "is_deleted" => 0
-                             ]
-                         ]);
+                  $lastId = $database->max("journeys", "id", [
+                      "admin_id" => $adminId
+                  ]);
 
-               $user = $database->select("users", "user_name",[
-                           "user_id" => $userId[0]
-                        ]);
+                  $userId = $database->select("journeys", "user_id", [
+                                "AND" => [
+                                    "date[>=]" => $timestamp,
+                                    "id" => $lastId,
+                                    "admin_id" => $adminId,
+                                    "is_deleted" => 0
+                                ]
+                            ]);
 
-               echo json_encode( array( 'status' => 'results', 'timestamp' => time(), 'lastId' => $lastId, 'username' => $user[0], 'userAction' => "New Journey Added") );
+                  $user = $database->select("users", "user_name",[
+                              "user_id" => $userId[0]
+                           ]);
+
+                  echo json_encode( array( 'status' => 'results', 'timestamp' => time(), 'lastId' => $lastId, 'username' => $user[0], 'userAction' => "New Journey Added") );
+               }else{
+
+                  //query and output for recent expenses widget
+                  $sql = "SELECT users.user_name, journeys.date
+                          FROM users, journeys
+                          WHERE users.user_id = journeys.user_id
+                          AND journeys.approved = 'Awaiting...'
+                          AND journeys.admin_id = $adminId
+                          AND journeys.is_deleted = 0
+                          AND users.is_deleted = 0 
+                          ORDER BY journeys.date DESC";
+
+                  $widgetData = $database->query($sql)->fetchAll();
+
+                  echo json_encode( array( 'status' => 'results', 'timestamp' => time(), 'widgetData' => $widgetData, "table" => "journeys", 'userAction' => "Update Journey Widget", 'option' => 'widget') ); 
+
+
+               }
+
             } 
          }
    }

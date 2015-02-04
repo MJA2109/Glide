@@ -16,3 +16,14 @@ function updateExpenseWidget(expensesData){
 		}
 	}			
 }
+
+
+function updateJourneyWidget(journeysData){
+	$(".recentJourneys ul").empty();
+	if(journeysData != ""){
+		for(var i = 0; i < journeysData.length; i++){
+			$(".recentJourneys ul").append("<li class = 'list-group-item'><span class ='fa fa-upload'></span>" + journeysData[i]["user_name"] + " <span class = 'textTime'> " + moment(journeysData[i]["expense_date"]).fromNow() + " </span>  </li>");
+		}
+	}
+
+}

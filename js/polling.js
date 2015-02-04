@@ -12,7 +12,8 @@ function startPolling(){
 
    poll(true, 0, "pollExpenses", "notification");
    poll(true, 0, "pollExpenses", "widget");
-   poll(true, 0, "pollJourneys", null);
+   poll(true, 0, "pollJourneys", "notification");
+   poll(true, 0, "pollJourneys", "widget");
    poll(true, 0, "pollUsers", null);
      
 }
@@ -50,7 +51,10 @@ function poll( timestamp, lastId, action, option ){
             
             }else if(server.table == "expenses" && server.option == "widget"){
                updateExpenseWidget(server.widgetData); //widgets.js
-            
+
+            }else if(server.table == "journeys" && server.option == "widget"){
+               updateJourneyWidget(server.widgetData);
+
             }else if(server.table == 'users'){
                updateOnlineUsers(server.onlineUsers); //widgets.js
             }

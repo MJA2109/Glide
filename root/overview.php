@@ -18,7 +18,7 @@
 		<div class = "widget panel panel-default">
 			<div class="panel-heading"><span class="glyphicon glyphicon-arrow-up">RecentJourneys</span></div>
 		  	<div class="panel-body recentJourneys">
-		    	<ul></ul>
+		    	<ul class = 'list-group'></ul>
 		 	</div>
 		</div>
 	</div>
