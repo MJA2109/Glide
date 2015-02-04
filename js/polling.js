@@ -10,9 +10,10 @@ if($('#ajaxContent').is('.home')){
  */
 function startPolling(){
 
-   poll(true, 0, "pollExpenses");
-   poll(true, 0, "pollJourneys");
-   poll(true, 0, "pollUsers");
+   poll(true, 0, "pollExpenses", "notification");
+   poll(true, 0, "pollExpenses", "widget");
+   poll(true, 0, "pollJourneys", null);
+   poll(true, 0, "pollUsers", null);
      
 }
 
@@ -24,14 +25,14 @@ function startPolling(){
  * @param : lastId - Int  : The id of the last record retrieved from database.
  * @param : action - String : Name of function to be called on server.
  */
-function poll( timestamp, lastId, action ){
+function poll( timestamp, lastId, action, option ){
    
    var timeout;
  
    $.ajax({
       url: '../api/polling/pollingAPI.php',
       type: 'GET',
-      data: 'timestamp=' + timestamp + '&lastId=' + lastId + '&action=' + action,
+      data: 'timestamp=' + timestamp + '&lastId=' + lastId + '&action=' + action + '&option=' + option,
       dataType: 'json',
       success: function(server){
          
@@ -41,11 +42,15 @@ function poll( timestamp, lastId, action ){
          
          if(server.status == 'results' || server.status == 'no-results'){
             timeout = setTimeout( function(){
-               poll( server.timestamp, server.lastId, action);
+               poll( server.timestamp, server.lastId, action, option);
             }, 5000 );
             
-            if(server.status == 'results' && server.table != "users"){
+            if(server.status == 'results' && server.table != "users" && server.option == "notification"){
                notification(server.username, server.userAction, moment($.now()).format('h:mm:ss a'));
+            
+            }else if(server.table == "expenses" && server.option == "widget"){
+               updateExpenseWidget(server.widgetData); //widgets.js
+            
             }else if(server.table == 'users'){
                updateOnlineUsers(server.onlineUsers); //widgets.js
             }
@@ -59,7 +64,7 @@ function poll( timestamp, lastId, action ){
          clearInterval(timeout);
          console.log("Server Error...");
          timeout=setTimeout( function(){
-            poll( server.timestamp, server.lastId, action );
+            poll( server.timestamp, server.lastId, action, option );
          }, 15000 );
       }
    });

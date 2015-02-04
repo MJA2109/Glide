@@ -635,15 +635,26 @@ body{
 
 /*============== widgets ==============*/
 
-.onlineUsers{
+.onlineUsers, .recentExpenses{
+
+    overflow-y:scroll;
+    width:300px;
+    height:245px;
 
     .list-group-item{  
         .fa-circle{
             color:green;
+        }
+
+        .fa{
             padding-right:10px;
         }
     }
 
+}
+
+.textTime{
+    font-size: 0.8em;
 }
 
 

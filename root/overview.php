@@ -12,7 +12,7 @@
 		<div class = "widget panel panel-default">
 			<div class="panel-heading"><span class="glyphicon glyphicon-arrow-up">RecentExpenses</span></div>
 		  	<div class="panel-body recentExpenses">
-		    	<ul></ul>
+		    	<ul class = 'list-group'></ul>
 		 	</div>
 		</div>
 		<div class = "widget panel panel-default">

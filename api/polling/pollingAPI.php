@@ -37,6 +37,7 @@
 
             $database = connectDB(); 
             $lastId = $_GET['lastId'];
+            $option = $_GET['option'];
             $timestamp = trim( $_GET['timestamp'] );
             if($timestamp){
                $timestamp = time();
@@ -79,24 +80,43 @@
           
             if( $numNewExpeses >= 1){
 
-               $lastId = $database->max("expenses", "expense_id", [
-                   "admin_id" => $adminId
-               ]);
+               //query and output for notification
+               if($option == "notification"){
 
-               $userId = $database->select("expenses", "user_id", [
-                             "AND" => [
-                                 "expense_date[>=]" => $timestamp,
-                                 "expense_id" => $lastId,
-                                 "admin_id" => $adminId,
-                                 "is_deleted" => 0
-                             ]
-                         ]);
+                  $lastId = $database->max("expenses", "expense_id", [
+                      "admin_id" => $adminId
+                  ]);
 
-               $user = $database->select("users", "user_name",[
-                           "user_id" => $userId[0]
-                        ]);
+                  $userId = $database->select("expenses", "user_id", [
+                                "AND" => [
+                                    "expense_date[>=]" => $timestamp,
+                                    "expense_id" => $lastId,
+                                    "admin_id" => $adminId,
+                                    "is_deleted" => 0
+                                ]
+                            ]);
+                  $user = $database->select("users", "user_name",[
+                              "user_id" => $userId[0]
+                           ]);
 
-               echo json_encode( array( 'status' => 'results', 'timestamp' => time(), 'lastId' => $lastId, 'username' => $user[0], 'userAction' => "New Expense Added") );
+                  echo json_encode( array( 'status' => 'results', 'timestamp' => time(), 'lastId' => $lastId, 'username' => $user[0], 'userAction' => "New Expense Added", 'option' => 'notification') );
+               
+               }else{
+
+                  //query and output for recent expenses widget
+                  $sql = "SELECT users.user_name, expenses.expense_date
+                          FROM users, expenses
+                          WHERE users.user_id = expenses.user_id
+                          AND expense_approved = 'Awaiting...'
+                          AND expenses.admin_id = $adminId
+                          AND expenses.is_deleted = 0
+                          AND users.is_deleted = 0 
+                          ORDER BY expenses.expense_date DESC";
+
+                  $widgetData = $database->query($sql)->fetchAll();
+
+                  echo json_encode( array( 'status' => 'results', 'timestamp' => time(), 'widgetData' => $widgetData, "table" => "expenses", 'userAction' => "Update Expense Widget", 'option' => 'widget') ); 
+               }
             } 
          }
    }

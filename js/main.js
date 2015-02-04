@@ -29,8 +29,7 @@ requirejs.config({
         'notify' : ['jquery'],
         'moment' : ['jquery'],
         'datepicker' : ['jquery'],
-        'polling' : ['notify'],
-        'widgets' : ['polling']
+        'polling' : ['notify', 'widgets']
     }
 });
 
