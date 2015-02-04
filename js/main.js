@@ -16,7 +16,9 @@ requirejs.config({
         'moment' : ["../../js/vendor/moment"],
         'datepicker' : ["../../js/vendor/bootstrap-datepicker"],
         //NB - google charts included at top of head.php template
-        'charts' : ['../../js/charts']
+        'charts' : ['../../js/charts'],
+        'polling' : ['../../js/polling'],
+        'widgets' : ['../../js/widgets']
     },
     shim:{
     	'bootstrap': ['jquery'],
@@ -26,7 +28,9 @@ requirejs.config({
         'val' : ['validator'],
         'notify' : ['jquery'],
         'moment' : ['jquery'],
-        'datepicker' : ['jquery']
+        'datepicker' : ['jquery'],
+        'polling' : ['notify'],
+        'widgets' : ['polling']
     }
 });
 
@@ -43,7 +47,9 @@ require(['jquery',
          'notify',
          'moment',
          'datepicker',
-         'charts'], function($) {
+         'charts',
+         'polling',
+         'widgets'], function($) {
 
             
             //Contains global variables

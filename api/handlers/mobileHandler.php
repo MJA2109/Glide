@@ -19,6 +19,8 @@ if(isset($_POST["action"])){
 	    break;
 	    case "appLogin" : GlideMobileAPI::appLogin();
 	    break;
+	    case "isOnline" : GlideMobileAPI::isOnline();
+	    break;
 
 	}
 }

@@ -6,7 +6,7 @@
 		require("../templates/head.php");
 		require("../templates/navigation.php");
 ?>	
-	<div id = "ajaxContent">
+	<div id = "ajaxContent" class = 'home'>
 	
 	</div>
 

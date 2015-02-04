@@ -111,6 +111,29 @@ class GlideMobileAPI extends GlideBaseAPI{
         	echo json_encode($history);	
         }
 	}
+
+
+	/**
+     * Name: isOnline
+     * Purpose: Update user online status
+     */
+	public static function isOnline(){
+
+		$database = GlideBaseAPI::connectDB();
+		$adminId = Util::get("adminId");
+		$userId = Util::get("userId");
+		$status = (int) Util::get("status");
+
+		$database->update("users", [
+                    "is_online" => $status
+                ],[ "AND" => [
+                    "user_id" => $userId,
+                    "admin_id" => $adminId
+                   ]
+                ]);
+
+		echo json_encode(array( 'status' => $status, 'adminId' => $adminId, 'userId' => $userId));		
+	}
 }
 
 ?>

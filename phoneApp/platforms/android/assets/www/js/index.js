@@ -128,6 +128,14 @@ function login(form){
                 window.localStorage.email = $("#loginEmail").val();
                 window.localStorage.instanceId = $("#instanceId").val();
                 setFormData();
+                toggleOnline(1); //toggle user to online status
+                
+                document.addEventListener("resume", function(){
+                    toggleOnline(1);
+                }, false);
+                document.addEventListener("pause", function(){
+                    toggleOnline(0);
+                }, false);
                 $.mobile.changePage("#home");
 
             }else{
@@ -654,6 +662,30 @@ function uploadForm(form){
             alert("Ajax Error " + data + " : " + error);
         }               
     });   
+}
+
+function toggleOnline(userStatus){
+    
+    var data = {
+        action : "isOnline",
+        userId : localStorage.userId,
+        adminId : localStorage.instanceId,
+        status : userStatus
+    }
+
+    $.ajax({
+        type: "post",
+        url: app.server,
+        data: data,
+        dataType: 'json',
+        success: function(data){
+            // alert(data.status + " "+ data.adminId + " " + data.userId);
+        },
+        errror: function(){
+            alert("Error : toggleOnline");
+        }
+
+    });
 }
 
 
