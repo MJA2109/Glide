@@ -84,7 +84,10 @@
                if($option == "notification"){
 
                   $lastId = $database->max("expenses", "expense_id", [
-                      "admin_id" => $adminId
+                      "AND" => [
+                           "admin_id" => $adminId,
+                           "is_deleted" => 0
+                        ]
                   ]);
 
                   $userId = $database->select("expenses", "user_id", [

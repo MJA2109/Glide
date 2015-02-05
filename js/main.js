@@ -18,7 +18,8 @@ requirejs.config({
         //NB - google charts included at top of head.php template
         'charts' : ['../../js/charts'],
         'polling' : ['../../js/polling'],
-        'widgets' : ['../../js/widgets']
+        'widgets' : ['../../js/widgets'],
+        'notification' : ['../../js/notification']
     },
     shim:{
     	'bootstrap': ['jquery'],
@@ -29,7 +30,11 @@ requirejs.config({
         'notify' : ['jquery'],
         'moment' : ['jquery'],
         'datepicker' : ['jquery'],
-        'polling' : ['notify', 'widgets']
+        'polling' : ['jquery', 'notification'],
+        'widgets' : ['polling'],
+        'notification' : ['notify']
+
+
     }
 });
 
@@ -48,7 +53,8 @@ require(['jquery',
          'datepicker',
          'charts',
          'polling',
-         'widgets'], function($) {
+         'widgets',
+         'notification'], function($) {
 
             
             //Contains global variables
@@ -661,6 +667,7 @@ require(['jquery',
                 $("#navHome").click(function(){
                     setLinkColour(this);
                     getPage("../root/overview.php", "standard");
+                    $(".gifLoader").show(); //show widget gif loader icons
                     transition();
                 });
                 $("#navExpenses").click(function(){
@@ -989,24 +996,13 @@ require(['jquery',
 
             }
 
-            initialiseEvents();              
+            initialiseEvents(); 
+
 });
 
 
-function notification(name, message, time){
-    
-    $.notify({
-        time : time,
-        name : name,
-        message : message
-    }, {
-        style: 'glide',
-        globalPosition: 'bottom right',
-        hideDuration: 700,
-        autoHideDelay: 20000,
-        gap:10
-    });
-}
+
+
 
 
 

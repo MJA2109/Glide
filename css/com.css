@@ -1,0 +1,713 @@
+/*! HTML5 Boilerplate v4.3.0 | MIT License | http://h5bp.com/ */
+/*
+ * What follows is the result of much research on cross-browser styling.
+ * Credit left inline and big thanks to Nicolas Gallagher, Jonathan Neal,
+ * Kroc Camen, and the H5BP dev community and team.
+ */
+/* ==========================================================================
+   Base styles: opinionated defaults
+   ========================================================================== */
+html,
+button,
+input,
+select,
+textarea {
+  color: #222;
+}
+html {
+  font-size: 1em;
+  line-height: 1.4;
+  height: 100%;
+}
+/*
+ * Remove text-shadow in selection highlight: h5bp.com/i
+ * These selection rule sets have to be separate.
+ * Customize the background color to match your design.
+ */
+::-moz-selection {
+  background: #b3d4fc;
+  text-shadow: none;
+}
+::selection {
+  background: #b3d4fc;
+  text-shadow: none;
+}
+/*
+ * A better looking default horizontal rule
+ */
+hr {
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid #ccc;
+  margin: 1em 0;
+  padding: 0;
+}
+/*
+ * Remove the gap between images, videos, audio and canvas and the bottom of
+ * their containers: h5bp.com/i/440
+ */
+audio,
+canvas,
+img,
+video {
+  vertical-align: middle;
+}
+/*
+ * Remove default fieldset styles.
+ */
+fieldset {
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+/*
+ * Allow only vertical resizing of textareas.
+ */
+textarea {
+  resize: vertical;
+}
+/*
+ * Remove blue outline of clicked button
+ */
+button {
+  outline: none !important;
+}
+/* ==========================================================================
+   Browse Happy prompt
+   ========================================================================== */
+.browsehappy {
+  margin: 0.2em 0;
+  background: #ccc;
+  color: #000;
+  padding: 0.2em 0;
+}
+/* ==========================================================================
+   Author's custom styles
+   ========================================================================== */
+body {
+  height: 100%;
+  color: #555;
+  background-color: #edf1f3;
+}
+/* 
+ *   Variables
+ */
+/*============ sign in/up ============*/
+.signUpBody {
+  width: 100%;
+  height: 100%;
+  background-color: #dbe3e7;
+}
+.wrapper {
+  width: 700px;
+  margin: auto;
+  position: relative;
+}
+.strip {
+  width: 100%;
+  height: 5px;
+  background-color: #1f2e37;
+}
+.indexLogo {
+  width: 500px;
+  height: 170px;
+  margin: auto;
+  background-color: #7290a1;
+  border-radius: 0px 0px 20px 20px;
+  -moz-border-radius: 0px 0px 20px 20px;
+  -webkit-border-radius: 0px 0px 20px 20px;
+}
+.indexLogo img {
+  width: 250px;
+  margin: auto;
+  padding-top: 30px;
+  display: block;
+}
+.signContent {
+  width: 500px;
+  margin: auto;
+}
+.signForm {
+  width: 300px;
+  position: relative;
+  margin: auto;
+  padding-top: 40px;
+}
+.signForm .form-control {
+  width: 250px;
+}
+.signForm .input-group {
+  padding-top: 25px;
+}
+.signForm .divBtnSign {
+  width: 80px;
+  height: 50px;
+  margin: auto;
+  margin-top: 25px;
+}
+.signForm .alternativeSign {
+  margin-top: 35px;
+  text-align: center;
+  font-size: 0.8em;
+}
+#errorNote {
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  bottom: 105px;
+  right: 45px;
+}
+/*=============== Web app =============*/
+#ajaxContent {
+  width: 100%;
+  height: 100%;
+}
+#loaderGif {
+  width: 70px;
+  height: 70px;
+  display: block;
+  margin: auto;
+  margin-top: 250px;
+}
+#loaderGif img {
+  width: 70px;
+  height: 70px;
+}
+#strip {
+  height: 5px;
+  width: 100%;
+  min-width: 1380px;
+  background-color: #1f2e37;
+}
+#navHeader {
+  width: 100%;
+  height: 60px;
+  min-width: 1380px;
+  background-color: #7290a1;
+}
+#navHeader #navHeaderFix {
+  width: 1200px;
+  height: 60px;
+}
+#navHeader #navHeaderFix #logo {
+  width: 270px;
+  height: 60px;
+  background-color: #4f758a;
+  float: left;
+}
+#navHeader #navHeaderFix #logo img {
+  margin-left: 65px;
+  margin-top: 10px;
+}
+#navHeader #navHeaderFix nav {
+  width: 800px;
+  height: 60px;
+  float: left;
+}
+#navHeader #navHeaderFix nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+#navHeader #navHeaderFix nav ul li {
+  display: inline;
+}
+#navHeader #navHeaderFix nav ul li a {
+  display: block;
+  width: 100px;
+  height: 60px;
+  float: left;
+  text-align: center;
+  padding-top: 20px;
+  color: #ffffff;
+}
+#navHeader #emailDiv {
+  color: #fff;
+  position: absolute;
+  top: 20px;
+  right: 15px;
+  height: 60px;
+}
+#navHeader #emailDiv div {
+  height: 20px;
+  margin-top: 5px;
+}
+#navHeader #signOutDiv {
+  display: none;
+  position: absolute;
+  width: 150px;
+  height: 100px;
+  padding: 32px;
+  top: 45px;
+  right: 10px;
+  background-color: #edf1f3;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  -webkit-box-shadow: -9px 25px 62px -10px rgba(0, 0, 0, 0.73);
+  -moz-box-shadow: -9px 25px 62px -10px rgba(0, 0, 0, 0.73);
+  box-shadow: -9px 25px 62px -10px rgba(0, 0, 0, 0.73);
+  border: 1px solid #bbb;
+}
+#subHeader {
+  width: 100%;
+  height: 80px;
+  min-width: 1380px;
+  background-color: #dbe3e7;
+  border-bottom: 1px solid #b8c7d0;
+}
+#subHeader #subHeaderFix {
+  width: 570px;
+  height: 80px;
+}
+#subHeader #subHeaderFix #subHeaderSec1 {
+  width: 270px;
+  height: 80px;
+  float: left;
+  border-right: 1px solid #b8c7d0;
+}
+#subHeader #subHeaderFix #subHeaderSec2 {
+  width: 250px;
+  height: 80px;
+  float: left;
+}
+#subHeader #subHeaderFix #subHeaderSec2 button {
+  margin-left: 30px;
+  margin-top: 30px;
+  float: left;
+}
+#flexfix {
+  min-width: 1380px;
+  height: 100%;
+}
+#flexfix #search {
+  width: 270px;
+  height: 100%;
+  border-right: 1px solid #b8c7d0;
+  background-color: #dbe3e7;
+  float: left;
+}
+#flexfix #search form {
+  width: 230px;
+  padding-left: 25px;
+}
+#flexfix #search .searchInput {
+  margin-top: 30px;
+}
+#flexfix #search #chartIcons {
+  width: 100%;
+  height: 50px;
+  margin-top: 50px;
+}
+#flexfix #search #chartIcons .chartIcon {
+  margin-left: 27px;
+}
+#flexfix #mainView {
+  width: 80%;
+  float: left;
+  background-color: #edf1f3;
+  padding-left: 20px;
+  padding-top: 20px;
+}
+#flexfix #mainView #expensesTable tr:nth-child(odd),
+#flexfix #mainView #journeysTable tr:nth-child(odd),
+#flexfix #mainView #usersTable tr:nth-child(odd) {
+  background-color: #edf1f3;
+}
+#flexfix #mainView #expensesData,
+#flexfix #mainView #journeysTable tbody,
+#flexfix #mainView #usersTable tbody {
+  font-size: 0.9em;
+}
+.form-group {
+  height: 52px !important;
+}
+/* overview page layout */
+.sectionWrapper {
+  width: 1100px;
+  margin: auto;
+}
+.sectionWrapper .section {
+  width: 1100px;
+  height: 350px;
+  margin-top: 30px;
+}
+.sectionWrapper .widget {
+  width: 300px;
+  height: 345px;
+  float: left;
+  margin-left: 40px;
+  margin-top: 30px;
+  position: relative;
+}
+/* Modal Styles */
+.modalStyle {
+  display: none;
+  position: relative;
+  width: 400px;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  border-radius: 20px;
+  background-color: #edf1f3;
+  border-top: 1px solid #fff;
+}
+.modalStyle .modalForm {
+  display: block;
+  width: 300px;
+  margin: auto;
+}
+.modalStyle .modalInput {
+  margin-top: 8px;
+}
+.modalStyle h4 {
+  width: 300px;
+  margin: auto;
+  text-align: center;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+.modalStyle input[type=submit] {
+  float: right;
+}
+.modalStyle .clear {
+  clear: both;
+  margin-bottom: 35px;
+}
+.modalImageStyle {
+  display: none;
+  position: relative;
+}
+.modalImageStyle img {
+  width: 450px;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  border-radius: 20px;
+}
+.modalCloseImg {
+  width: 25px;
+  height: 30px;
+  position: absolute;
+  top: -8px;
+  right: 2px;
+  background-image: url("../img/x.png");
+  background-repeat: no-repeat;
+  z-index: 500;
+}
+.comfirmationModal {
+  display: none;
+  position: relative;
+  width: 420px;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  border-radius: 20px;
+  background-color: #edf1f3;
+  border-top: 1px solid #fff;
+}
+.comfirmationModal div {
+  text-align: center;
+}
+.comfirmationModal div h4 {
+  margin: auto;
+  padding: 25px 0px 35px 0px;
+}
+.comfirmationModal div p {
+  margin: auto;
+  padding-bottom: 40px;
+  font-weight: bold;
+}
+.comfirmationModal div button {
+  width: 90px;
+  margin-bottom: 30px;
+}
+/*============== Notification styles ==============*/
+.notifyjs-glide-base {
+  width: 200px;
+  height: 80px;
+  white-space: nowrap;
+  background-color: #e2e2e2;
+  border: 1px solid #eeeeee;
+  border-top: 1px solid #eeeeee;
+  padding: 5px;
+  -webkit-border-radius: 15px;
+  -moz-border-radius: 15px;
+  border-radius: 15px;
+}
+.notifyjs-glide-base .time {
+  text-align: right;
+  font-size: 0.7em;
+  padding-right: 5px;
+}
+.notifyjs-glide-base .name {
+  font-weight: bold;
+  padding-left: 5px;
+  padding-bottom: 5px;
+}
+.notifyjs-glide-base .message {
+  padding-left: 5px;
+}
+.notifyjs-container {
+  -webkit-border-radius: 15px;
+  -moz-border-radius: 15px;
+  border-radius: 15px;
+  -webkit-box-shadow: 0px 1px 17px 1px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 0px 1px 17px 1px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px 1px 17px 1px rgba(0, 0, 0, 0.75);
+}
+#btnNotifications {
+  width: 205px;
+  height: 40px;
+  position: fixed;
+  padding: 10px;
+  right: 20px;
+  bottom: 0;
+  color: #eeeeee;
+  background-color: #7290a1;
+  border-top: 1px solid #4F758A;
+  border-left: 1px solid #4F758A;
+  border-right: 1px solid #4F758A;
+  z-index: 100;
+  -webkit-box-shadow: 0px 1px 17px 1px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 0px 1px 17px 1px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px 1px 17px 1px rgba(0, 0, 0, 0.75);
+}
+.notifyNotActive {
+  border-top: 1px solid #7290a1 !important;
+  border-left: 1px solid #7290a1 !important;
+  border-right: 1px solid #7290a1 !important;
+  background-color: #B8C7D0 !important;
+  color: #666666 !important;
+}
+/* override notify.js default position */
+.notifyjs-corner {
+  position: fixed !important;
+  right: 12px !important;
+  bottom: 40px !important;
+}
+/* modal fixes */
+/*#simplemodal-container, .simplemodal-wrap{
+    height:705px !important;
+}*/
+/*.long{
+    height:100% !important;  
+}*/
+#signUpForm .has-feedback .form-control-feedback,
+#signInForm .has-feedback .form-control-feedback {
+  top: 25px;
+  right: 12px;
+}
+.has-feedback .form-control-feedback {
+  top: 0;
+  right: 12px;
+}
+/*============== widgets ==============*/
+.onlineUsers,
+.recentExpenses,
+.recentJourneys,
+.liabilities {
+  overflow-y: scroll;
+  width: 300px;
+  height: 300px;
+}
+.onlineUsers .list-group-item .fa-circle,
+.recentExpenses .list-group-item .fa-circle,
+.recentJourneys .list-group-item .fa-circle,
+.liabilities .list-group-item .fa-circle {
+  color: green;
+}
+.onlineUsers .list-group-item .fa,
+.recentExpenses .list-group-item .fa,
+.recentJourneys .list-group-item .fa,
+.liabilities .list-group-item .fa {
+  padding-right: 10px;
+}
+.textTime {
+  font-size: 0.7em;
+  color: #000;
+  font-weight: bold;
+}
+.valPos {
+  float: right;
+  color: #666;
+  font-size: 0.9em;
+}
+.gifLoader {
+  position: absolute;
+  top: 160px;
+  left: 130px;
+}
+/* ==========================================================================
+   Helper classes
+   ========================================================================== */
+.textReduce {
+  font-size: 0.8em;
+  font-weight: bold;
+}
+.err {
+  color: #A94442;
+  background-color: #F2DEDE;
+  border-color: #A94442;
+}
+.errBorder {
+  border-color: #A94442;
+}
+.paginate_button:hover {
+  background-color: #dbe3e7 !important;
+}
+table.dataTable tbody tr.selected {
+  background-color: #ffbfbf !important;
+}
+/*
+ * Image replacement
+ */
+.ir {
+  background-color: transparent;
+  border: 0;
+  overflow: hidden;
+  /* IE 6/7 fallback */
+  *text-indent: -9999px;
+}
+.ir:before {
+  content: "";
+  display: block;
+  width: 0;
+  height: 150%;
+}
+/*
+ * Hide from both screenreaders and browsers: h5bp.com/u
+ */
+.hidden {
+  display: none !important;
+  visibility: hidden !important;
+}
+/*
+ * Hide only visually, but have it available for screenreaders: h5bp.com/v
+ */
+.visuallyhidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+/*
+ * Extends the .visuallyhidden class to allow the element to be focusable
+ * when navigated to via the keyboard: h5bp.com/p
+ */
+.visuallyhidden.focusable:active,
+.visuallyhidden.focusable:focus {
+  clip: auto;
+  height: auto;
+  margin: 0;
+  overflow: visible;
+  position: static;
+  width: auto;
+}
+/*
+ * Hide visually and from screenreaders, but maintain layout
+ */
+.invisible {
+  visibility: hidden;
+}
+/*
+ * Clearfix: contain floats
+ *
+ * For modern browsers
+ * 1. The space content is one way to avoid an Opera bug when the
+ *    `contenteditable` attribute is included anywhere else in the document.
+ *    Otherwise it causes space to appear at the top and bottom of elements
+ *    that receive the `clearfix` class.
+ * 2. The use of `table` rather than `block` is only necessary if using
+ *    `:before` to contain the top-margins of child elements.
+ */
+.clearfix:before,
+.clearfix:after {
+  content: " ";
+  /* 1 */
+  display: table;
+  /* 2 */
+}
+.clearfix:after {
+  clear: both;
+}
+/*
+ * For IE 6/7 only
+ * Include this rule to trigger hasLayout and contain floats.
+ */
+.clearfix {
+  *zoom: 1;
+}
+/* ==========================================================================
+   EXAMPLE Media Queries for Responsive Design.
+   These examples override the primary ('mobile first') styles.
+   Modify as content requires.
+   ========================================================================== */
+@media only screen and (min-width: 35em) {
+  /* Style adjustments for viewports that meet the condition */
+}
+@media print, (-o-min-device-pixel-ratio: 5/4), (-webkit-min-device-pixel-ratio: 1.25), (min-resolution: 120dpi) {
+  /* Style adjustments for high resolution devices */
+}
+/* ==========================================================================
+   Print styles.
+   Inlined to avoid required HTTP connection: h5bp.com/r
+   ========================================================================== */
+@media print {
+  * {
+    background: transparent !important;
+    color: #000 !important;
+    /* Black prints faster: h5bp.com/s */
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+  a,
+  a:visited {
+    text-decoration: underline;
+  }
+  a[href]:after {
+    content: " (" attr(href) ")";
+  }
+  abbr[title]:after {
+    content: " (" attr(title) ")";
+  }
+  /*
+     * Don't show links for images, or javascript/internal links
+     */
+  .ir a:after,
+  a[href^="javascript:"]:after,
+  a[href^="#"]:after {
+    content: "";
+  }
+  pre,
+  blockquote {
+    border: 1px solid #999;
+    page-break-inside: avoid;
+  }
+  thead {
+    display: table-header-group;
+    /* h5bp.com/t */
+  }
+  tr,
+  img {
+    page-break-inside: avoid;
+  }
+  img {
+    max-width: 100% !important;
+  }
+  @page {
+    margin: 0.5cm;
+  }
+  p,
+  h2,
+  h3 {
+    orphans: 3;
+    widows: 3;
+  }
+  h2,
+  h3 {
+    page-break-after: avoid;
+  }
+}

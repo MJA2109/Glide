@@ -59,6 +59,8 @@ function poll( timestamp, lastId, action, option ){
                updateOnlineUsers(server.onlineUsers); //widgets.js
             }
 
+            $(".gifLoader").hide();
+
          }else if(server.status == 'error'){
             alert('We got confused, Please refresh the page!');
          }
@@ -73,6 +75,8 @@ function poll( timestamp, lastId, action, option ){
       }
    });
 }
+
+
 
 
 

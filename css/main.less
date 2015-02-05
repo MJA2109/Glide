@@ -425,10 +425,11 @@ body{
 
     .widget{
         width:300px;
-        height:300px;
+        height:345px;
         float:left;
         margin-left:40px;
         margin-top:30px;
+        position:relative;
     }
 }
 
@@ -532,7 +533,6 @@ body{
 
 
 .notifyjs-glide-base{
-
     width : 200px;
     height : 80px;
     white-space: nowrap;
@@ -635,11 +635,11 @@ body{
 
 /*============== widgets ==============*/
 
-.onlineUsers, .recentExpenses, .recentJourneys{
+.onlineUsers, .recentExpenses, .recentJourneys, .liabilities{
 
     overflow-y:scroll;
     width:300px;
-    height:245px;
+    height:300px;
 
     .list-group-item{  
         .fa-circle{
@@ -657,6 +657,18 @@ body{
     font-size: 0.7em;
     color:#000;
     font-weight: bold;
+}
+
+.valPos{
+    float:right;
+    color:#666;
+    font-size: 0.9em;
+}
+
+.gifLoader{
+    position:absolute;
+    top:160px;
+    left:130px;
 }
 
 
