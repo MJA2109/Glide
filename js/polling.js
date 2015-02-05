@@ -46,7 +46,7 @@ function poll( timestamp, lastId, action, option ){
                poll( server.timestamp, server.lastId, action, option);
             }, 5000 );
             
-            if(server.status == 'results' && server.table != "users" && server.option == "notification"){
+            if(server.status == 'results' && server.table != "users" && server.option == "notification" && server.ignoreNotif != true){
                notification(server.username, server.userAction, moment($.now()).format('h:mm:ss a'));
             
             }else if(server.table == "expenses" && server.option == "widget"){

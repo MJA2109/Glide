@@ -18,7 +18,7 @@ echo   "<!DOCTYPE html>
                 <link rel='stylesheet' type='text/css' href='https://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.3/css/bootstrapValidator.min.css' />
                 <link rel = 'stylesheet' href = '../css/datepicker.css' />
                 <link href='//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css' rel='stylesheet'>
-                <link rel='stylesheet/less' type='text/css' href='../css/main.less'>
+                <link rel='stylesheet/less' type='text/css' href='https://cdn.rawgit.com/MJA2109/Glide/master/css/com.css'>
                 <script type='text/javascript' src='https://www.google.com/jsapi'></script>
                 <script data-main='../js/main' src = '../js/require.js'></script>
             </head>

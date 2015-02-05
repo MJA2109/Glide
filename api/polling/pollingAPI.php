@@ -38,9 +38,16 @@
             $database = connectDB(); 
             $lastId = $_GET['lastId'];
             $option = $_GET['option'];
+    
             $timestamp = trim( $_GET['timestamp'] );
             if($timestamp){
                $timestamp = time();
+            }
+
+            if($lastId == 0){
+              $ignoreNotification = true;
+            }else{
+              $ignoreNotification = false;
             }
                 
             $timer = 0;
@@ -48,8 +55,8 @@
             
             $numNewExpeses = $database->count("expenses", [
                                    "AND" => [
-                                       "expense_date[>=]" => $timestamp,
                                        "expense_id[>]" => $lastId,
+                                       "expense_date[>=]" => $timestamp,
                                        "expense_approved" => "Awaiting...",
                                        "admin_id" => $adminId,
                                        "is_deleted" => 0
@@ -86,6 +93,7 @@
                   $lastId = $database->max("expenses", "expense_id", [
                       "AND" => [
                            "admin_id" => $adminId,
+                           "expense_approved" => "Awaiting...",
                            "is_deleted" => 0
                         ]
                   ]);
@@ -95,6 +103,7 @@
                                     "expense_date[>=]" => $timestamp,
                                     "expense_id" => $lastId,
                                     "admin_id" => $adminId,
+                                    "expense_approved" => "Awaiting...",
                                     "is_deleted" => 0
                                 ]
                             ]);
@@ -102,7 +111,9 @@
                               "user_id" => $userId[0]
                            ]);
 
-                  echo json_encode( array( 'status' => 'results', 'timestamp' => time(), 'lastId' => $lastId, 'username' => $user[0], 'userAction' => "New Expense Added", 'option' => 'notification') );
+                  echo json_encode( array( 'status' => 'results', 
+                                            'timestamp' => time(), 'lastId' => $lastId, 'username' => $user[0], 
+                                            'userAction' => "New Expense Added", 'option' => 'notification', "ignoreNotif" => $ignoreNotification) );
                
                }else{
 
@@ -139,6 +150,12 @@
             $timestamp = trim( $_GET['timestamp'] );
             if($timestamp){
                $timestamp = time();
+            }
+            
+            if($lastId == 0){
+              $ignoreNotification = true;
+            }else{
+              $ignoreNotification = false;
             }
                 
             $timer = 0;
@@ -181,7 +198,11 @@
                if($option == "notification"){
 
                   $lastId = $database->max("journeys", "id", [
-                      "admin_id" => $adminId
+                     "AND" => [
+                      "admin_id" => $adminId,
+                      "approved" => "Awaiting...",
+                      "is_deleted" => 0
+                      ]
                   ]);
 
                   $userId = $database->select("journeys", "user_id", [
@@ -189,6 +210,7 @@
                                     "date[>=]" => $timestamp,
                                     "id" => $lastId,
                                     "admin_id" => $adminId,
+                                    "approved" => "Awaiting...",
                                     "is_deleted" => 0
                                 ]
                             ]);
@@ -197,7 +219,9 @@
                               "user_id" => $userId[0]
                            ]);
 
-                  echo json_encode( array( 'status' => 'results', 'timestamp' => time(), 'lastId' => $lastId, 'username' => $user[0], 'userAction' => "New Journey Added") );
+                  echo json_encode( array( 'status' => 'results', 'timestamp' => time(), 
+                                            'lastId' => $lastId, "table" => "journeys", 'username' => $user[0], 
+                                            'userAction' => "New Journey Added", 'option' => 'notification', "ignoreNotif" => $ignoreNotification) );
                }else{
 
                   //query and output for recent expenses widget
