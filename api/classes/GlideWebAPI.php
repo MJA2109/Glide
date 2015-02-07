@@ -1283,6 +1283,10 @@ class GlideWebAPI extends GlideBaseAPI{
 
             $option = $_POST["searchOption"];
 
+            if(isset($_POST['liabilities'])){
+                $liabilities = $_POST['liabilities'];
+            }
+
             if($option == "singleUser"){
 
                 $userEmail = Util::get("userEmail");
@@ -1305,12 +1309,17 @@ class GlideWebAPI extends GlideBaseAPI{
                           WHERE expense_date >= DATE_SUB(CURDATE(), INTERVAL ".$time.")
                           AND admin_id = $adminId
                           AND is_deleted = 0 
-                          AND expenses.expense_approved <> 'No' ";
+                          AND expenses.expense_approved <> 'Awaiting...' ";
                 
                 //add for single user only
                 if($option == "singleUser"){
                     $sql_1 .= " AND user_id = $userId[0] ";
                 }
+                //add if liabilities request
+                if($liabilities){
+                    $sql_1 .= "AND expense_status = 'unprocessed' ";
+                }
+
                 $sql_1 .= " GROUP BY expense_category ";
 
                 //calculate mileage for single user only
@@ -1323,7 +1332,8 @@ class GlideWebAPI extends GlideBaseAPI{
                               AND jn.is_deleted = 0
                               AND ur.is_deleted = 0 
                               AND ur.user_mileage_rate > 0
-                              AND jn.user_id = $userId[0] ";
+                              AND jn.user_id = $userId[0] 
+                              AND jn.approved <> 'Awaiting...' ";
                 
 
                 }else{
@@ -1335,7 +1345,12 @@ class GlideWebAPI extends GlideBaseAPI{
                               AND ur.admin_id = $adminId
                               AND jn.is_deleted = 0
                               AND ur.is_deleted = 0 
-                              AND ur.user_mileage_rate > 0 ";
+                              AND ur.user_mileage_rate > 0 
+                              AND jn.approved <> 'Awaiting...' ";
+                              
+                              if($liabilities){
+                                $sql_2 .= "AND jn.status = 'unprocessed' ";
+                              }
                 }
 
                 $categoryCost = $database->query($sql_1)->fetchAll();
@@ -1352,7 +1367,7 @@ class GlideWebAPI extends GlideBaseAPI{
                     $last = $index;
                 }
 
-                $log["sql"] = $mileageCost;
+                // $log["sql"] = $mileageCost;
 
                 if($mileageCost[0]["mileage"] != null){
                     //append mileage cost onto chartData

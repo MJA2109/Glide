@@ -28,32 +28,32 @@
 
 	<div class = "section">
 		<div class = "widget panel panel-default">
-			<div class="panel-heading"><span class="glyphicon glyphicon-euro">Liabilities</span><span class = "valPos">€<span class = "liabVal">1344.09</span></span></div>
+			<div class="panel-heading"><span class="glyphicon glyphicon-euro">Liabilities</span><span class = "valPos">€<span class = "liabVal"></span></span></div>
 		  	<div class="panel-body liabilities">
 		  		<div class = "gifLoader"><i class="fa fa-cog fa-spin fa-3x"></i></div>
 		  		<ul class="list-group">
   					<li class="list-group-item">
-    					<span class="badge">€53.03</span>
+    					<span class="badge acc"></span>
     					<span class ='fa fa-home'></span>Accommodation
   					</li>
   					<li class="list-group-item">
-    					<span class="badge">€0</span>
+    					<span class="badge ent"></span>
     					<span class ='fa fa-glass'></span>Entertainment
   					</li>
   					<li class="list-group-item">
-    					<span class="badge">€453.03</span>
+    					<span class="badge mil"></span>
     					<span class ='fa fa-car'></span>Mileage
   					</li>
   					<li class="list-group-item">
-    					<span class="badge">€453.03</span>
+    					<span class="badge tra"></span>
     					<span class ='fa fa-plane'></span>Travel
   					</li>
   					<li class="list-group-item">
-    					<span class="badge">€3.03</span>
+    					<span class="badge pho"></span>
     					<span class ='fa fa-mobile-phone'></span>Phone
   					</li>
   					<li class="list-group-item">
-    					<span class="badge">€453.03</span>
+    					<span class="badge foo"></span>
     					<span class ='fa fa-cutlery'></span>Food
   					</li>
 				</ul>

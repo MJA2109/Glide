@@ -148,13 +148,19 @@ require(['jquery',
                 var loader = "<div = id = 'loaderGif'><img src = '../img/gifLoader.gif' alt = 'loading...' /></div>";
                 
                 $("#ajaxContent").html(loader).load(url, function(){
-                    if(pageType == "datatable"){
-                        getTableData(action);
-                    }else if(pageType == "chart"){
-                        attachValEvent("#search"); //attach validation to ajax loaded content
-                        var emptySet = {data : Array} //pass in empty object to initialise chart
-                        initialiseChart(emptySet, "bar");
+                    var emptySet = {data : Array} //pass in empty object to initialise chart
+
+                    switch(pageType){
+                        case "datatable" : getTableData(action);
+                        break;
+                        case "chart" :  attachValEvent("#search"); //attach validation to ajax loaded content
+                                        initialiseChart(emptySet, "bar");
+                        break;
+                        case "standard" : getLiabilities();
+                        break;
                     }
+
+
                 });  
             }
 
@@ -635,6 +641,35 @@ require(['jquery',
 
 
             /**
+             * Name: getLiabilities
+             * Purpose: Calculate the total system liabilites.
+             */
+            function getLiabilities(){
+                var data = {
+                    action : "getChartData",
+                    chartType: "barChart",
+                    searchOption : null,
+                    time: "1 YEAR",
+                    liabilities: true
+                }
+
+                $.ajax({
+                    type: "POST",
+                    url: appData.api,
+                    data: data,
+                    dataType: "json",
+                    success: function(data){
+                        updatedLiabilitiesWidget(data);
+                    },
+                    error: function(data){
+                        alert("Get Liabilities Ajax Error");
+                    }
+
+                });
+            }
+
+
+            /**
              * Name: initialiseEvents
              * Purpose: Initialise application events
              */
@@ -645,7 +680,7 @@ require(['jquery',
                 
                 //load home page
                 setLinkColour("#navHome");
-                getPage("../root/overview.php", "standard");
+                getPage("../root/overview.php", null, "standard");
 
                 submitForm('#signUpForm');
                 submitForm('#signInForm');
@@ -666,7 +701,7 @@ require(['jquery',
                 });
                 $("#navHome").click(function(){
                     setLinkColour(this);
-                    getPage("../root/overview.php", "standard");
+                    getPage("../root/overview.php", null, "standard");
                     $(".gifLoader").show(); //show widget gif loader icons
                     transition();
                 });
