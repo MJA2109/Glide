@@ -1,0 +1,27 @@
+<html>
+<head>
+	<title>Test Node</title>
+</head>
+<body>
+	<h1>Testing Node.js</h1>
+	<div id = 'message'></div>
+	<input type = 'text' id = 'txtbox' />
+	<input type = "button" value = 'Send !' id = "btnSend" />
+
+	<script type="text/javascript" src="http://192.168.1.64:8000/faye/client.js"></script>
+	<script type="text/javascript" src = "https://code.jquery.com/jquery-2.1.3.min.js"></script>
+	<script type="text/javascript">
+		var client = new Faye.Client('http://192.168.1.64:8000/', {
+			timeout: 120
+		});
+
+		$("#btnSend").click(function(){
+			var msg = $("#txtbox").val();
+			client.publish('/50_notification', {
+				text : msg
+			});
+		});
+
+	</script>
+</body>
+</html>

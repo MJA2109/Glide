@@ -1187,6 +1187,10 @@ class GlideWebAPI extends GlideBaseAPI{
     }
 
 
+    /**
+     * Name: getPieChartData
+     * Purpose: Calculate the most popular merchants. 
+     */
     static function getPieChartData(){
 
         session_start();
@@ -1501,6 +1505,67 @@ class GlideWebAPI extends GlideBaseAPI{
         }else{
             return $userId;
         }
+    }
+
+
+     /**
+     * Name: getWidgetData
+     * Purpose: Get data for either the expense, journey or user widget
+     */
+    static function getWidgetData(){
+
+        session_start();
+
+        if(isset($_SESSION["adminId"])){
+
+            $database = GlideWebAPI::connectDB();
+            $adminId = $_SESSION["adminId"];
+            $widgetType = Util::get("widgetType");
+            
+            if($widgetType == "Onlineusers"){
+                $users = $database->select("users", "*",[
+                           "AND" => [
+                                    "is_online" => 1,
+                                    "admin_id" => $adminId,
+                                    "is_deleted" => 0
+                                   ]
+                               ]);
+                  
+               echo json_encode( array( 'type' => 'users', 'widgetData' => $users) );
+
+            }else if($widgetType == "Recentexpenses"){
+                $sql = "SELECT users.user_name, expenses.expense_date
+                        FROM users, expenses
+                        WHERE users.user_id = expenses.user_id
+                        AND expense_approved = 'Awaiting...'
+                        AND expenses.admin_id = $adminId
+                        AND expenses.is_deleted = 0
+                        AND users.is_deleted = 0 
+                        ORDER BY expenses.expense_date DESC";
+
+                      $widgetData = $database->query($sql)->fetchAll();
+                
+                echo json_encode( array( 'type' => 'expenses', 'widgetData' => $widgetData) ); 
+
+            }else if($widgetType == "Recentjourneys"){
+                
+                 $sql = "SELECT users.user_name, journeys.date
+                          FROM users, journeys
+                          WHERE users.user_id = journeys.user_id
+                          AND journeys.approved = 'Awaiting...'
+                          AND journeys.admin_id = $adminId
+                          AND journeys.is_deleted = 0
+                          AND users.is_deleted = 0 
+                          ORDER BY journeys.date DESC";
+
+                  $widgetData = $database->query($sql)->fetchAll();
+
+                  echo json_encode( array( 'type' => 'journeys', 'widgetData' => $widgetData) ); 
+            }
+
+        }else{
+            echo json_encode(array("error" => "Admin ID not set"));
+        }  
     }
 
 } //class

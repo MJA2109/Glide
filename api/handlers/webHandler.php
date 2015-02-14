@@ -45,6 +45,8 @@ if(isset($_POST["action"])){
 	    break;
 	    case "getChartData" : GlideWebAPI::getChartData();
 	    break;
+	    case "getWidgetData" : GlideWebAPI::getWidgetData();
+	    break;
 	}
 }
 

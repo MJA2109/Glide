@@ -1,7 +1,7 @@
 //Initialize application. Set global variables.
 var app = {
-    server: "http://192.168.1.69/Glide/api/handlers/mobileHandler.php",
-    //server: "http://ma.pickacab.com/test/test.php",
+    server: "http://192.168.1.64/Glide/api/handlers/mobileHandler.php",
+    useNodeServer: false,
     map: "",             //google map object
     trackerMarker: "",   //contains tracker marker
     markerArray: [],     //array of map markers
@@ -122,20 +122,15 @@ function login(form){
         success: function(data){
             var auth = JSON.parse(data);
             if(auth){
+
                 window.localStorage.userId = auth[0].user_id;
+                alert("User ID is : " + localStorage.userId);
                 window.localStorage.userName = auth[0].user_name;
                 window.localStorage.password = auth[0].password;
                 window.localStorage.email = $("#loginEmail").val();
                 window.localStorage.instanceId = $("#instanceId").val();
                 setFormData();
-                toggleOnline(1); //toggle user to online status
-                
-                document.addEventListener("resume", function(){
-                    toggleOnline(1);
-                }, false);
-                document.addEventListener("pause", function(){
-                    toggleOnline(0);
-                }, false);
+                initialiseWidgetCalls(); //either node or long polling calls
                 $.mobile.changePage("#home");
 
             }else{
@@ -146,6 +141,25 @@ function login(form){
             alert("Unable to connect to server.");
         } 
     });
+}
+
+
+
+function initialiseWidgetCalls(){
+
+    toggleOnline(1); //toggle user to online status
+    if(app.useNodeServer == true){isOnline(true);}
+    
+    document.addEventListener("resume", function(){
+        if(app.useNodeServer == true){isOnline(true);}
+        toggleOnline(1);
+        
+    }, false);
+    document.addEventListener("pause", function(){
+        if(app.useNodeServer == true){isOnline(false);}
+        toggleOnline(0);
+        
+    }, false);
 }
 
 
@@ -261,7 +275,9 @@ function getCurrentLocation(){
     }
 
     function onFail(error){
-        alert("Unable to retrieve GPS position.");
+        //alert(JSON.stringify(error));
+        alert("Unable to retrieve GPS position. Check GPS is turned on.");
+        $.mobile.changePage("#home");
     }
 }
 
@@ -650,11 +666,18 @@ function uploadForm(form){
            
             if(form == "#uploadJourneyDataForm"){ 
                 clearGeoDataArrays();
-                resetUploadJourneyData(); 
+                resetUploadJourneyData();
+                if(app.useNodeServer == true){
+                    publishNotification("journeys"); //send message to node.js server
+                }
             }
             if(form == "#uploadExpenseForm"){ 
-                resetUploadExpenseForm(); 
+                resetUploadExpenseForm();
+                if(app.useNodeServer == true){
+                    publishNotification("expenses"); //send message to node.js server
+                }
             }
+
             $.mobile.changePage("#home");
             $.mobile.loading("hide");
         },
@@ -664,6 +687,12 @@ function uploadForm(form){
     });   
 }
 
+
+/**
+ * Name: toggleOnline
+ * Purpose: Update users online status to either on or off.
+ * @param userStatus - boolean : update status.
+ */
 function toggleOnline(userStatus){
     
     var data = {
@@ -714,6 +743,46 @@ function clearGeoDataArrays(){
     app.journeyData.length = 0;
     app.timestamp.length = 0;
 }
+
+
+
+/*=========== Node Calls ================*/
+
+
+
+function publishNotification(type){
+    var client = new Faye.Client('http://192.168.1.64:8000/', {
+        timeout: 120
+    });
+
+    if(type == "journeys"){
+        client.publish('/' + localStorage.instanceId + "_notification", {
+            name : localStorage.userName,
+            action : "New Journey Added",
+            type : "journey"
+        }); 
+    }else if(type == "expenses"){
+        client.publish('/' + localStorage.instanceId + "_notification", {
+            name : localStorage.userName,
+            action : "New Expense Added",
+            type : "expense"
+        });  
+    }
+}
+
+
+
+function isOnline(userOnline){
+    var client = new Faye.Client('http://192.168.1.64:8000/', {
+        timeout: 120
+    });
+    client.publish('/' + localStorage.instanceId + "_onlineUsers", {
+        name : localStorage.userName,
+        userId : localStorage.userId,
+        isOnline: userOnline
+    }); 
+}
+
 
 
 

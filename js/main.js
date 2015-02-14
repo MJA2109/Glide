@@ -19,7 +19,9 @@ requirejs.config({
         'charts' : ['../../js/charts'],
         'polling' : ['../../js/polling'],
         'widgets' : ['../../js/widgets'],
-        'notification' : ['../../js/notification']
+        'notification' : ['../../js/notification'],
+        'fayeModule' : ['http://192.168.1.64:8000/faye/client'],
+        'webClient' : ['../../js/node/webClient']
     },
     shim:{
     	'bootstrap': ['jquery'],
@@ -32,7 +34,8 @@ requirejs.config({
         'datepicker' : ['jquery'],
         'polling' : ['jquery', 'notification'],
         'widgets' : ['polling'],
-        'notification' : ['notify']
+        'notification' : ['notify'],
+        'webClient' : ['fayeModule']
 
 
     }
@@ -54,13 +57,18 @@ require(['jquery',
          'charts',
          'polling',
          'widgets',
-         'notification'], function($) {
+         'notification',
+         'fayeModule',
+         'webClient'], function($) {
 
             
             //Contains global variables
             var appData = {
                 api: "../api/handlers/webHandler.php",
-                apiKey: "dflj45fgfg343fggf454rgf53"
+                server: "http://192.168.1.64",
+                apiKey: "dflj45fgfg343fggf454rgf53",
+                useNodeServer : false,
+                usePollingServer : true
             }
 
             /**
@@ -87,6 +95,7 @@ require(['jquery',
                             }else if(logData.type == "signIn"){
                                 if(errorCount == 0){
                                     window.localStorage.layout = "admin";
+                                    window.localStorage.adminId = logData.data.adminId;
                                     window.location = "home.php";
                                 }else{
                                     errorFeedback(); 
@@ -127,6 +136,7 @@ require(['jquery',
                     type: "POST",
                     data: data,
                     success: function(){
+                        // window.localStorage.clear();
                         window.location = "index.php";
                     },
                     error: function(){
@@ -669,6 +679,39 @@ require(['jquery',
             }
 
 
+             /**
+             * Name: getWidgetData
+             * Purpose: Send Ajax request to retrieve data for either users, expense or journey widgets.
+             * @params: type - String : Widget to process
+             */
+            function getWidgetData(type){
+                var data = {
+                    action : "getWidgetData",
+                    widgetType : type
+                }
+
+                $.ajax({
+                    type: "POST",
+                    url: appData.api,
+                    data: data,
+                    dataType: "json",
+                    success: function(data){
+                        switch(data.type){
+                            case "expenses" : updateExpenseWidget(data.widgetData);
+                            break;
+                            case "journeys" : updateJourneyWidget(data.widgetData);
+                            break;
+                            case "users" : updateOnlineUsers(data.widgetData);
+                            break;
+                        }
+                    },
+                    error: function(data){
+                        //alert(JSON.stringify(data));
+                    }
+
+                });
+            }
+
             /**
              * Name: initialiseEvents
              * Purpose: Initialise application events
@@ -677,22 +720,32 @@ require(['jquery',
 
                 //array to hold Ids of selected users, expenses and journeys
                 var selectedIdStack = new Array();
+
+                if(appData.usePollingServer == true){
+                    if($('#ajaxContent').is('.home')){
+                        startPolling();
+                    }
+                }
                 
-                //load home page
+                /*=========load home page on sign in==========*/
                 setLinkColour("#navHome");
                 getPage("../root/overview.php", null, "standard");
 
                 submitForm('#signUpForm');
                 submitForm('#signInForm');
                 submitForm('#pmSignInForm');
-
-                //set layout
+                if(appData.useNodeServer == true){
+                    getWidgetData("onlineUsers");
+                    getWidgetData("recentExpenses");
+                    getWidgetData("recentJourneys");
+                }
                 if(window.localStorage.layout == "admin"){
                     setAdminLayout();
                 }
                 if(window.localStorage.layout == "projectManager"){
                    setProjectManagerLayout(); 
                 }
+                /*=============================================*/
 
                 
                 /********* NAVBAR EVENTS **********/
@@ -704,6 +757,11 @@ require(['jquery',
                     getPage("../root/overview.php", null, "standard");
                     $(".gifLoader").show(); //show widget gif loader icons
                     transition();
+                    if(appData.useNodeServer == true){
+                        getWidgetData("onlineUsers");
+                        getWidgetData("recentExpenses");
+                        getWidgetData("recentJourneys");
+                    }
                 });
                 $("#navExpenses").click(function(){
                     setLinkColour(this);

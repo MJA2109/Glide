@@ -1,9 +1,4 @@
 
-//when signed in start polling server
-if($('#ajaxContent').is('.home')){
-  startPolling();
-}
-
 /**
  * Name: startPolling
  * Purpose: Call poll function for each table.

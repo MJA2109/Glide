@@ -288,7 +288,7 @@
           
             if( $numOnlineUsers >= 1){
 
-               $users = $database->select("users", "user_name",[
+               $users = $database->select("users", "*",[
                            "AND" => [
                                     "is_online" => 1,
                                     "admin_id" => $adminId,
