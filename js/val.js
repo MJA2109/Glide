@@ -510,15 +510,19 @@ $(document).ready(function(){
                         message: 'The given Email address is not valid'
                     },
                     remote: {
-                        message: 'Email address already exists on our system',
                         url: validation.server,
                         data: {
-                            action: 'isAvailable'
+                            action: 'availableEmail'
                         },
+                        message: 'Email address already exists on our system',
                         type : 'POST'
                     }
                 }
             },
+
+
+
+
             adminPassword: {
                 validators: {
                     notEmpty: {

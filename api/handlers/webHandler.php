@@ -47,6 +47,8 @@ if(isset($_POST["action"])){
 	    break;
 	    case "getWidgetData" : GlideWebAPI::getWidgetData();
 	    break;
+	    case "availableEmail" : GlideWebAPI::availableEmail();
+	    break;
 	}
 }
 

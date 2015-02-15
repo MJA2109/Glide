@@ -291,8 +291,8 @@ class GlideWebAPI extends GlideBaseAPI{
 
 
     /**
-     * Name: doesUserExist
-     * Purpose: Check user is user mobile, admin email or user email available
+     * Name: isAvailable
+     * Purpose: Check does user email or mobile exist
      */
     public static function isAvailable(){
 
@@ -304,10 +304,6 @@ class GlideWebAPI extends GlideBaseAPI{
                 $column = "user_mobile";
                 $table = "users";
                 $data = Util::get("userMobile");
-            }else if(Util::get("adminEmail") != null){
-                $column = "admin_email";
-                $table = "admins";
-                $data = Util::get("adminEmail");
             }else if(Util::get("userEmail") != null){
                 $column = "user_email";
                 $table = "users";
@@ -337,6 +333,31 @@ class GlideWebAPI extends GlideBaseAPI{
             echo json_encode(array("error" => "Admin ID not set"));
         }
 
+    }
+
+    /**
+     * Name: availableEmail
+     * Purpose: On sign up check is purposed email in use
+     */
+    public static function availableEmail(){
+
+        $database = GlideWebAPI::connectDB();
+        $email = Util::get("adminEmail");
+        $log = array();
+            
+        $inUse = $database->count("admins", [
+            "AND" => [
+                "admin_email" => $email,
+                "is_deleted" => 0
+            ]
+        ]);
+
+        if($inUse > 0){
+            $log["valid"] = false;
+        }else{
+            $log["valid"] = true;
+        }
+        echo json_encode($log); 
     }
 
 
