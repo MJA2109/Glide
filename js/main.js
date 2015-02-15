@@ -61,6 +61,7 @@ require(['jquery',
          'fayeModule',
          'webClient'], function($) {
 
+            //Glide version_1.0
             
             //Contains global variables
             var appData = {
