@@ -1248,7 +1248,7 @@ class GlideWebAPI extends GlideBaseAPI{
                 //query expense table 
                 $sql_1 = "SELECT merchant_name, ROUND(SUM(expense_cost), 2) as total_spend
                           FROM merchants mc, expenses ex
-                          WHERE expense_date >= DATE_SUB(CURDATE(), INTERVAL ".$time.")
+                          WHERE expense_date BETWEEN CURDATE() - INTERVAL ".$time." AND CURDATE()
                           AND ex.admin_id = $adminId
                           AND ex.merchant_id = mc.merchant_id
                           AND ex.is_deleted = 0
@@ -1331,7 +1331,7 @@ class GlideWebAPI extends GlideBaseAPI{
                 //query expense table 
                 $sql_1 = "SELECT expense_category, ROUND(SUM(expense_cost), 2) as total_cost
                           FROM expenses
-                          WHERE expense_date >= DATE_SUB(CURDATE(), INTERVAL ".$time.")
+                          WHERE expense_date BETWEEN CURDATE() - INTERVAL ".$time." AND CURDATE()
                           AND admin_id = $adminId
                           AND is_deleted = 0 
                           AND expenses.expense_approved <> 'Awaiting...' ";
@@ -1351,7 +1351,7 @@ class GlideWebAPI extends GlideBaseAPI{
                 if($option == "singleUser"){
                     $sql_2 = "SELECT (ROUND(SUM(distance), 2) * user_mileage_rate) as mileage
                               FROM users ur, journeys jn
-                              WHERE date >= DATE_SUB(CURDATE(), INTERVAL ".$time.")
+                              WHERE date BETWEEN CURDATE() - INTERVAL ".$time." AND CURDATE()
                               AND ur.user_id = jn.user_id
                               AND ur.admin_id = $adminId
                               AND jn.is_deleted = 0
@@ -1365,7 +1365,7 @@ class GlideWebAPI extends GlideBaseAPI{
                     //calculate all mileage costs
                     $sql_2 = "SELECT ROUND(SUM(distance * user_mileage_rate), 2) as mileage
                               FROM users ur, journeys jn
-                              WHERE date >= DATE_SUB(CURDATE(), INTERVAL ".$time.")
+                              WHERE date BETWEEN CURDATE() - INTERVAL ".$time." AND CURDATE()
                               AND ur.user_id = jn.user_id
                               AND ur.admin_id = $adminId
                               AND jn.is_deleted = 0
@@ -1451,7 +1451,7 @@ class GlideWebAPI extends GlideBaseAPI{
                 //query expense table 
                 $sql_1 = "SELECT DATE_FORMAT(expense_date, '%b') as month, ROUND(SUM(expense_cost), 2) as total_cost
                           FROM expenses
-                          WHERE expense_date >= DATE_SUB(CURDATE(), INTERVAL ".$time.")
+                          WHERE expense_date BETWEEN CURDATE() - INTERVAL ".$time." AND CURDATE()
                           AND admin_id = $adminId
                           AND is_deleted = 0 
                           AND expenses.expense_approved <> 'No' ";

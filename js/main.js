@@ -361,7 +361,7 @@ require(['jquery',
                                 case "line" : initialiseChart(results, "line");
                                 break;
                             }
-                           
+                            $("#btnGetChartData").removeAttr("disabled"); //validation disabled bug fix
                             // console.log(data);
                         },
                         error: function(){
@@ -723,7 +723,9 @@ require(['jquery',
 
                 if(appData.usePollingServer == true){
                     if($('#ajaxContent').is('.home')){
-                        startPolling();
+                        if(appData.usePollingServer == true){
+                            startPolling();
+                        }
                     }
                 }
                 
