@@ -92,7 +92,7 @@
 	</div>
 </div>
 
-<div class = "modalReceiptImage modalImageStyle">
+<div class = "modalReceiptImage modalImageStyle imageDropFix">
 	<img src="" alt = "Receipt Image" />
 </div>	
 
