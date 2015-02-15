@@ -20,7 +20,7 @@ requirejs.config({
         'polling' : ['../../js/polling'],
         'widgets' : ['../../js/widgets'],
         'notification' : ['../../js/notification'],
-        'fayeModule' : ['http://192.168.1.64:8000/faye/client'],
+        'fayeModule' : ['http://192.168.1.74:8000/faye/client'],
         'webClient' : ['../../js/node/webClient']
     },
     shim:{
@@ -65,7 +65,7 @@ require(['jquery',
             //Contains global variables
             var appData = {
                 api: "../api/handlers/webHandler.php",
-                server: "http://192.168.1.64",
+                server: "http://192.168.1.74",
                 apiKey: "dflj45fgfg343fggf454rgf53",
                 useNodeServer : false,
                 usePollingServer : true
@@ -434,7 +434,7 @@ require(['jquery',
                 $("#usersTable").dataTable({
                     "data" : tableData,
                     "columns" : [
-                        {"data": "DT_RowId"},
+                        // {"data": "DT_RowId"},
                         {"data": "user_name"},
                         {"data": "user_mobile"},
                         {"data": "user_email"},
@@ -967,12 +967,12 @@ require(['jquery',
                     var row = "#" + dataId;
                     var form = "#modalEditUserForm";
 
-                    var userId = $(row + " td:nth-child(1)").text();
-                    var userName = $(row + " td:nth-child(2)").text();
-                    var userMobile = $(row + " td:nth-child(3)").text();
-                    var userEmail = $(row + " td:nth-child(4)").text();
-                    var userRate = $(row + " td:nth-child(5)").text();
-                    var userType = $(row + " td:nth-child(6)").text();
+                    // var userId = $(row + " td:nth-child(1)").text();
+                    var userName = $(row + " td:nth-child(1)").text();
+                    var userMobile = $(row + " td:nth-child(2)").text();
+                    var userEmail = $(row + " td:nth-child(3)").text();
+                    var userRate = $(row + " td:nth-child(4)").text();
+                    var userType = $(row + " td:nth-child(5)").text();
                     
                     userRate = formatDecimal(userRate);
 

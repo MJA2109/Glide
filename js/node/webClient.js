@@ -1,5 +1,5 @@
 var channel = window.localStorage.adminId;
-var server = "192.168.1.64";
+var server = "192.168.1.74";
 
 client = new Faye.Client('http://' + server + ':8000/', {
 	timeout: 120

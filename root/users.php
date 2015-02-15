@@ -40,7 +40,7 @@
 		<table id = "usersTable">
 			<thead>
 				<tr>
-					<th>User ID</th>
+					<!-- <th>User ID</th> -->
 					<th>User Name</th>
 					<th>Mobile</th>
 					<th>E-mail</th>
