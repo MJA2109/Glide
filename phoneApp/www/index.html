@@ -5,10 +5,11 @@
         <meta name="format-detection" content="telephone=no" />
         <meta name="viewport" content="initial-scale=1, maximum-scale=1">
         <meta name="msapplication-tap-highlight" content="no" />
-        <link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.4.3.min.css">
-        <link rel="stylesheet" type="text/css" href="css/glideTheme.min.css">
         <link rel="stylesheet" type="text/css" href="css/jquery.mobile.icons.min.css" />
-         <link rel="stylesheet" type="text/css" href="css/jquery.mobile.iscrollview-pull.css" />
+        <link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.4.3.min.css">
+        <link rel="stylesheet" type="text/css" href="css/jquery.mobile.iscrollview-pull.css" />
+        <link rel="stylesheet" href="css/font-awesome/css/font-awesome.min.css">
+        <link rel="stylesheet" type="text/css" href="css/GlideUpDate.css">
         <link rel="stylesheet" type="text/css" href="css/index.css" />
         <title>Glide</title>
     </head>
@@ -16,7 +17,7 @@
         <div class="app">    
 
             <!-- Login Page -->
-            <div data-role = "page" data-transition = "flip" id = "login">
+            <div data-role = "page" data-transition = "flip" id = "login" class = "mainGradient">
                 <div id = "loginWrapper">
 
                     <div>
@@ -34,7 +35,7 @@
                             <input type = "password" name = "password" id = "loginPassword" placeholder = "Password"/>
                         </div>
                         <div>
-                            <input type = "text" name = "instanceId" id = "instanceId" placeholder = "Instance ID"/>
+                            <input type = "text" name = "instanceId" id = "instanceId" placeholder = "GIS Code"/>
                         </div>
                         <div>
                             <input type = "button" value = "Login" id = "btnLogin" />
@@ -44,41 +45,36 @@
             </div>
 
             <!-- Home Page -->
-            <div data-role = "page" data-transition = "flip" id="home">
-                <div data-role= "navbar" class = "fixedNav">
-                    <nav>
-                        <div id = "navLogo">
-                            <h1>glide</h1> 
-                        </div>
-                        <!-- <div id = "navGrid">
-                            <a href="#home" class=" ui-alt-icon ui-nodisc-icon ui-btn ui-corner-all ui-icon-grid ui-btn-icon-notext"></a> 
-                        </div> -->
-                    </nav>
+            <div data-role = "page" data-transition = "flip" id="home" class = "mainGradient borderFix">
+
+                <div id = "menuLogo">
+                    <img src="img/glide.png"/>
                 </div>
 
-                <div class = "navSpace"></div>
-
-                <div data-role="content">
-                    <a href="#uploadExpenses" data-role="button" data-icon = "arrow-u" data-iconpos = "top">Upload Expenses</a>
-                    <a href="#trackJourney" data-role="button" data-icon = "forward" data-iconpos = "top">Track Journey</a>
-                    <a href="#expenseHistory" data-role="button" data-icon = "star" data-iconpos = "top">Expense History</a>
-                    <a href="#journeyHistory" data-role="button" data-icon = "star" data-iconpos = "top">Journey History</a>
-                    <a href="#accountInfo" data-role="button" data-icon = "info" data-iconpos = "top">Account Info</a>
+                <div data-role="controlgroup" id = "menuGroup">
+                    <a href="#uploadExpenses" data-role="button" data-icon = "arrow-u" data-iconpos = "right" >Expense Upload</a>
+                    <a href="#trackJourney" data-role="button" data-icon = "navigation" data-iconpos = "right" >Journey Tracker</a>
+                    <a href="#expenseHistory" data-role="button" data-icon = "bars" data-iconpos = "right" >Expense History</a>
+                    <a href="#journeyHistory" data-role="button" data-icon = "bars" data-iconpos = "right" >Journey History</a>
+                    <a href="#accountInfo" data-role="button" data-icon = "info" data-iconpos = "right" >Account Info</a>
+                    <a href="#" data-role="button" data-icon = "delete" data-iconpos = "right" >Sign Out</a>
                 </div>
+
             </div>
 
             
+            
             <!-- Upload Expenses Page -->
             <div data-role = "page" data-transition = "flip" id="uploadExpenses" data-tap-toggle="false">
-                <div data-role= "navbar" class = "fixedNav">
-                    <nav>
-                        <div id = "navLogo">
-                            <h1>glide</h1> 
+                <div data-role= "header" class = "fixedNav mainGradient borderFix">    
+                    <div class = "pageName">
+                        <h2>Expense Upload</h2>   
+                    </div>
+                    <div id = "navGrid">
+                        <div>
+                            <a href="#home" class="ui-nodisc-icon ui-corner-all ui-icon-arrow-l ui-btn-icon-notext"></a> 
                         </div>
-                        <div id = "navGrid">
-                            <a href="#home" class=" ui-alt-icon ui-nodisc-icon ui-btn ui-corner-all ui-icon-grid ui-btn-icon-notext"></a> 
-                        </div>
-                    </nav>
+                    </div> 
                 </div>
 
                 <div class = "navSpace"></div>
@@ -112,10 +108,11 @@
                             </div>
                         </div>
                         <div>
-                            <label for="uploadCategory" class="select">
+                            <!-- <label for="uploadCategory" class="select">
                                 Category:
-                            </label>
+                            </label> -->
                             <select name = "category" id="uploadCategory" data-iconpos = "left">
+                                <option value = "">Category</option>
                                 <option value = "accommodation">Accommodation</option>
                                 <option value = "travel">Travel</option>
                                 <option value = "food">Food</option>
@@ -124,20 +121,20 @@
                             </select>
                         </div>
                         <div>
-                            <label for = "uploadMerchant">Merchant:</label>
-                            <input type = "text" name = "merchant" id = "uploadMerchant" value = "" />
+                            <!-- <label for = "uploadMerchant">Merchant:</label> -->
+                            <input type = "text" name = "merchant" id = "uploadMerchant" value = "" placeholder = "Merchant"/>
                         </div>
                         <div>
-                            <label for = "uploadCost">Cost:</label>
-                            <input type = "text" name = "cost" id = "uploadCost" value = "" />
+                            <!-- <label for = "uploadCost">Cost:</label> -->
+                            <input type = "text" name = "cost" id = "uploadCost" value = "" placeholder = "Cost"/>
                         </div>
                         <div>
-                            <label for = "uploadAccount">Account:</label>
-                            <input type = "text" name = "account" id = "uploadAccount" value = "" />
+                            <!-- <label for = "uploadAccount">Account:</label> -->
+                            <input type = "text" name = "account" id = "uploadAccount" value = "" placeholder = "Account"/>
                         </div>
                         <div>
-                            <label for = "uploadComment">Comment:</label>
-                            <textarea name = "comment" id = "uploadComment"></textarea>
+                            <!-- <label for = "uploadComment">Comment:</label> -->
+                            <textarea name = "comment" id = "uploadComment" placeholder = "Comment"></textarea>
                         </div>
                         <div>
                             <input type = "button" value = "Upload" id = "btnUpload" data-icon = "arrow-u"/>
@@ -148,62 +145,80 @@
 
             <!-- Track Journey Page -->
             <div data-role = "page" data-transition = "flip" id="trackJourney" data-tap-toggle="false">
-                    <div data-role= "navbar" class = "fixedNav">
-                        <nav>
-                            <div id = "navLogo">
-                                <h1>glide</h1> 
+                    <div data-role= "header" class = "fixedNav mainGradient borderFix">    
+                        <div class = "pageName">
+                            <h2>Journey Tracker</h2>   
+                        </div> 
+                        <div id = "navGrid">
+                            <div>
+                                <a href="#home" class="ui-nodisc-icon ui-corner-all ui-icon-arrow-l ui-btn-icon-notext"></a> 
                             </div>
-                            <div id = "navGrid">
-                                <a href="#home" class=" ui-alt-icon ui-nodisc-icon ui-btn ui-corner-all ui-icon-grid ui-btn-icon-notext"></a> 
-                            </div>
-                        </nav>
+                        </div> 
                     </div>
 
                     <div class = "navSpace"></div>
+                    <div id = "mapLoader">
+                        <i class="fa fa-cog fa-spin fa-3x"></i> 
+                        <p>Retrieving GPS Position...</p>
+                    </div>
+                    <div id = "googleMap"></div>
 
-                    <div id = "googleMap"> </div>
-
-                    <div id = "finish">
+                    <div id = "finish" class = "mainGradient">
                         <input type = "button" value = "Finish" id = "btnFinishJourney" data-icon = "action" />  
                     </div>
-                    <div id = "start">
+                    <div id = "start" class = "mainGradient">
                         <input type = "button" value = "Start" id = "btnStartJourney" data-icon = "navigation" />
                     </div>
             </div>
 
+            
             <!-- Account Info Page -->
             <div data-role = "page" data-transition = "flip" id="accountInfo" data-tap-toggle="false">
-                <div data-role= "navbar" class = "fixedNav">
-                    <nav>
-                        <div id = "navLogo">
-                            <h1>glide</h1> 
+                
+                <div data-role= "header" class = "fixedNav mainGradient borderFix">    
+                    <div class = "pageName">
+                        <h2>Account Info</h2>   
+                    </div>
+                    <div id = "navGrid">
+                        <div>
+                            <a href="#home" class="ui-nodisc-icon ui-corner-all ui-icon-arrow-l ui-btn-icon-notext"></a> 
                         </div>
-                        <div id = "navGrid">
-                            <a href="#home" class=" ui-alt-icon ui-nodisc-icon ui-btn ui-corner-all ui-icon-grid ui-btn-icon-notext"></a> 
-                        </div>
-                    </nav>
+                    </div> 
                 </div>
 
                 <div class = "navSpace"></div>
 
                 <div data-role="content">
-                    <div>
-                        <h2>Total Expenses: <span>€1054.23<span></h2>
+                    <div id = "accountGeneralInfo">
+                        <p><span class = "boldTxt"><i class="fa fa-globe"></i> Company</span>: Nixatel</p>
+                        <p><span class = "boldTxt"><i class="fa fa-user"></i> User</span>: Michael Anderson</p>
+                        <p><span class = "boldTxt"><i class="fa fa-calendar"></i> Registered</span>: 21/02/1987</p>
+                        <p><span class = "boldTxt"><i class="fa fa-plus-square-o"></i> No. of Claims</span>: 54</p>
                     </div>
+                    <ul data-role="listview">
+                        <li class="ui-li ui-li-static ui-btn-up-c ui-li-has-count ui-corner-bottom ui-li-last"><i class="fa fa-home"></i> Accommodation <span class="ui-li-count ui-btn-up-c ui-btn-corner-all">€100.32</span></li>
+                        <li class="ui-li ui-li-static ui-btn-up-c ui-li-has-count ui-corner-bottom ui-li-last"><i class="fa fa-glass"></i> Entertainment <span class="ui-li-count ui-btn-up-c ui-btn-corner-all">€100.32</span></li>
+                        <li class="ui-li ui-li-static ui-btn-up-c ui-li-has-count ui-corner-bottom ui-li-last"><i class="fa fa-car"></i> Mileage <span class="ui-li-count ui-btn-up-c ui-btn-corner-all">€100.32</span></li>
+                        <li class="ui-li ui-li-static ui-btn-up-c ui-li-has-count ui-corner-bottom ui-li-last"><i class="fa fa-plane"></i> Travel <span class="ui-li-count ui-btn-up-c ui-btn-corner-all">€100.32</span></li>
+                        <li class="ui-li ui-li-static ui-btn-up-c ui-li-has-count ui-corner-bottom ui-li-last"><i class="fa fa-mobile"></i> Phone <span class="ui-li-count ui-btn-up-c ui-btn-corner-all">€100.32</span></li>
+                        <li class="ui-li ui-li-static ui-btn-up-c ui-li-has-count ui-corner-bottom ui-li-last"><i class="fa fa-cutlery"></i> Food <span class="ui-li-count ui-btn-up-c ui-btn-corner-all">€100.32</span></li>
+                        <li class="ui-li ui-li-static ui-btn-up-c ui-li-has-count ui-corner-bottom ui-li-last"> <h4><i class="fa fa-arrow-circle-down"></i> Total Claimed</h4> <span class="ui-li-count ui-btn-up-c ui-btn-corner-all"><h4>€1304.32</h4></span></li>
+                    </ul>
                 </div>
             </div>
 
-            <!-- Previous Expenses Page -->
+            
+            <!-- Expense History -->
             <div data-role = "page" data-transition = "flip" id="expenseHistory" data-tap-toggle="false">
-                <div data-role= "navbar" class = "fixedNav">
-                    <nav>
-                        <div id = "navLogo">
-                            <h1>glide</h1> 
+               <div data-role= "header" class = "fixedNav mainGradient borderFix">    
+                    <div class = "pageName">
+                        <h2>Expense History</h2>   
+                    </div>
+                    <div id = "navGrid">
+                        <div>
+                            <a href="#home" class="ui-nodisc-icon ui-corner-all ui-icon-arrow-l ui-btn-icon-notext"></a> 
                         </div>
-                        <div id = "navGrid">
-                            <a href="#home" class=" ui-alt-icon ui-nodisc-icon ui-btn ui-corner-all ui-icon-grid ui-btn-icon-notext"></a> 
-                        </div>
-                    </nav>
+                    </div> 
                 </div>
 
                 <div class = "navSpace"></div>
@@ -214,27 +229,28 @@
                         <span class="iscroll-pull-label"></span>
                     </div>
                     <ul data-role = "listview">
-                        <!-- expense history data goes here -->
-
                         
                     </ul>
                 </div>
             </div>
 
-
+            
+            <!-- Journey history -->
             <div data-role = "page" data-transition = "flip" id="journeyHistory" data-tap-toggle="false">
-                <div data-role= "navbar" class = "fixedNav">
-                    <nav>
-                        <div id = "navLogo">
-                            <h1>glide</h1> 
+
+                <div data-role= "header" class = "fixedNav mainGradient borderFix">    
+                    <div class = "pageName">
+                        <h2>Journey History</h2>   
+                    </div>
+                    <div id = "navGrid">
+                        <div>
+                            <a href="#home" class="ui-nodisc-icon ui-corner-all ui-icon-arrow-l ui-btn-icon-notext"></a> 
                         </div>
-                        <div id = "navGrid">
-                            <a href="#home" class=" ui-alt-icon ui-nodisc-icon ui-btn ui-corner-all ui-icon-grid ui-btn-icon-notext"></a> 
-                        </div>
-                    </nav>
+                    </div> 
                 </div>
 
                 <div class = "navSpace"></div>
+                
 
                 <div data-role="content" id = "journeyScroll" data-iscroll>
                     <div class="iscroll-pulldown">
@@ -242,24 +258,23 @@
                         <span class="iscroll-pull-label"></span>
                     </div>
                     <ul data-role = "listview">
-                         <!-- journey history data goes here --> 
-
-
+                        <!-- journey history data goes here -->
                     </ul>
                 </div>
             </div>
 
             <!-- Upload Journey Data -->
             <div data-role = "page" id="uploadJourneyData" data-tap-toggle="false">
-                <div data-role= "navbar" class = "fixedNav">
-                    <nav>
-                        <div id = "navLogo">
-                            <h1>glide</h1> 
+        
+                <div data-role= "header" class = "fixedNav mainGradient borderFix">    
+                    <div class = "pageName">
+                        <h2>Journey Upload</h2>   
+                    </div>
+                    <div id = "navGrid">
+                        <div>
+                            <a href="#home" class="ui-nodisc-icon ui-corner-all ui-icon-arrow-l ui-btn-icon-notext"></a> 
                         </div>
-                        <div id = "navGrid">
-                            <a href="#home" class=" ui-alt-icon ui-nodisc-icon ui-btn ui-corner-all ui-icon-grid ui-btn-icon-notext"></a> 
-                        </div>
-                    </nav>
+                    </div> 
                 </div>
 
                 <div class = "navSpace"></div>

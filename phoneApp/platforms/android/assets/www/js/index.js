@@ -1,6 +1,6 @@
 //Initialize application. Set global variables.
 var app = {
-    server: "http://192.168.1.64/Glide/api/handlers/mobileHandler.php",
+    server: "http://192.168.1.74/Glide/api/handlers/mobileHandler.php",
     useNodeServer: false,
     map: "",             //google map object
     trackerMarker: "",   //contains tracker marker
@@ -218,23 +218,25 @@ function refreshHistory(divId, attr, action){
             if(data){
                 var history = JSON.parse(data);
                 if(attr == "expenseId"){
-                    $.each(history, function(key, value){
+                    
+                     $.each(history, function(key, value){
                         $(divId + " ul").prepend("<li expenseId  = ' " + value.expense_id + " '>" +
-                                                 "<div class = 'historyDiv'><div class = 'historyInfo'>Date:</div> " + value.expense_date + "</div>" +
-                                                 "<div class = 'historyDiv'><div class = 'historyInfo'>Type:</div> " + value.expense_category + "</div>" +
-                                                 "<div class = 'historyDiv'><div class = 'historyInfo'>Merchant:</div> " + value.merchant_name + " </div>" +
-                                                 "<div class = 'historyDiv'><div class = 'historyInfo'>Location:</div> Cork City</div>" +
-                                                 "<div class = 'historyDiv'><div class = 'historyInfo'>Cost:</div> € " + value.expense_cost + "</div></li>");      
+                                                 "<div class = 'historyDiv'><div class = 'historyInfo'><i class='fa fa-calendar'></i> Date</div>" + moment(value.expense_date).format('MMMM Do YYYY, h:mm:ss a') + "</div>" +
+                                                 "<div class = 'historyDiv'><div class = 'historyInfo'><i class='fa fa-tag'></i> Type</div> " + value.expense_category + "</div>" +
+                                                 " <div class = 'historyDiv'><div class = 'historyInfo'><i class='fa fa-shopping-cart'></i> Merchant</div>" + value.merchant_name + "</div>" +
+                                                 "<div class = 'historyDiv'><div class = 'historyInfo'><i class='fa fa-map-marker'></i> Location:</div> Cork City</div>" +
+                                                 "<div class = 'historyDiv'><div class = 'historyInfo'><i class='fa fa-money'></i> Cost</div> € " + value.expense_cost + "</div>");      
                     });
                     data = null;
                 }else{
+
                     $.each(history, function(key, value){
                         $(divId + " ul").prepend("<li journeyId  = ' " + value.id + " '>" +
-                                                 "<div class = 'historyDiv'><div class = 'historyInfo'>Date:</div> " + value.date + "</div>" +
-                                                 "<div class = 'historyDiv'><div class = 'historyInfo'>Origin:</div> " + value.origin + "</div>" +
-                                                 "<div class = 'historyDiv'><div class = 'historyInfo'>Destination:</div> " + value.destination + " </div>" +
-                                                 "<div class = 'historyDiv'><div class = 'historyInfo'>Time:</div>  " + value.journey_time + " </div>" +
-                                                 "<div class = 'historyDiv'><div class = 'historyInfo'>Distance:</div> Km " + value.distance + "</div></li>");      
+                                                 "<div class = 'historyDiv'><div class = 'historyInfo'><i class='fa fa-calendar'></i> Date:</div> " + moment(value.expense_date).format('MMMM Do YYYY, h:mm:ss a') + " </div>" +
+                                                 "<div class = 'historyDiv'><div class = 'historyInfo'><i class='fa fa-map-marker'></i> Origin:</div> " + value.origin + "</div>" +
+                                                 "<div class = 'historyDiv'><div class = 'historyInfo'><i class='fa fa-map-marker'></i> Destination:</div> " + value.destination + " </div>" +
+                                                 "<div class = 'historyDiv'><div class = 'historyInfo'><i class='fa fa-clock-o'></i> Time:</div>  " + value.journey_time + " </div>" +
+                                                 "<div class = 'historyDiv'><div class = 'historyInfo'><i class='fa fa-road'></i> Distance:</div> Km " + value.distance + "</div></li>");      
                     });
                     data = null;
                 }
@@ -261,7 +263,7 @@ function getCurrentLocation(){
     
     var options = {
         enableHighAccuracy: true,
-        timeout: 10000,
+        timeout: 60000,
         maximumAge: 0
     }
 
