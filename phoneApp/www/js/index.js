@@ -19,7 +19,13 @@ var app = {
     },
     onDeviceReady: function() {
         if(navigator.network.connection.type == Connection.NONE){
-            alert("No Network Connection detected");   
+            //alert("No Network Connection detected");
+            swal({
+                title: "Error!",
+                type: "warning",     
+                text: "No network connection detected...",
+                confirmButtonColor: "#4F758A"
+            });   
         }
         initializeEvents();
     }
@@ -87,7 +93,6 @@ function initializeEvents(){
     //check local storage for login details
     checkPreAuth();
 
-
 }
 
 
@@ -134,11 +139,21 @@ function login(form){
                 $.mobile.changePage("#home");
 
             }else{
-                alert("Incorrect details, try again...");
+                swal({
+                    title: "Error!",
+                    type: "warning",     
+                    text: "Incorrect details, try again...",
+                    confirmButtonColor: "#4F758A"
+                });
             } 
         },
         error: function(){
-            alert("Unable to connect to server.");
+            swal({
+                title: "Error!",
+                type: "warning",     
+                text: "Unable to connect to server...",
+                confirmButtonColor: "#4F758A"
+            });
         } 
     });
 }
@@ -244,11 +259,21 @@ function refreshHistory(divId, attr, action){
                 $( divId + " ul").listview("refresh"); //fix to reapply css
 
             }else{
-                alert("Already up to date...");
+                swal({
+                    title: "Error!",
+                    type: "warning",     
+                    text: "Already up to date...",
+                    confirmButtonColor: "#4F758A"
+                });
             }    
         },
         errror: function(){
-            alert("Unable to retrieve data...");  
+            swal({
+                title: "Error!",
+                type: "warning",     
+                text: "Unable to retrieve data...",
+                confirmButtonColor: "#4F758A"
+            }); 
         }
 
     });
@@ -278,8 +303,15 @@ function getCurrentLocation(){
 
     function onFail(error){
         //alert(JSON.stringify(error));
-        alert("Unable to retrieve GPS position. Check GPS is turned on.");
-        $.mobile.changePage("#home");
+        // alert("Unable to retrieve GPS position. Check GPS is turned on.");
+        swal({
+            title: "Error!", 
+            type: "warning",  
+            text: "Unable to retrieve GPS position. Check GPS is turned on.",
+            confirmButtonColor: "#4F758A"
+        }, function(){
+            $.mobile.changePage("#home");
+        });
     }
 }
 
@@ -292,7 +324,14 @@ function startJourney(){
 
     $("#start").hide();
     $("#finish").show();
-    alert("Journey Started");
+    //alert("Journey Started");
+    swal({
+        title: "Go!", 
+        type: "success",  
+        text: "Journey Started",
+        confirmButtonColor: "#4F758A",
+        timer: 5000
+    });
 
     var minimumAccuracy = 20;
 
@@ -310,9 +349,21 @@ function startJourney(){
 
         function(error){
             if(error.code == 1){
-                alert("Error: Access denied !");
+                //alert("Error: Access denied !");
+                swal({
+                    title: "Error!",
+                    type: "warning",     
+                    text: "Acess Denied",
+                    confirmButtonColor: "#4F758A"
+                });
             }else if(error.code == 2){
-                alert("Error: Position is unavailable");
+                //alert("Error: Position is unavailable");
+                swal({
+                    title: "Error!",
+                    type: "warning",     
+                    text: "Position is unavailable",
+                    confirmButtonColor: "#4F758A"
+                });
             }
         },
 
@@ -347,8 +398,16 @@ function finishJourney(){
         resetMap();
 
     }else{
-        alert("Device has not received sufficient GPS data.");
-        $.mobile.changePage("#home");
+        //alert("Device has not received sufficient GPS data.");
+        swal({
+            title: "Error!", 
+            type: "warning",    
+            text: "Device has not received sufficient GPS data.",
+            confirmButtonColor: "#4F758A"
+        }, function(){
+            $.mobile.changePage("#home");
+        });
+
         $("#start").show();
         $("#finish").hide();
     }
@@ -611,7 +670,13 @@ function captureReceipt(){
     }
 
     function onFail(message) {
-        alert("Error : Can't access device camera.");
+        //alert("Error : Can't access device camera.");
+        swal({
+            title: "Error!", 
+            type: "warning",    
+            text: "Can't access device camera.",
+            confirmButtonColor: "#4F758A"
+        });
     }
 }
 
@@ -636,7 +701,13 @@ function uploadReceipt(){
     fileTrans.upload(imageURI, encodeURI(app.server), uploadComplete, uploadFailed, options);
     
     function uploadFailed(error){
-        alert("Upload failed : " + JSON.stringify(error));
+        //alert("Upload failed : " + JSON.stringify(error));
+        swal({
+            title: "Error!", 
+            type: "warning",    
+            text: "Image upload failed",
+            confirmButtonColor: "#4F758A"
+        });
     }
 
     function uploadComplete(data){
