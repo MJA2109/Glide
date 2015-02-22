@@ -88,6 +88,10 @@ function initializeEvents(){
         $(this).iscrollview("refresh");
     });
 
+    $("#signOut").click(function(){
+        signOut();
+    });
+
     //window.localStorage.clear();
 
     //check local storage for login details
@@ -104,7 +108,7 @@ function checkPreAuth(){
     if(window.localStorage.userName != undefined && window.localStorage.userId != undefined){   
         $("#loginEmail").val(window.localStorage.email);
         $("#instanceId").val(window.localStorage.instanceId);
-        $("#password").val(window.localStorage.password);
+        $("#loginPassword").val(window.localStorage.password);
         login("#loginForm");
     }
 }
@@ -129,7 +133,7 @@ function login(form){
             if(auth){
 
                 window.localStorage.userId = auth[0].user_id;
-                alert("User ID is : " + localStorage.userId);
+                //alert("User ID is : " + localStorage.userId);
                 window.localStorage.userName = auth[0].user_name;
                 window.localStorage.password = auth[0].password;
                 window.localStorage.email = $("#loginEmail").val();
@@ -159,7 +163,17 @@ function login(form){
 }
 
 
+function signOut(){
+    alert(window.localStorage.userName);
+    window.localStorage.clear();
+    alert(window.localStorage.userName);
+    navigator.app.exitApp();
+}
 
+/**
+ * Name: resetMapGPS
+ * Purpose: Reset the GPS ID and reset map controls.
+ */
 function initialiseWidgetCalls(){
 
     toggleOnline(1); //toggle user to online status
@@ -236,11 +250,11 @@ function refreshHistory(divId, attr, action){
                     
                      $.each(history, function(key, value){
                         $(divId + " ul").prepend("<li expenseId  = ' " + value.expense_id + " '>" +
-                                                 "<div class = 'historyDiv'><div class = 'historyInfo'><i class='fa fa-calendar'></i> Date</div>" + moment(value.expense_date).format('MMMM Do YYYY, h:mm:ss a') + "</div>" +
-                                                 "<div class = 'historyDiv'><div class = 'historyInfo'><i class='fa fa-tag'></i> Type</div> " + value.expense_category + "</div>" +
-                                                 " <div class = 'historyDiv'><div class = 'historyInfo'><i class='fa fa-shopping-cart'></i> Merchant</div>" + value.merchant_name + "</div>" +
+                                                 "<div class = 'historyDiv'><div class = 'historyInfo'><i class='fa fa-calendar'></i> Date:</div>" + moment(value.expense_date).format('MMMM Do YYYY, h:mm:ss a') + "</div>" +
+                                                 "<div class = 'historyDiv'><div class = 'historyInfo'><i class='fa fa-tag'></i> Type:</div> " + value.expense_category + "</div>" +
+                                                 " <div class = 'historyDiv'><div class = 'historyInfo'><i class='fa fa-shopping-cart'></i> Merchant:</div>" + value.merchant_name + "</div>" +
                                                  "<div class = 'historyDiv'><div class = 'historyInfo'><i class='fa fa-map-marker'></i> Location:</div> Cork City</div>" +
-                                                 "<div class = 'historyDiv'><div class = 'historyInfo'><i class='fa fa-money'></i> Cost</div> € " + value.expense_cost + "</div>");      
+                                                 "<div class = 'historyDiv'><div class = 'historyInfo'><i class='fa fa-money'></i> Cost:</div> € " + value.expense_cost + "</div>");      
                     });
                     data = null;
                 }else{
