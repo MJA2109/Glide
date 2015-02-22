@@ -736,42 +736,82 @@ function uploadReceipt(){
  * @param form - string : form to be processed.
  */
 function uploadForm(form){
-    var frm = $(form);
-    var data = frm.serialize();
-    $.ajax({
-        type: "post",
-        url: app.server,
-        data: data,
-        beforeSend: function() {          
-            $.mobile.loading("show", {
-                text: "Uploading data...",
-                textVisible: true,
-                theme: "z"
-            });
-        },
-        success: function(data){
-           
-            if(form == "#uploadJourneyDataForm"){ 
-                clearGeoDataArrays();
-                resetUploadJourneyData();
-                if(app.useNodeServer == true){
-                    publishNotification("journeys"); //send message to node.js server
-                }
-            }
-            if(form == "#uploadExpenseForm"){ 
-                resetUploadExpenseForm();
-                if(app.useNodeServer == true){
-                    publishNotification("expenses"); //send message to node.js server
-                }
-            }
+    
+    var errors = validateInput(form);
 
-            $.mobile.changePage("#home");
-            $.mobile.loading("hide");
-        },
-        error: function(data, error){
-            alert("Ajax Error " + data + " : " + error);
-        }               
-    });   
+    if(errors.length == 0){
+
+        var frm = $(form);
+        var data = frm.serialize();
+        $.ajax({
+            type: "post",
+            url: app.server,
+            data: data,
+            beforeSend: function() {          
+                $.mobile.loading("show", {
+                    text: "Uploading data...",
+                    textVisible: true,
+                    theme: "z"
+                });
+            },
+            success: function(data){
+               
+                if(form == "#uploadJourneyDataForm"){ 
+                    clearGeoDataArrays();
+                    resetUploadJourneyData();
+                    if(app.useNodeServer == true){
+                        publishNotification("journeys"); //send message to node.js server
+                    }
+                }
+                if(form == "#uploadExpenseForm"){ 
+                    resetUploadExpenseForm();
+                    if(app.useNodeServer == true){
+                        publishNotification("expenses"); //send message to node.js server
+                    }
+                }
+
+                $.mobile.changePage("#home");
+                $.mobile.loading("hide");
+            },
+            error: function(data, error){
+                alert("Ajax Error " + data + " : " + error);
+            }               
+        }); 
+    
+    }else{
+
+        errors.length == 1 ? errors = errors + " field " : errors = errors + " fields ";
+        swal({
+            title: "Error!", 
+            type: "warning",    
+            text: "Invalid input, check " + errors + " and try again...",
+            confirmButtonColor: "#4F758A"
+        });   
+    }  
+}
+
+
+function validateInput(form){
+    
+    var errors = Array()
+
+    if(form == "#uploadExpenseForm"){
+
+        if($(form + " #uploadCategory").val() == "category"){
+            errors.push("Category");
+        }
+        if($(form + " #uploadMerchant").val() == ""){
+            errors.push("Merchant");
+        }
+        if($(form + " #uploadCost").val() == "" || !$.isNumeric($(form + " #uploadCost").val())){
+            errors.push("Cost");
+        }
+
+    }else if (form == "#uploadJourneyDataForm"){
+
+    }
+
+    return errors;
 }
 
 
@@ -811,6 +851,7 @@ function toggleOnline(userStatus){
  */
 function resetUploadExpenseForm(){
     $("#uploadMerchant, #uploadDate, #uploadCost, #uploadComment, #uploadAccount").val("");
+    $('#uploadCategory').prop('selectedIndex',0);
     $("#receipt").remove();
 }
 
