@@ -164,9 +164,7 @@ function login(form){
 
 
 function signOut(){
-    alert(window.localStorage.userName);
     window.localStorage.clear();
-    alert(window.localStorage.userName);
     navigator.app.exitApp();
 }
 
@@ -274,8 +272,8 @@ function refreshHistory(divId, attr, action){
 
             }else{
                 swal({
-                    title: "Error!",
-                    type: "warning",     
+                    title: "Updated!",
+                    type: "success",     
                     text: "Already up to date...",
                     confirmButtonColor: "#4F758A"
                 });
@@ -676,6 +674,7 @@ function captureReceipt(){
                     destinationType: Camera.DestinationType.FILE_URI, correctOrientation: true, targetWidth: 800, targetHeight: 800 });
     
     function onSuccess(imageURI) {
+        $("#receipt").remove();
         $("<img id = 'receipt' src = ''>").appendTo("#uploadedImage");
         app.imageURI = imageURI;
         var image = document.getElementById('receipt');

@@ -101,12 +101,19 @@
                         <div>
                             <input type = "hidden" name = "userEmail" value = "" id = "expUserEmail"/>
                         </div>
-                        <div>
-                            <input type = "button" value = "Capture Receipt" id = "btnCaptureReceipt" data-icon = "camera"/>
+                        <div id = "cameraControl">
+                            <!-- <input type = "button" value = "Capture Receipt" id = "btnCaptureReceipt" data-icon = "camera"/> -->
+
+                            <div id = "btnCaptureReceipt">
+                                <i class="fa fa-camera fa-4x"></i>
+                            </div>
+                            
                             <div id = "uploadedImage">
                                 
                             </div>
                         </div>
+
+                        <div class = "clearDiv"></div>
                         <div>
                             <!-- <label for="uploadCategory" class="select">
                                 Category:
