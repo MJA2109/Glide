@@ -17,6 +17,21 @@ class GlideMobileAPI extends GlideBaseAPI{
 		$hashedPassword = sha1($password);
 		$instanceId = Util::get("instanceId");
 
+		$company = $database->select("companies" , [
+
+				"[>]admins" => ["company_id" => "company_id"],
+
+        	],[
+        		"company_name"
+
+        	], [
+			"AND" => [
+	            "admins.admin_id" => $instanceId
+	        ]
+        ]);
+
+
+
 		$auth = $database->select("users", [
 			
 			"user_id",
@@ -34,6 +49,7 @@ class GlideMobileAPI extends GlideBaseAPI{
 
 		if($auth){
 			$auth[0]["password"] = $password;
+			$auth[0]["company"] = $company[0]["company_name"];
 			echo json_encode($auth);
 		}else{
 			echo json_encode(false);
@@ -133,6 +149,92 @@ class GlideMobileAPI extends GlideBaseAPI{
                 ]);
 
 		echo json_encode(array( 'status' => $status, 'adminId' => $adminId, 'userId' => $userId));		
+	}
+
+
+	public static function getAccountInfo(){
+
+		$database = GlideMobileAPI::connectDB();
+		$userEmail = Util::get("userEmail");
+		$adminId = Util::get("adminId");
+		$userId = GlideMobileAPI::getUserId($userEmail, $adminId);
+
+		$noOfExpenses = $database->count("expenses", [
+            "AND" => [
+                "user_id" => $userId,
+                "is_deleted" => 0,
+                "expense_status" => "processed"
+            ]
+        ]);
+
+        $noOfJourneys = $database->count("journeys", [
+        	"AND" => [
+        		"user_id" => $userId,
+        		"is_deleted" => 0,
+        		"status" => "processed"
+        	]	
+        ]);
+
+        $totalClaims = $noOfJourneys + $noOfExpenses;
+
+        echo json_encode(array("totalClaims" => $totalClaims));
+	}
+
+
+	public static function getClaimsInfo(){
+
+		$database = GlideMobileAPI::connectDB();
+		$userEmail = Util::get("userEmail");
+		$adminId = Util::get("adminId");
+		$userId = GlideMobileAPI::getUserId($userEmail, $adminId);
+
+		$sql_1 = "SELECT expense_category, ROUND(SUM(expense_cost), 2) as total_cost
+                  FROM expenses
+                  WHERE admin_id = $adminId
+                  AND is_deleted = 0 
+                  AND expenses.expense_approved <> 'Awaiting...'
+                  AND user_id = $userId[0]
+                  AND expense_status = 'processed'
+                  GROUP BY expense_category ";
+
+        
+        $sql_2 = "SELECT ROUND(SUM(distance * user_mileage_rate), 2) as mileage
+                  FROM users ur, journeys jn
+                  WHERE ur.user_id = jn.user_id
+                  AND ur.user_id = $userId[0]
+                  AND ur.admin_id = $adminId
+                  AND jn.is_deleted = 0
+                  AND ur.is_deleted = 0 
+                  AND ur.user_mileage_rate > 0 
+                  AND jn.approved <> 'Awaiting...' 
+                  AND jn.status = 'processed' ";
+
+
+        $categoryCost = $database->query($sql_1)->fetchAll();
+        $mileageCost = $database->query($sql_2)->fetchAll();
+
+
+        $index = 0;
+        $last; //used to append mileage and total claims to last position of array
+
+        foreach($categoryCost as $data){
+            $accountInfo[$index] = array();
+            $accountInfo[$index]["column"] = $data["expense_category"];
+            $accountInfo[$index]["colValue"] = $data["total_cost"];
+            $index++;
+            $last = $index;
+        }
+
+        if($mileageCost[0]["mileage"] != null){
+            //append mileage cost onto accountInfo
+            $accountInfo[$last]["column"] = "Mileage Cost";
+            $accountInfo[$last]["colValue"] = $mileageCost[0]["mileage"];
+        }
+
+
+
+		echo json_encode(array( 'data' => $accountInfo));	
+
 	}
 }
 

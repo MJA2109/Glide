@@ -8,7 +8,8 @@
         <link rel="stylesheet" type="text/css" href="css/jquery.mobile.icons.min.css" />
         <link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.4.3.min.css">
         <link rel="stylesheet" type="text/css" href="css/jquery.mobile.iscrollview-pull.css" />
-        <link rel="stylesheet" href="css/font-awesome/css/font-awesome.min.css">
+        <link rel="stylesheet" href="css/font-awesome/css/font-awesome.min.css" />
+        <link rel="stylesheet" type="text/css" href="css/sweet-alert.css">
         <link rel="stylesheet" type="text/css" href="css/GlideUpDate.css">
         <link rel="stylesheet" type="text/css" href="css/index.css" />
         <title>Glide</title>
@@ -57,7 +58,7 @@
                     <a href="#expenseHistory" data-role="button" data-icon = "bars" data-iconpos = "right" >Expense History</a>
                     <a href="#journeyHistory" data-role="button" data-icon = "bars" data-iconpos = "right" >Journey History</a>
                     <a href="#accountInfo" data-role="button" data-icon = "info" data-iconpos = "right" >Account Info</a>
-                    <a href="#" data-role="button" data-icon = "delete" data-iconpos = "right" >Sign Out</a>
+                    <a href="#" id = "signOut" data-role="button" data-icon = "delete" data-iconpos = "right" >Sign Out</a>
                 </div>
 
             </div>
@@ -70,10 +71,9 @@
                     <div class = "pageName">
                         <h2>Expense Upload</h2>   
                     </div>
-                    <div id = "navGrid">
-                        <div>
+                    <div id = "navGrid" href>
                             <a href="#home" class="ui-nodisc-icon ui-corner-all ui-icon-arrow-l ui-btn-icon-notext"></a> 
-                        </div>
+
                     </div> 
                 </div>
 
@@ -101,18 +101,25 @@
                         <div>
                             <input type = "hidden" name = "userEmail" value = "" id = "expUserEmail"/>
                         </div>
-                        <div>
-                            <input type = "button" value = "Capture Receipt" id = "btnCaptureReceipt" data-icon = "camera"/>
+                        <div id = "cameraControl">
+                            <!-- <input type = "button" value = "Capture Receipt" id = "btnCaptureReceipt" data-icon = "camera"/> -->
+
+                            <div id = "btnCaptureReceipt">
+                                <i class="fa fa-camera fa-4x"></i>
+                            </div>
+                            
                             <div id = "uploadedImage">
                                 
                             </div>
                         </div>
+
+                        <div class = "clearDiv"></div>
                         <div>
                             <!-- <label for="uploadCategory" class="select">
                                 Category:
                             </label> -->
                             <select name = "category" id="uploadCategory" data-iconpos = "left">
-                                <option value = "">Category</option>
+                                <option value = "category">Category</option>
                                 <option value = "accommodation">Accommodation</option>
                                 <option value = "travel">Travel</option>
                                 <option value = "food">Food</option>
@@ -190,19 +197,25 @@
 
                 <div data-role="content">
                     <div id = "accountGeneralInfo">
-                        <p><span class = "boldTxt"><i class="fa fa-globe"></i> Company</span>: Nixatel</p>
-                        <p><span class = "boldTxt"><i class="fa fa-user"></i> User</span>: Michael Anderson</p>
-                        <p><span class = "boldTxt"><i class="fa fa-calendar"></i> Registered</span>: 21/02/1987</p>
-                        <p><span class = "boldTxt"><i class="fa fa-plus-square-o"></i> No. of Claims</span>: 54</p>
+                        <p><span class = "boldTxt"><i class="fa fa-globe"></i> Company</span>: <span id = "com"></span></p>
+                        <p><span class = "boldTxt"><i class="fa fa-user"></i> User</span>: <span id = "name"></span></p>
+                        <p><span class = "boldTxt"><i class="fa fa-plus-square-o"></i> No. of Claims</span>: <span id = "noOfClaims"></span></p>
+                        <!-- <p><span class = "boldTxt"><i class="fa fa-calendar"></i> Last claim</span>: <span id = "reg"></span></p> -->
                     </div>
                     <ul data-role="listview">
-                        <li class="ui-li ui-li-static ui-btn-up-c ui-li-has-count ui-corner-bottom ui-li-last"><i class="fa fa-home"></i> Accommodation <span class="ui-li-count ui-btn-up-c ui-btn-corner-all">€100.32</span></li>
-                        <li class="ui-li ui-li-static ui-btn-up-c ui-li-has-count ui-corner-bottom ui-li-last"><i class="fa fa-glass"></i> Entertainment <span class="ui-li-count ui-btn-up-c ui-btn-corner-all">€100.32</span></li>
-                        <li class="ui-li ui-li-static ui-btn-up-c ui-li-has-count ui-corner-bottom ui-li-last"><i class="fa fa-car"></i> Mileage <span class="ui-li-count ui-btn-up-c ui-btn-corner-all">€100.32</span></li>
-                        <li class="ui-li ui-li-static ui-btn-up-c ui-li-has-count ui-corner-bottom ui-li-last"><i class="fa fa-plane"></i> Travel <span class="ui-li-count ui-btn-up-c ui-btn-corner-all">€100.32</span></li>
-                        <li class="ui-li ui-li-static ui-btn-up-c ui-li-has-count ui-corner-bottom ui-li-last"><i class="fa fa-mobile"></i> Phone <span class="ui-li-count ui-btn-up-c ui-btn-corner-all">€100.32</span></li>
-                        <li class="ui-li ui-li-static ui-btn-up-c ui-li-has-count ui-corner-bottom ui-li-last"><i class="fa fa-cutlery"></i> Food <span class="ui-li-count ui-btn-up-c ui-btn-corner-all">€100.32</span></li>
-                        <li class="ui-li ui-li-static ui-btn-up-c ui-li-has-count ui-corner-bottom ui-li-last"> <h4><i class="fa fa-arrow-circle-down"></i> Total Claimed</h4> <span class="ui-li-count ui-btn-up-c ui-btn-corner-all"><h4>€1304.32</h4></span></li>
+                        <li class="ui-li ui-li-static ui-btn-up-c ui-li-has-count ui-corner-bottom ui-li-last"><i class="fa fa-home"></i> Accommodation <span class="ui-li-count ui-btn-up-c ui-btn-corner-all acc"></span></li>
+
+                        <li class="ui-li ui-li-static ui-btn-up-c ui-li-has-count ui-corner-bottom ui-li-last"><i class="fa fa-glass"></i> Entertainment <span class="ui-li-count ui-btn-up-c ui-btn-corner-all ent"></span></li>
+
+                        <li class="ui-li ui-li-static ui-btn-up-c ui-li-has-count ui-corner-bottom ui-li-last"><i class="fa fa-car"></i> Mileage <span class="ui-li-count ui-btn-up-c ui-btn-corner-all mil"></span></li>
+
+                        <li class="ui-li ui-li-static ui-btn-up-c ui-li-has-count ui-corner-bottom ui-li-last"><i class="fa fa-plane"></i> Travel <span class="ui-li-count ui-btn-up-c ui-btn-corner-all tra"></span></li>
+
+                        <li class="ui-li ui-li-static ui-btn-up-c ui-li-has-count ui-corner-bottom ui-li-last"><i class="fa fa-mobile"></i> Phone <span class="ui-li-count ui-btn-up-c ui-btn-corner-all pho"></span></li>
+
+                        <li class="ui-li ui-li-static ui-btn-up-c ui-li-has-count ui-corner-bottom ui-li-last"><i class="fa fa-cutlery"></i> Food <span class="ui-li-count ui-btn-up-c ui-btn-corner-all foo"></span></li>
+
+                        <li class="ui-li ui-li-static ui-btn-up-c ui-li-has-count ui-corner-bottom ui-li-last"> <h4><i class="fa fa-arrow-circle-down"></i> Total Claimed</h4> <span class="ui-li-count ui-btn-up-c ui-btn-corner-all"><h4 class = "liabVal"></h4></span></li>
                     </ul>
                 </div>
             </div>
@@ -343,6 +356,7 @@
         <script type="text/javascript" src = "js/vendor/moment.js"></script>
         <script type="text/javascript" src = "js/vendor/iscroll.js"></script>
         <script type="text/javascript" src = "js/vendor/jquery-mobile-iscroll.js"></script>
+         <script type="text/javascript" src="js/vendor/sweet-alert.min.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
         <script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
         <script type="text/javascript" src="http://192.168.1.64:8000/faye/client.js"></script>

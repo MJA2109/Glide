@@ -18,7 +18,7 @@
         <div class="app">    
 
             <!-- Login Page -->
-            <!-- <div data-role = "page" data-transition = "flip" id = "login" class = "mainGradient">
+            <div data-role = "page" data-transition = "flip" id = "login" class = "mainGradient">
                 <div id = "loginWrapper">
 
                     <div>
@@ -43,7 +43,7 @@
                         </div>
                     </form>
                 </div>
-            </div> -->
+            </div>
 
             <!-- Home Page -->
             <div data-role = "page" data-transition = "flip" id="home" class = "mainGradient borderFix">
@@ -197,19 +197,25 @@
 
                 <div data-role="content">
                     <div id = "accountGeneralInfo">
-                        <p><span class = "boldTxt"><i class="fa fa-globe"></i> Company</span>: Nixatel</p>
-                        <p><span class = "boldTxt"><i class="fa fa-user"></i> User</span>: Michael Anderson</p>
-                        <p><span class = "boldTxt"><i class="fa fa-calendar"></i> Registered</span>: 21/02/1987</p>
-                        <p><span class = "boldTxt"><i class="fa fa-plus-square-o"></i> No. of Claims</span>: 54</p>
+                        <p><span class = "boldTxt"><i class="fa fa-globe"></i> Company</span>: <span id = "com"></span></p>
+                        <p><span class = "boldTxt"><i class="fa fa-user"></i> User</span>: <span id = "name"></span></p>
+                        <p><span class = "boldTxt"><i class="fa fa-plus-square-o"></i> No. of Claims</span>: <span id = "noOfClaims"></span></p>
+                        <!-- <p><span class = "boldTxt"><i class="fa fa-calendar"></i> Last claim</span>: <span id = "reg"></span></p> -->
                     </div>
                     <ul data-role="listview">
-                        <li class="ui-li ui-li-static ui-btn-up-c ui-li-has-count ui-corner-bottom ui-li-last"><i class="fa fa-home"></i> Accommodation <span class="ui-li-count ui-btn-up-c ui-btn-corner-all">€100.32</span></li>
-                        <li class="ui-li ui-li-static ui-btn-up-c ui-li-has-count ui-corner-bottom ui-li-last"><i class="fa fa-glass"></i> Entertainment <span class="ui-li-count ui-btn-up-c ui-btn-corner-all">€100.32</span></li>
-                        <li class="ui-li ui-li-static ui-btn-up-c ui-li-has-count ui-corner-bottom ui-li-last"><i class="fa fa-car"></i> Mileage <span class="ui-li-count ui-btn-up-c ui-btn-corner-all">€100.32</span></li>
-                        <li class="ui-li ui-li-static ui-btn-up-c ui-li-has-count ui-corner-bottom ui-li-last"><i class="fa fa-plane"></i> Travel <span class="ui-li-count ui-btn-up-c ui-btn-corner-all">€100.32</span></li>
-                        <li class="ui-li ui-li-static ui-btn-up-c ui-li-has-count ui-corner-bottom ui-li-last"><i class="fa fa-mobile"></i> Phone <span class="ui-li-count ui-btn-up-c ui-btn-corner-all">€100.32</span></li>
-                        <li class="ui-li ui-li-static ui-btn-up-c ui-li-has-count ui-corner-bottom ui-li-last"><i class="fa fa-cutlery"></i> Food <span class="ui-li-count ui-btn-up-c ui-btn-corner-all">€100.32</span></li>
-                        <li class="ui-li ui-li-static ui-btn-up-c ui-li-has-count ui-corner-bottom ui-li-last"> <h4><i class="fa fa-arrow-circle-down"></i> Total Claimed</h4> <span class="ui-li-count ui-btn-up-c ui-btn-corner-all"><h4>€1304.32</h4></span></li>
+                        <li class="ui-li ui-li-static ui-btn-up-c ui-li-has-count ui-corner-bottom ui-li-last"><i class="fa fa-home"></i> Accommodation <span class="ui-li-count ui-btn-up-c ui-btn-corner-all acc"></span></li>
+
+                        <li class="ui-li ui-li-static ui-btn-up-c ui-li-has-count ui-corner-bottom ui-li-last"><i class="fa fa-glass"></i> Entertainment <span class="ui-li-count ui-btn-up-c ui-btn-corner-all ent"></span></li>
+
+                        <li class="ui-li ui-li-static ui-btn-up-c ui-li-has-count ui-corner-bottom ui-li-last"><i class="fa fa-car"></i> Mileage <span class="ui-li-count ui-btn-up-c ui-btn-corner-all mil"></span></li>
+
+                        <li class="ui-li ui-li-static ui-btn-up-c ui-li-has-count ui-corner-bottom ui-li-last"><i class="fa fa-plane"></i> Travel <span class="ui-li-count ui-btn-up-c ui-btn-corner-all tra"></span></li>
+
+                        <li class="ui-li ui-li-static ui-btn-up-c ui-li-has-count ui-corner-bottom ui-li-last"><i class="fa fa-mobile"></i> Phone <span class="ui-li-count ui-btn-up-c ui-btn-corner-all pho"></span></li>
+
+                        <li class="ui-li ui-li-static ui-btn-up-c ui-li-has-count ui-corner-bottom ui-li-last"><i class="fa fa-cutlery"></i> Food <span class="ui-li-count ui-btn-up-c ui-btn-corner-all foo"></span></li>
+
+                        <li class="ui-li ui-li-static ui-btn-up-c ui-li-has-count ui-corner-bottom ui-li-last"> <h4><i class="fa fa-arrow-circle-down"></i> Total Claimed</h4> <span class="ui-li-count ui-btn-up-c ui-btn-corner-all"><h4 class = "liabVal"></h4></span></li>
                     </ul>
                 </div>
             </div>

@@ -19,9 +19,9 @@ requirejs.config({
         'charts' : ['../../js/charts'],
         'polling' : ['../../js/polling'],
         'widgets' : ['../../js/widgets'],
-        'notification' : ['../../js/notification'],
-        'fayeModule' : ['http://192.168.1.74:8000/faye/client'],
-        'webClient' : ['../../js/node/webClient']
+        'notification' : ['../../js/notification']
+        // 'fayeModule' : ['http://192.168.1.74:8000/faye/client'],
+        // 'webClient' : ['../../js/node/webClient']
     },
     shim:{
     	'bootstrap': ['jquery'],
@@ -34,8 +34,8 @@ requirejs.config({
         'datepicker' : ['jquery'],
         'polling' : ['jquery', 'notification'],
         'widgets' : ['polling'],
-        'notification' : ['notify'],
-        'webClient' : ['fayeModule']
+        'notification' : ['notify']
+        // 'webClient' : ['fayeModule']
 
 
     }
@@ -57,9 +57,10 @@ require(['jquery',
          'charts',
          'polling',
          'widgets',
-         'notification',
-         'fayeModule',
-         'webClient'], function($) {
+         'notification'
+         // 'fayeModule',
+         // 'webClient'
+         ], function($) {
 
             //Glide version_1.0
             

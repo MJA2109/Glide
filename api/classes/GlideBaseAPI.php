@@ -269,6 +269,53 @@ class GlideBaseAPI{
     }
 
 
+
+     /**
+     * Name: getUserId
+     * Purpose: Get user ID associated with a given email address.
+     * @param $userEmail - String : Email address
+     * @param $adminId - Int : Administrators ID
+     * @return $userId 
+     */
+    public static function getUserId($userEmail, $adminId){
+
+        $database = GlideBaseAPI::connectDB();
+        $log["errors"] = array();
+
+        if(empty($userEmail)){
+            $log["errors"]["userEmailErr"] = "User E-mail address required";
+        }else{
+
+            $validAdminEmail = Util::validateEmail($userEmail);
+        
+            if($validAdminEmail === false){
+                $log["errors"]["validEmail"] = "User E-mail is not valid";
+            }else{
+                
+                $userId = $database->select("users", "user_id",[
+                    "AND" => [
+                        "user_email" => $userEmail,
+                        "admin_id" => $adminId,
+                        "is_deleted" => 0
+                    ]
+                ]);
+
+                if(!$userId){
+                    $log["errors"]["user"] = "User does not exist";   
+                }
+            }
+        }
+
+        $errorCount = count($log["errors"]);
+
+        if($errorCount != 0){
+            return false;
+        }else{
+            return $userId;
+        }
+    }
+
+
     
 
 }

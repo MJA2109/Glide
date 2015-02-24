@@ -19,7 +19,13 @@ var app = {
     },
     onDeviceReady: function() {
         if(navigator.network.connection.type == Connection.NONE){
-            alert("No Network Connection detected");   
+            //alert("No Network Connection detected");
+            swal({
+                title: "Error!",
+                type: "warning",     
+                text: "No network connection detected...",
+                confirmButtonColor: "#4F758A"
+            });   
         }
         initializeEvents();
     }
@@ -58,6 +64,11 @@ function initializeEvents(){
         resetUploadJourneyData();
     });
 
+    $("#accountInfo").on("pageshow", function(){
+        getAccountInfo();
+        getClaimsInfo();
+    })
+
     $("#btnStartJourney").click(function(){
         startJourney();
     });
@@ -82,11 +93,14 @@ function initializeEvents(){
         $(this).iscrollview("refresh");
     });
 
+    $("#signOut").click(function(){
+        signOut();
+    });
+
     //window.localStorage.clear();
 
     //check local storage for login details
     checkPreAuth();
-
 
 }
 
@@ -99,7 +113,7 @@ function checkPreAuth(){
     if(window.localStorage.userName != undefined && window.localStorage.userId != undefined){   
         $("#loginEmail").val(window.localStorage.email);
         $("#instanceId").val(window.localStorage.instanceId);
-        $("#password").val(window.localStorage.password);
+        $("#loginPassword").val(window.localStorage.password);
         login("#loginForm");
     }
 }
@@ -122,29 +136,46 @@ function login(form){
         success: function(data){
             var auth = JSON.parse(data);
             if(auth){
-
+                window.localStorage.company = auth[0].company;
                 window.localStorage.userId = auth[0].user_id;
-                alert("User ID is : " + localStorage.userId);
                 window.localStorage.userName = auth[0].user_name;
                 window.localStorage.password = auth[0].password;
                 window.localStorage.email = $("#loginEmail").val();
                 window.localStorage.instanceId = $("#instanceId").val();
                 setFormData();
-                initialiseWidgetCalls(); //either node or long polling calls
                 $.mobile.changePage("#home");
+                initialiseWidgetCalls(); //either node or long polling calls
 
             }else{
-                alert("Incorrect details, try again...");
+                swal({
+                    title: "Error!",
+                    type: "warning",     
+                    text: "Incorrect details, try again...",
+                    confirmButtonColor: "#4F758A"
+                });
             } 
         },
         error: function(){
-            alert("Unable to connect to server.");
+            swal({
+                title: "Error!",
+                type: "warning",     
+                text: "Unable to connect to server...",
+                confirmButtonColor: "#4F758A"
+            });
         } 
     });
 }
 
 
+function signOut(){
+    window.localStorage.clear();
+    navigator.app.exitApp();
+}
 
+/**
+ * Name: resetMapGPS
+ * Purpose: Reset the GPS ID and reset map controls.
+ */
 function initialiseWidgetCalls(){
 
     toggleOnline(1); //toggle user to online status
@@ -160,6 +191,7 @@ function initialiseWidgetCalls(){
         toggleOnline(0);
         
     }, false);
+
 }
 
 
@@ -221,11 +253,11 @@ function refreshHistory(divId, attr, action){
                     
                      $.each(history, function(key, value){
                         $(divId + " ul").prepend("<li expenseId  = ' " + value.expense_id + " '>" +
-                                                 "<div class = 'historyDiv'><div class = 'historyInfo'><i class='fa fa-calendar'></i> Date</div>" + moment(value.expense_date).format('MMMM Do YYYY, h:mm:ss a') + "</div>" +
-                                                 "<div class = 'historyDiv'><div class = 'historyInfo'><i class='fa fa-tag'></i> Type</div> " + value.expense_category + "</div>" +
-                                                 " <div class = 'historyDiv'><div class = 'historyInfo'><i class='fa fa-shopping-cart'></i> Merchant</div>" + value.merchant_name + "</div>" +
+                                                 "<div class = 'historyDiv'><div class = 'historyInfo'><i class='fa fa-calendar'></i> Date:</div>" + moment(value.expense_date).format('MMMM Do YYYY, h:mm:ss a') + "</div>" +
+                                                 "<div class = 'historyDiv'><div class = 'historyInfo'><i class='fa fa-tag'></i> Type:</div> " + value.expense_category + "</div>" +
+                                                 " <div class = 'historyDiv'><div class = 'historyInfo'><i class='fa fa-shopping-cart'></i> Merchant:</div>" + value.merchant_name + "</div>" +
                                                  "<div class = 'historyDiv'><div class = 'historyInfo'><i class='fa fa-map-marker'></i> Location:</div> Cork City</div>" +
-                                                 "<div class = 'historyDiv'><div class = 'historyInfo'><i class='fa fa-money'></i> Cost</div> € " + value.expense_cost + "</div>");      
+                                                 "<div class = 'historyDiv'><div class = 'historyInfo'><i class='fa fa-money'></i> Cost:</div> € " + value.expense_cost + "</div>");      
                     });
                     data = null;
                 }else{
@@ -244,11 +276,21 @@ function refreshHistory(divId, attr, action){
                 $( divId + " ul").listview("refresh"); //fix to reapply css
 
             }else{
-                alert("Already up to date...");
+                swal({
+                    title: "Updated!",
+                    type: "success",     
+                    text: "Already up to date...",
+                    confirmButtonColor: "#4F758A"
+                });
             }    
         },
         errror: function(){
-            alert("Unable to retrieve data...");  
+            swal({
+                title: "Error!",
+                type: "warning",     
+                text: "Unable to retrieve data...",
+                confirmButtonColor: "#4F758A"
+            }); 
         }
 
     });
@@ -278,8 +320,15 @@ function getCurrentLocation(){
 
     function onFail(error){
         //alert(JSON.stringify(error));
-        alert("Unable to retrieve GPS position. Check GPS is turned on.");
-        $.mobile.changePage("#home");
+        // alert("Unable to retrieve GPS position. Check GPS is turned on.");
+        swal({
+            title: "Error!", 
+            type: "warning",  
+            text: "Unable to retrieve GPS position. Check GPS is turned on.",
+            confirmButtonColor: "#4F758A"
+        }, function(){
+            $.mobile.changePage("#home");
+        });
     }
 }
 
@@ -292,7 +341,14 @@ function startJourney(){
 
     $("#start").hide();
     $("#finish").show();
-    alert("Journey Started");
+    //alert("Journey Started");
+    swal({
+        title: "Go!", 
+        type: "success",  
+        text: "Journey Started",
+        confirmButtonColor: "#4F758A",
+        timer: 5000
+    });
 
     var minimumAccuracy = 20;
 
@@ -310,9 +366,21 @@ function startJourney(){
 
         function(error){
             if(error.code == 1){
-                alert("Error: Access denied !");
+                //alert("Error: Access denied !");
+                swal({
+                    title: "Error!",
+                    type: "warning",     
+                    text: "Acess Denied",
+                    confirmButtonColor: "#4F758A"
+                });
             }else if(error.code == 2){
-                alert("Error: Position is unavailable");
+                //alert("Error: Position is unavailable");
+                swal({
+                    title: "Error!",
+                    type: "warning",     
+                    text: "Position is unavailable",
+                    confirmButtonColor: "#4F758A"
+                });
             }
         },
 
@@ -347,8 +415,16 @@ function finishJourney(){
         resetMap();
 
     }else{
-        alert("Device has not received sufficient GPS data.");
-        $.mobile.changePage("#home");
+        //alert("Device has not received sufficient GPS data.");
+        swal({
+            title: "Error!", 
+            type: "warning",    
+            text: "Device has not received sufficient GPS data.",
+            confirmButtonColor: "#4F758A"
+        }, function(){
+            $.mobile.changePage("#home");
+        });
+
         $("#start").show();
         $("#finish").hide();
     }
@@ -603,6 +679,7 @@ function captureReceipt(){
                     destinationType: Camera.DestinationType.FILE_URI, correctOrientation: true, targetWidth: 800, targetHeight: 800 });
     
     function onSuccess(imageURI) {
+        $("#receipt").remove();
         $("<img id = 'receipt' src = ''>").appendTo("#uploadedImage");
         app.imageURI = imageURI;
         var image = document.getElementById('receipt');
@@ -611,7 +688,13 @@ function captureReceipt(){
     }
 
     function onFail(message) {
-        alert("Error : Can't access device camera.");
+        //alert("Error : Can't access device camera.");
+        swal({
+            title: "Error!", 
+            type: "warning",    
+            text: "Can't access device camera.",
+            confirmButtonColor: "#4F758A"
+        });
     }
 }
 
@@ -636,7 +719,13 @@ function uploadReceipt(){
     fileTrans.upload(imageURI, encodeURI(app.server), uploadComplete, uploadFailed, options);
     
     function uploadFailed(error){
-        alert("Upload failed : " + JSON.stringify(error));
+        //alert("Upload failed : " + JSON.stringify(error));
+        swal({
+            title: "Error!", 
+            type: "warning",    
+            text: "Image upload failed",
+            confirmButtonColor: "#4F758A"
+        });
     }
 
     function uploadComplete(data){
@@ -651,42 +740,82 @@ function uploadReceipt(){
  * @param form - string : form to be processed.
  */
 function uploadForm(form){
-    var frm = $(form);
-    var data = frm.serialize();
-    $.ajax({
-        type: "post",
-        url: app.server,
-        data: data,
-        beforeSend: function() {          
-            $.mobile.loading("show", {
-                text: "Uploading data...",
-                textVisible: true,
-                theme: "z"
-            });
-        },
-        success: function(data){
-           
-            if(form == "#uploadJourneyDataForm"){ 
-                clearGeoDataArrays();
-                resetUploadJourneyData();
-                if(app.useNodeServer == true){
-                    publishNotification("journeys"); //send message to node.js server
-                }
-            }
-            if(form == "#uploadExpenseForm"){ 
-                resetUploadExpenseForm();
-                if(app.useNodeServer == true){
-                    publishNotification("expenses"); //send message to node.js server
-                }
-            }
+    
+    var errors = validateInput(form);
 
-            $.mobile.changePage("#home");
-            $.mobile.loading("hide");
-        },
-        error: function(data, error){
-            alert("Ajax Error " + data + " : " + error);
-        }               
-    });   
+    if(errors.length == 0){
+
+        var frm = $(form);
+        var data = frm.serialize();
+        $.ajax({
+            type: "post",
+            url: app.server,
+            data: data,
+            beforeSend: function() {          
+                $.mobile.loading("show", {
+                    text: "Uploading data...",
+                    textVisible: true,
+                    theme: "z"
+                });
+            },
+            success: function(data){
+               
+                if(form == "#uploadJourneyDataForm"){ 
+                    clearGeoDataArrays();
+                    resetUploadJourneyData();
+                    if(app.useNodeServer == true){
+                        publishNotification("journeys"); //send message to node.js server
+                    }
+                }
+                if(form == "#uploadExpenseForm"){ 
+                    resetUploadExpenseForm();
+                    if(app.useNodeServer == true){
+                        publishNotification("expenses"); //send message to node.js server
+                    }
+                }
+
+                $.mobile.changePage("#home");
+                $.mobile.loading("hide");
+            },
+            error: function(data, error){
+                alert("Ajax Error " + data + " : " + error);
+            }               
+        }); 
+    
+    }else{
+
+        errors.length == 1 ? errors = errors + " field " : errors = errors + " fields ";
+        swal({
+            title: "Error!", 
+            type: "warning",    
+            text: "Invalid input, check " + errors + " and try again...",
+            confirmButtonColor: "#4F758A"
+        });   
+    }  
+}
+
+
+function validateInput(form){
+    
+    var errors = Array()
+
+    if(form == "#uploadExpenseForm"){
+
+        if($(form + " #uploadCategory").val() == "category"){
+            errors.push("Category");
+        }
+        if($(form + " #uploadMerchant").val() == ""){
+            errors.push("Merchant");
+        }
+        if($(form + " #uploadCost").val() == "" || !$.isNumeric($(form + " #uploadCost").val())){
+            errors.push("Cost");
+        }
+
+    }else if (form == "#uploadJourneyDataForm"){
+
+    }
+
+    return errors;
 }
 
 
@@ -721,11 +850,118 @@ function toggleOnline(userStatus){
 
 
 /**
+ * Name: getAccountInfo
+ * Purpose: Get general info about account such as user, no of claims etc.
+ */
+
+function getAccountInfo(){
+
+    var data = {
+        action : "getAccountInfo",
+        userEmail : window.localStorage.email,
+        adminId : window.localStorage.instanceId
+    }
+
+    $.ajax({
+        type: "post",
+        url: app.server,
+        data: data,
+        dataType: 'json',
+        success: function(data){
+            $("#com").text(window.localStorage.company); 
+            $("#name").text(window.localStorage.userName);
+            $("#noOfClaims").text(data.totalClaims); 
+        },
+        errror: function(){
+            alert("Get Account Info Ajax Error");   
+        }
+
+    });
+}
+
+
+
+
+ /**
+ * Name: getClaimsInfo
+ * Purpose: Get breakdown of claims per user
+ */
+function getClaimsInfo(){
+    
+    var data = {
+        action : "getClaimsInfo",
+        userEmail : window.localStorage.email,
+        adminId : window.localStorage.instanceId
+    }
+
+    $.ajax({
+        type: "post",
+        url: app.server,
+        data: data,
+        dataType: 'json',
+        success: function(data){
+            updateAccountInfoPage(data);  
+        },
+        errror: function(){
+            alert("Get Account Info Ajax Error");   
+        }
+
+    });
+
+}
+
+
+/**
+ * Name: updateAccountInfoPage
+ * Purpose: Format data and update page
+ * @param lia - object : object contains category name and total claims per category.
+ */
+function updateAccountInfoPage(lia){
+    
+    var catTotal = {};
+    var total = 0;
+
+    for(var i = 0; i < lia.data.length; i++){
+        if(lia.data[i].column == "Accommodation"){
+            catTotal.acc = lia.data[i].colValue;
+        }else if(lia.data[i].column == "Entertainment"){
+            catTotal.ent = lia.data[i].colValue;
+        }else if(lia.data[i].column == "Mileage Cost"){
+            catTotal.mil = lia.data[i].colValue;
+        }else if(lia.data[i].column == "Travel"){
+            catTotal.tra = lia.data[i].colValue;
+        }else if(lia.data[i].column == "Phone"){
+            catTotal.pho = lia.data[i].colValue;
+        }else if(lia.data[i].column == "Food"){
+            catTotal.foo = lia.data[i].colValue;
+        }
+
+        total = total + parseFloat(lia.data[i].colValue);
+    }
+
+    $(".acc").text(typeof catTotal.acc == 'undefined' ? "€" + 0 : "€" + addCommas(catTotal.acc));
+    $(".ent").text(typeof catTotal.ent == 'undefined' ? "€" + 0 : "€" + addCommas(catTotal.ent));
+    $(".mil").text(typeof catTotal.mil == 'undefined' ? "€" + 0 : "€" + addCommas(catTotal.mil));
+    $(".tra").text(typeof catTotal.tra == 'undefined' ? "€" + 0 : "€" + addCommas(catTotal.tra));
+    $(".pho").text(typeof catTotal.pho == 'undefined' ? "€" + 0 : "€" + addCommas(catTotal.pho));
+    $(".foo").text(typeof catTotal.foo == 'undefined' ? "€" + 0 : "€" + addCommas(catTotal.foo));
+    $(".liabVal").text("€ " + addCommas(total.toFixed(2)));
+
+    function addCommas(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+}
+
+
+
+
+/**
  * Name: resetUploadExpenseForm
  * Purpose: Reset image & data input fields to null
  */
 function resetUploadExpenseForm(){
     $("#uploadMerchant, #uploadDate, #uploadCost, #uploadComment, #uploadAccount").val("");
+    $('#uploadCategory').prop('selectedIndex',0);
     $("#receipt").remove();
 }
 

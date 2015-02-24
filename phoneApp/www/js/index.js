@@ -64,6 +64,11 @@ function initializeEvents(){
         resetUploadJourneyData();
     });
 
+    $("#accountInfo").on("pageshow", function(){
+        getAccountInfo();
+        getClaimsInfo();
+    })
+
     $("#btnStartJourney").click(function(){
         startJourney();
     });
@@ -131,16 +136,15 @@ function login(form){
         success: function(data){
             var auth = JSON.parse(data);
             if(auth){
-
+                window.localStorage.company = auth[0].company;
                 window.localStorage.userId = auth[0].user_id;
-                //alert("User ID is : " + localStorage.userId);
                 window.localStorage.userName = auth[0].user_name;
                 window.localStorage.password = auth[0].password;
                 window.localStorage.email = $("#loginEmail").val();
                 window.localStorage.instanceId = $("#instanceId").val();
                 setFormData();
-                initialiseWidgetCalls(); //either node or long polling calls
                 $.mobile.changePage("#home");
+                initialiseWidgetCalls(); //either node or long polling calls
 
             }else{
                 swal({
@@ -187,6 +191,7 @@ function initialiseWidgetCalls(){
         toggleOnline(0);
         
     }, false);
+
 }
 
 
@@ -842,6 +847,112 @@ function toggleOnline(userStatus){
 
     });
 }
+
+
+/**
+ * Name: getAccountInfo
+ * Purpose: Get general info about account such as user, no of claims etc.
+ */
+
+function getAccountInfo(){
+
+    var data = {
+        action : "getAccountInfo",
+        userEmail : window.localStorage.email,
+        adminId : window.localStorage.instanceId
+    }
+
+    $.ajax({
+        type: "post",
+        url: app.server,
+        data: data,
+        dataType: 'json',
+        success: function(data){
+            $("#com").text(window.localStorage.company); 
+            $("#name").text(window.localStorage.userName);
+            $("#noOfClaims").text(data.totalClaims); 
+        },
+        errror: function(){
+            alert("Get Account Info Ajax Error");   
+        }
+
+    });
+}
+
+
+
+
+ /**
+ * Name: getClaimsInfo
+ * Purpose: Get breakdown of claims per user
+ */
+function getClaimsInfo(){
+    
+    var data = {
+        action : "getClaimsInfo",
+        userEmail : window.localStorage.email,
+        adminId : window.localStorage.instanceId
+    }
+
+    $.ajax({
+        type: "post",
+        url: app.server,
+        data: data,
+        dataType: 'json',
+        success: function(data){
+            updateAccountInfoPage(data);  
+        },
+        errror: function(){
+            alert("Get Account Info Ajax Error");   
+        }
+
+    });
+
+}
+
+
+/**
+ * Name: updateAccountInfoPage
+ * Purpose: Format data and update page
+ * @param lia - object : object contains category name and total claims per category.
+ */
+function updateAccountInfoPage(lia){
+    
+    var catTotal = {};
+    var total = 0;
+
+    for(var i = 0; i < lia.data.length; i++){
+        if(lia.data[i].column == "Accommodation"){
+            catTotal.acc = lia.data[i].colValue;
+        }else if(lia.data[i].column == "Entertainment"){
+            catTotal.ent = lia.data[i].colValue;
+        }else if(lia.data[i].column == "Mileage Cost"){
+            catTotal.mil = lia.data[i].colValue;
+        }else if(lia.data[i].column == "Travel"){
+            catTotal.tra = lia.data[i].colValue;
+        }else if(lia.data[i].column == "Phone"){
+            catTotal.pho = lia.data[i].colValue;
+        }else if(lia.data[i].column == "Food"){
+            catTotal.foo = lia.data[i].colValue;
+        }
+
+        total = total + parseFloat(lia.data[i].colValue);
+    }
+
+    $(".acc").text(typeof catTotal.acc == 'undefined' ? "€" + 0 : "€" + addCommas(catTotal.acc));
+    $(".ent").text(typeof catTotal.ent == 'undefined' ? "€" + 0 : "€" + addCommas(catTotal.ent));
+    $(".mil").text(typeof catTotal.mil == 'undefined' ? "€" + 0 : "€" + addCommas(catTotal.mil));
+    $(".tra").text(typeof catTotal.tra == 'undefined' ? "€" + 0 : "€" + addCommas(catTotal.tra));
+    $(".pho").text(typeof catTotal.pho == 'undefined' ? "€" + 0 : "€" + addCommas(catTotal.pho));
+    $(".foo").text(typeof catTotal.foo == 'undefined' ? "€" + 0 : "€" + addCommas(catTotal.foo));
+    $(".liabVal").text("€ " + addCommas(total.toFixed(2)));
+
+    function addCommas(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+}
+
+
 
 
 /**

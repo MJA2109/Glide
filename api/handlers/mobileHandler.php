@@ -4,7 +4,7 @@ require "../classes/GlideMobileAPI.php";
 
 //Call public static function based on posted action
 if(isset($_POST["action"])){
-	//var_dump($_POST);
+	// var_dump($_POST);
 	$action = $_POST["action"];
 	switch($action){
 		case "addExpense" : GlideMobileAPI::addExpense();
@@ -20,6 +20,10 @@ if(isset($_POST["action"])){
 	    case "appLogin" : GlideMobileAPI::appLogin();
 	    break;
 	    case "isOnline" : GlideMobileAPI::isOnline();
+	    break;
+	    case "getClaimsInfo" : GlideMobileAPI::getClaimsInfo();
+	    break;
+	    case "getAccountInfo" : GlideMobileAPI::getAccountInfo();
 	    break;
 
 	}

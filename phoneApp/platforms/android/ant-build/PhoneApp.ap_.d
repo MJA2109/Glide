@@ -36,6 +36,7 @@
 /Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/assets/www/css/jquery.mobile-1.4.3.min.css \
 /Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/assets/www/css/jquery.mobile.icons.min.css \
 /Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/assets/www/css/jquery.mobile.iscrollview-pull.css \
+/Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/assets/www/css/sweet-alert.css \
 /Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/assets/www/css/font-awesome/css \
 /Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/assets/www/css/font-awesome/fonts \
 /Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/assets/www/css/font-awesome/less \
@@ -277,6 +278,7 @@
 /Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/assets/www/css/images/icons-svg/user-white.svg \
 /Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/assets/www/css/images/icons-svg/video-black.svg \
 /Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/assets/www/css/images/icons-svg/video-white.svg \
+/Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/assets/www/img/defaultImage.jpg \
 /Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/assets/www/img/glide.png \
 /Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/assets/www/img/glideLogo.png \
 /Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/assets/www/img/glideLogoTrans.png \
@@ -289,6 +291,7 @@
 /Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/assets/www/js/vendor/jquery-mobile-iscroll.js \
 /Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/assets/www/js/vendor/jquery.mobile-1.4.3.min.js \
 /Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/assets/www/js/vendor/moment.js \
+/Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/assets/www/js/vendor/sweet-alert.min.js \
 /Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/assets/www/plugins/org.apache.cordova.camera \
 /Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/assets/www/plugins/org.apache.cordova.device-motion \
 /Applications/MAMP/htdocs/Glide/phoneApp/platforms/android/assets/www/plugins/org.apache.cordova.device-orientation \

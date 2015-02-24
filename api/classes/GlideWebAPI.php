@@ -1483,50 +1483,50 @@ class GlideWebAPI extends GlideBaseAPI{
     }
     
 
-    /**
-     * Name: getUserId
-     * Purpose: Get user ID associated with a given email address.
-     * @param $userEmail - String : Email address
-     * @param $adminId - Int : Administrators ID
-     * @return $userId 
-     */
-    static function getUserId($userEmail, $adminId){
+    // /**
+    //  * Name: getUserId
+    //  * Purpose: Get user ID associated with a given email address.
+    //  * @param $userEmail - String : Email address
+    //  * @param $adminId - Int : Administrators ID
+    //  * @return $userId 
+    //  */
+    // static function getUserId($userEmail, $adminId){
 
-        $database = GlideWebAPI::connectDB();
-        $log["errors"] = array();
+    //     $database = GlideWebAPI::connectDB();
+    //     $log["errors"] = array();
 
-        if(empty($userEmail)){
-            $log["errors"]["userEmailErr"] = "User E-mail address required";
-        }else{
+    //     if(empty($userEmail)){
+    //         $log["errors"]["userEmailErr"] = "User E-mail address required";
+    //     }else{
 
-            $validAdminEmail = Util::validateEmail($userEmail);
+    //         $validAdminEmail = Util::validateEmail($userEmail);
         
-            if($validAdminEmail === false){
-                $log["errors"]["validEmail"] = "User E-mail is not valid";
-            }else{
+    //         if($validAdminEmail === false){
+    //             $log["errors"]["validEmail"] = "User E-mail is not valid";
+    //         }else{
                 
-                $userId = $database->select("users", "user_id",[
-                    "AND" => [
-                        "user_email" => $userEmail,
-                        "admin_id" => $adminId,
-                        "is_deleted" => 0
-                    ]
-                ]);
+    //             $userId = $database->select("users", "user_id",[
+    //                 "AND" => [
+    //                     "user_email" => $userEmail,
+    //                     "admin_id" => $adminId,
+    //                     "is_deleted" => 0
+    //                 ]
+    //             ]);
 
-                if(!$userId){
-                    $log["errors"]["user"] = "User does not exist";   
-                }
-            }
-        }
+    //             if(!$userId){
+    //                 $log["errors"]["user"] = "User does not exist";   
+    //             }
+    //         }
+    //     }
 
-        $errorCount = count($log["errors"]);
+    //     $errorCount = count($log["errors"]);
 
-        if($errorCount != 0){
-            return false;
-        }else{
-            return $userId;
-        }
-    }
+    //     if($errorCount != 0){
+    //         return false;
+    //     }else{
+    //         return $userId;
+    //     }
+    // }
 
 
      /**
