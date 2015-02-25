@@ -20,7 +20,8 @@ requirejs.config({
         'polling' : ['../../js/polling'],
         'widgets' : ['../../js/widgets'],
         'notification' : ['../../js/notification'],
-        'jedit' : ["../../js/vendor/jedit"]
+        'jedit' : ["../../js/vendor/jedit"],
+        'sound' : ["../../js/vendor/ion.sound.min"]
         // 'fayeModule' : ['http://192.168.1.74:8000/faye/client'],
         // 'webClient' : ['../../js/node/webClient']
     },
@@ -36,7 +37,8 @@ requirejs.config({
         'polling' : ['jquery', 'notification'],
         'widgets' : ['polling'],
         'notification' : ['notify'],
-        'jedit' : ['jquery']
+        'jedit' : ['jquery'],
+        'sound' : ['jquery']
         // 'webClient' : ['fayeModule']
 
 
@@ -60,7 +62,8 @@ require(['jquery',
          'polling',
          'widgets',
          'notification',
-         'jedit'
+         'jedit',
+         'sound'
          // 'fayeModule',
          // 'webClient'
          ], function($) {
@@ -777,6 +780,17 @@ require(['jquery',
              * Purpose: Initialise application events
              */
             function initialiseEvents(){
+
+
+                ion.sound({
+                    sounds: [
+                        {name: "water_droplet"}
+                    ],
+                    path: "../js/sounds/",
+                    preload: true,
+                    multiplay: true,
+                    volume: 1.0
+                });
 
                 //array to hold Ids of selected users, expenses and journeys
                 var selectedIdStack = new Array();

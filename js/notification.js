@@ -17,4 +17,7 @@ function notification(name, message, time){
         autoHideDelay: 20000,
         gap:10
     });
+
+    // play sound
+    ion.sound.play("water_droplet");
 }
