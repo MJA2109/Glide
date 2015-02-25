@@ -657,6 +657,7 @@ require(['jquery',
              * Purpose: Calculate the total system liabilites.
              */
             function getLiabilities(){
+
                 var data = {
                     action : "getChartData",
                     chartType: "barChart",
@@ -671,6 +672,7 @@ require(['jquery',
                     data: data,
                     dataType: "json",
                     success: function(data){
+                        // alert(JSON.stringify(data));
                         updatedLiabilitiesWidget(data);
                     },
                     error: function(data){

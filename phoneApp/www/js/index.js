@@ -232,8 +232,10 @@ function setFormData(){
  */
 function refreshHistory(divId, attr, action){
 
-    var mostRecentExpense = 0; //id of most recent expense retreived
-    mostRecentExpense = $(divId + " ul li").attr(attr);
+    var mostRecentExpense = $(divId + " ul li").attr(attr);
+    if(typeof mostRecentExpense == "undefined"){
+        mostRecentExpense = 0; //id of most recent expense retreived
+    }
 
     var data = {
         action: action,

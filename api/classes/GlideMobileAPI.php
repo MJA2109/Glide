@@ -82,8 +82,10 @@ class GlideMobileAPI extends GlideBaseAPI{
         	], [
 			"AND" => [
 	            "expenses.admin_id" => $adminId,
+              "expenses.is_deleted" => 0,
 	            "user_id" => $userId,
-	            "expense_id[>]" => $mostRecentExpense
+	            "expense_id[>]" => $mostRecentExpense,
+              "expense_status" => "Processed"
 	        ]
         ]);
 
@@ -119,7 +121,8 @@ class GlideMobileAPI extends GlideBaseAPI{
 	            "admin_id" => $adminId,
 	            "user_id" => $userId,
 	            "id[>]" => $mostRecentExpense,
-	            "is_deleted" => 0
+	            "is_deleted" => 0,
+              "status" => "Processed"
 	        ]
         ]);
 

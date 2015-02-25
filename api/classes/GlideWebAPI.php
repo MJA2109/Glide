@@ -1248,7 +1248,7 @@ class GlideWebAPI extends GlideBaseAPI{
                 //query expense table 
                 $sql_1 = "SELECT merchant_name, ROUND(SUM(expense_cost), 2) as total_spend
                           FROM merchants mc, expenses ex
-                          WHERE expense_date BETWEEN CURDATE() - INTERVAL ".$time." AND CURDATE()
+                          WHERE expense_date BETWEEN SUBDATE(CURDATE(), INTERVAL ". $time ." ) AND NOW()
                           AND ex.admin_id = $adminId
                           AND ex.merchant_id = mc.merchant_id
                           AND ex.is_deleted = 0
@@ -1331,7 +1331,7 @@ class GlideWebAPI extends GlideBaseAPI{
                 //query expense table 
                 $sql_1 = "SELECT expense_category, ROUND(SUM(expense_cost), 2) as total_cost
                           FROM expenses
-                          WHERE expense_date BETWEEN CURDATE() - INTERVAL ".$time." AND CURDATE()
+                          WHERE expense_date BETWEEN SUBDATE(CURDATE(), INTERVAL ". $time ." ) AND NOW()
                           AND admin_id = $adminId
                           AND is_deleted = 0 
                           AND expenses.expense_approved <> 'Awaiting...' ";
@@ -1342,16 +1342,20 @@ class GlideWebAPI extends GlideBaseAPI{
                 }
                 //add if liabilities request
                 if($liabilities){
-                    $sql_1 .= "AND expense_status = 'unprocessed' ";
+                    $sql_1 .= "AND expense_status = 'Unprocessed' ";
                 }
 
                 $sql_1 .= " GROUP BY expense_category ";
+
+
+                $log["test"]["sql"] = $sql_1;
+
 
                 //calculate mileage for single user only
                 if($option == "singleUser"){
                     $sql_2 = "SELECT (ROUND(SUM(distance), 2) * user_mileage_rate) as mileage
                               FROM users ur, journeys jn
-                              WHERE date BETWEEN CURDATE() - INTERVAL ".$time." AND CURDATE()
+                              WHERE date BETWEEN SUBDATE(CURDATE(), INTERVAL ". $time ." ) AND NOW()
                               AND ur.user_id = jn.user_id
                               AND ur.admin_id = $adminId
                               AND jn.is_deleted = 0
@@ -1365,7 +1369,7 @@ class GlideWebAPI extends GlideBaseAPI{
                     //calculate all mileage costs
                     $sql_2 = "SELECT ROUND(SUM(distance * user_mileage_rate), 2) as mileage
                               FROM users ur, journeys jn
-                              WHERE date BETWEEN CURDATE() - INTERVAL ".$time." AND CURDATE()
+                              WHERE date BETWEEN SUBDATE(CURDATE(), INTERVAL ". $time ." ) AND NOW()
                               AND ur.user_id = jn.user_id
                               AND ur.admin_id = $adminId
                               AND jn.is_deleted = 0
@@ -1374,12 +1378,14 @@ class GlideWebAPI extends GlideBaseAPI{
                               AND jn.approved <> 'Awaiting...' ";
                               
                               if($liabilities){
-                                $sql_2 .= "AND jn.status = 'unprocessed' ";
+                                $sql_2 .= "AND jn.status = 'Unprocessed' ";
                               }
                 }
 
                 $categoryCost = $database->query($sql_1)->fetchAll();
                 $mileageCost = $database->query($sql_2)->fetchAll();
+
+                // $log["test"]["categoryCost"] = $categoryCost;
 
                 $index = 0;
                 $last; //used to append mileage to last position of array
@@ -1451,7 +1457,7 @@ class GlideWebAPI extends GlideBaseAPI{
                 //query expense table 
                 $sql_1 = "SELECT DATE_FORMAT(expense_date, '%b') as month, ROUND(SUM(expense_cost), 2) as total_cost
                           FROM expenses
-                          WHERE expense_date BETWEEN CURDATE() - INTERVAL ".$time." AND CURDATE()
+                          WHERE expense_date BETWEEN SUBDATE(CURDATE(), INTERVAL ". $time ." ) AND NOW()
                           AND admin_id = $adminId
                           AND is_deleted = 0 
                           AND expenses.expense_approved <> 'No' ";
