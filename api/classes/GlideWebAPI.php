@@ -1489,52 +1489,6 @@ class GlideWebAPI extends GlideBaseAPI{
     }
     
 
-    // /**
-    //  * Name: getUserId
-    //  * Purpose: Get user ID associated with a given email address.
-    //  * @param $userEmail - String : Email address
-    //  * @param $adminId - Int : Administrators ID
-    //  * @return $userId 
-    //  */
-    // static function getUserId($userEmail, $adminId){
-
-    //     $database = GlideWebAPI::connectDB();
-    //     $log["errors"] = array();
-
-    //     if(empty($userEmail)){
-    //         $log["errors"]["userEmailErr"] = "User E-mail address required";
-    //     }else{
-
-    //         $validAdminEmail = Util::validateEmail($userEmail);
-        
-    //         if($validAdminEmail === false){
-    //             $log["errors"]["validEmail"] = "User E-mail is not valid";
-    //         }else{
-                
-    //             $userId = $database->select("users", "user_id",[
-    //                 "AND" => [
-    //                     "user_email" => $userEmail,
-    //                     "admin_id" => $adminId,
-    //                     "is_deleted" => 0
-    //                 ]
-    //             ]);
-
-    //             if(!$userId){
-    //                 $log["errors"]["user"] = "User does not exist";   
-    //             }
-    //         }
-    //     }
-
-    //     $errorCount = count($log["errors"]);
-
-    //     if($errorCount != 0){
-    //         return false;
-    //     }else{
-    //         return $userId;
-    //     }
-    // }
-
-
      /**
      * Name: getWidgetData
      * Purpose: Get data for either the expense, journey or user widget
@@ -1594,6 +1548,47 @@ class GlideWebAPI extends GlideBaseAPI{
             echo json_encode(array("error" => "Admin ID not set"));
         }  
     }
+
+
+    public static function getTopMerchants(){
+        
+        session_start();
+
+        if(isset($_SESSION["adminId"])){
+            $database = GlideWebAPI::connectDB();
+            $adminId = $_SESSION["adminId"];
+
+             $sql_1 = "SELECT merchant_name, ROUND(SUM(expense_cost), 2) as total_spend
+                          FROM merchants mc, expenses ex
+                          WHERE expense_date BETWEEN SUBDATE(CURDATE(), INTERVAL 1 YEAR ) AND NOW()
+                          AND ex.admin_id = $adminId
+                          AND ex.merchant_id = mc.merchant_id
+                          AND ex.is_deleted = 0
+                          AND mc.is_deleted = 0
+                          AND ex.expense_approved <> 'No' 
+                          GROUP BY merchant_name
+                          ORDER BY expense_cost DESC 
+                          LIMIT 8 ";
+
+            $merchantCost = $database->query($sql_1)->fetchAll();
+
+            $index = 0;
+
+            foreach($merchantCost as $data){
+                $merchantData[$index] = array();
+                $merchantData[$index]["column"] = $data["merchant_name"];
+                $merchantData[$index]["colValue"] = $data["total_spend"];
+                $index++;
+            }
+             
+            echo json_encode($merchantData);           
+
+         }else{
+            echo json_encode(array("error" => "Admin ID not set"));
+        }  
+        // echo json_encode(array("top merchants" => "you're at top merchants"));    
+    }
+
 
     public static function getNotes(){
 

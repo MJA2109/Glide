@@ -61,7 +61,7 @@
 		</div>
 		<div class = "widget panel panel-default">
 			<div class="panel-heading"><span class="glyphicon glyphicon-shopping-cart">TopMerchants</span></div>
-		  	<div class="panel-body notes">
+		  	<div class="panel-body topMerchants">
 		    	<ul></ul>
 		 	</div>
 		</div>

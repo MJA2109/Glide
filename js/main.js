@@ -172,6 +172,7 @@ require(['jquery',
                                         initialiseChart(emptySet, "bar");
                         break;
                         case "standard" : getLiabilities();
+                                          getTopMerchants();
                                           getNotes();
                         break;
                     }
@@ -701,11 +702,36 @@ require(['jquery',
                         $(".edit").text(data);
                     },
                     error: function(data){
-                        alert("Get Liabilities Ajax Error");
+                        alert("Get notes Ajax Error");
                     }
 
                 });
 
+            }
+
+
+            function getTopMerchants(){
+
+                var data = {
+                    action : "getTopMerchants"
+                }
+
+                $.ajax({
+                    type: "POST",
+                    url: appData.api,
+                    data: data,
+                    dataType: "json",
+                    success: function(data){
+                        for(x=0; x< data.length; x++){
+                            $(".topMerchants ul").append("<li class='list-group-item'>" + 
+                              "<span class='badge'> € " + data[x].colValue + "</span>" + data[x].column + "</li>");
+                        }   
+                    },
+                    error: function(data){
+                        alert("Get merchants Ajax Error");
+                    }
+
+                });   
             }
 
 

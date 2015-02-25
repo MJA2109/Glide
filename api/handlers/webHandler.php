@@ -53,6 +53,8 @@ if(isset($_POST["action"])){
 	    break;
 	    case "getNotes" : GlideWebAPI::getNotes();
 	    break;
+	    case "getTopMerchants" : GlideWebAPI::getTopMerchants();
+	    break;
 	}
 }
 
