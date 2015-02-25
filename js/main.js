@@ -724,14 +724,18 @@ require(['jquery',
                     success: function(data){
                         for(x=0; x< data.length; x++){
                             $(".topMerchants ul").append("<li class='list-group-item'>" + 
-                              "<span class='badge'> € " + data[x].colValue + "</span>" + data[x].column + "</li>");
+                              "<span class='badge'> € " + format(data[x].colValue) + "</span>" + data[x].column + "</li>");
                         }   
                     },
                     error: function(data){
                         alert("Get merchants Ajax Error");
                     }
 
-                });   
+                }); 
+
+                function format(x) {
+                    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                }  
             }
 
 
