@@ -49,6 +49,10 @@ if(isset($_POST["action"])){
 	    break;
 	    case "availableEmail" : GlideWebAPI::availableEmail();
 	    break;
+	    case "saveNotes" : GlideWebAPI::saveNotes();
+	    break;
+	    case "getNotes" : GlideWebAPI::getNotes();
+	    break;
 	}
 }
 

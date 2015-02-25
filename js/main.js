@@ -19,7 +19,8 @@ requirejs.config({
         'charts' : ['../../js/charts'],
         'polling' : ['../../js/polling'],
         'widgets' : ['../../js/widgets'],
-        'notification' : ['../../js/notification']
+        'notification' : ['../../js/notification'],
+        'jedit' : ["../../js/vendor/jedit"]
         // 'fayeModule' : ['http://192.168.1.74:8000/faye/client'],
         // 'webClient' : ['../../js/node/webClient']
     },
@@ -34,7 +35,8 @@ requirejs.config({
         'datepicker' : ['jquery'],
         'polling' : ['jquery', 'notification'],
         'widgets' : ['polling'],
-        'notification' : ['notify']
+        'notification' : ['notify'],
+        'jedit' : ['jquery']
         // 'webClient' : ['fayeModule']
 
 
@@ -57,7 +59,8 @@ require(['jquery',
          'charts',
          'polling',
          'widgets',
-         'notification'
+         'notification',
+         'jedit'
          // 'fayeModule',
          // 'webClient'
          ], function($) {
@@ -169,6 +172,7 @@ require(['jquery',
                                         initialiseChart(emptySet, "bar");
                         break;
                         case "standard" : getLiabilities();
+                                          getNotes();
                         break;
                     }
 
@@ -683,6 +687,28 @@ require(['jquery',
             }
 
 
+            function getNotes(){
+
+                var data = {
+                    action : "getNotes"
+                }
+
+                $.ajax({
+                    type: "POST",
+                    url: appData.api,
+                    data: data,
+                    success: function(data){
+                        $(".edit").text(data);
+                    },
+                    error: function(data){
+                        alert("Get Liabilities Ajax Error");
+                    }
+
+                });
+
+            }
+
+
              /**
              * Name: getWidgetData
              * Purpose: Send Ajax request to retrieve data for either users, expense or journey widgets.
@@ -1093,11 +1119,37 @@ require(['jquery',
                     $("#btnGetChartData").attr("disabled", false);
                 });
 
+
+                //notes widget
+                $('body').delegate('.edit', "mouseenter", function(){
+                    $(".editStyle button").addClass("btn");
+                    $(".edit").editable(appData.api, {
+                        cssclass : 'editStyle',
+                        type      : 'textarea',
+                        cancel: '<button class="btn btn-default" type="cancel" >Cancel</button>',
+                        submit: '<button class="btn btn-default" type="submit" >Ok</button>',
+                        name      : "notes",
+                        tooltip   : 'Click to edit...',
+                        submitdata : {
+                            action : "saveNotes"
+                        },
+                        callback : function(value, settings) {
+                        }
+                    });
+                });
+              
+                
+                     
+    
+
             }
 
             initialiseEvents(); 
 
 });
+
+
+
 
 
 

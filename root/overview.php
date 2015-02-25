@@ -60,15 +60,15 @@
 		 	</div>
 		</div>
 		<div class = "widget panel panel-default">
-			<div class="panel-heading"><span class="glyphicon glyphicon-plus">Auxiliary</span></div>
+			<div class="panel-heading"><span class="glyphicon glyphicon-shopping-cart">TopMerchants</span></div>
 		  	<div class="panel-body notes">
 		    	<ul></ul>
 		 	</div>
 		</div>
 		<div class = "widget panel panel-default">
-			<div class="panel-heading"><span class="glyphicon glyphicon-plus">Auxiliary</span></div>
+			<div class="panel-heading"><span class="glyphicon glyphicon-pencil">Notes</span></div>
 		  	<div class="panel-body unProcessed">
-		    	<ul></ul>
+		    	<div class = "edit"></div>
 		 	</div>
 		</div>
 	</div>

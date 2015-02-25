@@ -1595,6 +1595,54 @@ class GlideWebAPI extends GlideBaseAPI{
         }  
     }
 
+    public static function getNotes(){
+
+        session_start();
+
+        if(isset($_SESSION["adminId"])){
+            $database = GlideWebAPI::connectDB();
+            $adminId = $_SESSION["adminId"];
+            $notes = Util::get("notes");
+
+            $dbnotes = $database->select("admins", "notes", [
+                "admin_id" => $adminId
+            ]);
+
+            echo $dbnotes[0];  
+
+        }else{
+            echo json_encode(array("error" => "Admin ID not set"));
+        } 
+
+    }
+
+
+    public static function saveNotes(){
+
+        session_start();
+
+        if(isset($_SESSION["adminId"])){
+            $database = GlideWebAPI::connectDB();
+            $adminId = $_SESSION["adminId"];
+            $notes = Util::get("notes");
+
+            $database->update("admins", [
+                "notes" => $notes,
+                ], [
+                    "admin_id" => $adminId
+                ]);
+            
+            $dbnotes = $database->select("admins", "notes", [
+                "admin_id" => $adminId
+            ]);
+
+            echo $dbnotes[0];  
+        }else{
+            echo json_encode(array("error" => "Admin ID not set"));
+        }  
+        
+    }
+
 } //class
 
 
