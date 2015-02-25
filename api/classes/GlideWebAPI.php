@@ -689,7 +689,7 @@ class GlideWebAPI extends GlideBaseAPI{
                 //format number and message and send text to user
                 $userMobile = ltrim($userMobile, '0');
                 $userMobile = "353".$userMobile;
-                $message = 'LOGIN DETAILS  Email : '.$userEmail.' Instance ID :  '.$adminId.' Password : '.$password;
+                $message = 'LOGIN DETAILS  Email : '.$userEmail.' GIS Code :  '.$adminId.' Password : '.$password;
                 $response = GlideWebAPI::sendText("353871272117", $message);
 
                 echo json_encode($log);     
@@ -1253,7 +1253,7 @@ class GlideWebAPI extends GlideBaseAPI{
                           AND ex.merchant_id = mc.merchant_id
                           AND ex.is_deleted = 0
                           AND mc.is_deleted = 0
-                          AND ex.expense_approved <> 'No' ";
+                          AND ex.expense_approved <> 'Awating...' ";
                 
                 //add for single user only
                 if($option == "singleUser"){
@@ -1561,11 +1561,11 @@ class GlideWebAPI extends GlideBaseAPI{
              $sql_1 = "SELECT merchant_name, ROUND(SUM(expense_cost), 2) as total_spend
                           FROM merchants mc, expenses ex
                           WHERE expense_date BETWEEN SUBDATE(CURDATE(), INTERVAL 1 YEAR ) AND NOW()
-                          AND ex.admin_id = $adminId
-                          AND ex.merchant_id = mc.merchant_id
+                          AND mc.merchant_id = ex.merchant_id
+                          AND mc.admin_id = $adminId
                           AND ex.is_deleted = 0
                           AND mc.is_deleted = 0
-                          AND ex.expense_approved <> 'No' 
+                          AND ex.expense_approved <> 'Awaiting...' 
                           GROUP BY merchant_name
                           ORDER BY expense_cost DESC 
                           LIMIT 8 ";
