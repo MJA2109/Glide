@@ -2,6 +2,7 @@
 var app = {
     server: "http://192.168.1.74/Glide/api/handlers/mobileHandler.php",
     useNodeServer: false,
+    nodeUrl : 'http://192.168.1.64:8000/',
     map: "",             //google map object
     trackerMarker: "",   //contains tracker marker
     markerArray: [],     //array of map markers
@@ -991,7 +992,7 @@ function clearGeoDataArrays(){
 
 
 function publishNotification(type){
-    var client = new Faye.Client('http://192.168.1.64:8000/', {
+    var client = new Faye.Client(app.nodeUrl, {
         timeout: 120
     });
 
@@ -1013,7 +1014,7 @@ function publishNotification(type){
 
 
 function isOnline(userOnline){
-    var client = new Faye.Client('http://192.168.1.64:8000/', {
+    var client = new Faye.Client(app.nodeUrl, {
         timeout: 120
     });
     client.publish('/' + localStorage.instanceId + "_onlineUsers", {
