@@ -241,7 +241,6 @@ function drawBarChart(table){
     }
     
 
-
     return tableData;
 
 

@@ -352,6 +352,7 @@ require(['jquery',
              */
             function getChartData(){   
                 var frm = $("#getChartDataForm");
+                var setAlert = false;
                 frm.submit(function (ev) {
                     var data = frm.serialize();
                     console.log("Data for server : " + data);
@@ -362,14 +363,21 @@ require(['jquery',
                         success: function (data) {
                             results = JSON.parse(data);
                             console.log(JSON.stringify(results));
-                            var type = results.chartType;
-                            switch(type){
-                                case "bar" :  initialiseChart(results, "bar");
-                                break;
-                                case "pie" : initialiseChart(results, "pie");
-                                break;
-                                case "line" : initialiseChart(results, "line");
-                                break;
+                            if(results.data.length == 0 && setAlert == false){
+                                setAlert = true;
+                                alert("No data available...");  
+                            }else{
+                                // alert(JSON.stringify(results));
+                                // alert(results.data[0].column);
+                                var type = results.chartType;
+                                switch(type){
+                                    case "bar" :  initialiseChart(results, "bar");
+                                    break;
+                                    case "pie" : initialiseChart(results, "pie");
+                                    break;
+                                    case "line" : initialiseChart(results, "line");
+                                    break;
+                                }
                             }
                             $("#btnGetChartData").removeAttr("disabled"); //validation disabled bug fix
                             // console.log(data);
@@ -725,10 +733,12 @@ require(['jquery',
                     data: data,
                     dataType: "json",
                     success: function(data){
-                        for(x=0; x< data.length; x++){
-                            $(".topMerchants ul").append("<li class='list-group-item'>" + 
-                              "<span class='badge'> € " + format(data[x].colValue) + "</span>" + data[x].column + "</li>");
-                        }   
+                        if(data){
+                            for(x=0; x< data.length; x++){
+                                $(".topMerchants ul").append("<li class='list-group-item'>" + 
+                                  "<span class='badge'> € " + format(data[x].colValue) + "</span>" + data[x].column + "</li>");
+                            }
+                        }  
                     },
                     error: function(data){
                         alert("Get merchants Ajax Error");

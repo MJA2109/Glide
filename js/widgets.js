@@ -6,6 +6,8 @@ function updateOnlineUsers(onlineUsers){
 		}
 		$(".userVal").text(onlineUsers.length);
 	}
+	$(".gifLoader").hide();
+
 }
 
 

@@ -46,12 +46,15 @@ function poll( timestamp, lastId, action, option ){
             
             }else if(server.table == "expenses" && server.option == "widget"){
                updateExpenseWidget(server.widgetData); //widgets.js
+               $(".gifLoader").hide();
 
             }else if(server.table == "journeys" && server.option == "widget"){
                updateJourneyWidget(server.widgetData);
+               $(".gifLoader").hide();
 
             }else if(server.table == 'users'){
                updateOnlineUsers(server.onlineUsers); //widgets.js
+               $(".gifLoader").hide();
             }
 
          }else if(server.status == 'error'){
