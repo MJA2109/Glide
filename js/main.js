@@ -99,7 +99,7 @@ require(['jquery',
                             //check for errors
                             var errorCount = Object.keys(logData.errors).length;
                             if(logData.type == "registration" && errorCount == 0){
-                                window.location = "signIn.php"
+                                window.location = "index.php"
                             }else if(logData.type == "signIn"){
                                 if(errorCount == 0){
                                     window.localStorage.layout = "admin";
