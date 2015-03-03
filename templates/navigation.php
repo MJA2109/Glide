@@ -1,5 +1,5 @@
 <?php
-echo "
+echo "<div id = 'splash'><div id = 'splashMsg'><div id = 'splashSpin'><i class='fa fa-cog fa-spin fa-3x'></i></div><h3>Loading...</h3></div></div> 
 	<div id = 'strip'></div>
 	<div id = 'navHeader'>
 		<div id = 'navHeaderFix'>

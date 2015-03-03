@@ -128,48 +128,131 @@ body{
 
  /*============ sign in/up ============*/
 
- .signUpBody{
+ #splash{
+    position:absolute;
+    top:0;
+    left:0;
     width:100%;
     height:100%;
-    background-color:@subHeader;
+    background-color:#1f2e37;
+    opacity: 0.9;
+    z-index: 10000;
+
+    #splashMsg{
+        width:300px;
+        height:300px;
+        margin:auto;
+        margin-top:200px;
+
+        #splashSpin{
+            width:40px;
+            height:40px;
+            margin:auto;
+            padding-top:120px;
+        }
+
+        h3{
+            display:block;
+            width:100px;
+            height:50px;
+            margin:auto;
+            margin-top:60px;
+        }
+    }
  }
 
  .wrapper{
-    width:700px;
-    margin:auto;
-    position:relative;
- }
-
- .strip{
     width:100%;
-    height:5px;
-    background-color: @strip;
+    height:100%;
+    background-color:#ffffff;
+    position:relative;
+    overflow: hidden
  }
 
- .indexLogo{
-    width:500px;
-    height:170px;
+ .signContent{
+   /* -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    border-radius: 20px;*/
+    width:498px;
+    height:205px;
     margin:auto;
-    background-color:@navigation;
-    border-radius: 0px 0px 20px 20px;
-    -moz-border-radius: 0px 0px 20px 20px;
-    -webkit-border-radius: 0px 0px 20px 20px;
- }
-
-.indexLogo img{
-    width:250px;
-    margin:auto;
-    padding-top:30px;
-    display:block;
+    border-left:1px solid #eee;
+    border-right:1px solid #eee;
+   /* margin-top:75px;*/
+    background-color:#1f2e37;
 }
 
-.signContent{
-    width:500px;
+.indexLogo{
+    width:300px;
+    height:150px;
     margin:auto;
+
+        img{
+            width:150px;
+            margin:auto;
+            padding-top:50px;
+            display:block;
+        }
+ }
+
+
+.tabStyle{
+    width:496px;
+    margin-top:20px;
+    padding-left:10px;
+}
+
+.tabStyle a{
+    color:#555;
+}
+
+.tabStyle li a{
+   /* background-color:#7290a1;*/
+}
+
+.tabStyle li a .active{
+    background-color:#eee !important;
+}
+
+
+.nav-tabs > li.active > a,
+.nav-tabs > li.active > a:hover,
+.nav-tabs > li.active > a:focus {
+    font-size: 0.7em;
+    color: #555;
+    cursor: default;
+    background-color:#edf1f3;
+    border: 1px solid #fff;
+    border-bottom-color: transparent;
+} 
+
+.nav-tabs > li > a,
+.nav-tabs > li > a:hover,
+.nav-tabs > li > a:focus {
+    font-size: 0.7em;
+    color: #555;
+    cursor: default;
+    background-color:#b8c7d0;
+    border: 1px solid #fff;
+    border-bottom-color: transparent;
+} 
+
+.tab-content{
+    background-color:#edf1f3;
+    -webkit-border-bottom-right-radius: 30px;
+    -webkit-border-bottom-left-radius: 30px;
+    -moz-border-radius-bottomright: 30px;
+    -moz-border-radius-bottomleft: 30px;
+    border-bottom-right-radius: 30px;
+    border-bottom-left-radius: 30px;
+    border-bottom:1px solid #7290a1;
+    border-left:1px solid #7290a1;
+    border-right:1px solid #7290a1;
 }
 
 .signForm{
     width:300px;
+    height:400px;
     position:relative;
     margin:auto;
     padding-top:40px;
@@ -186,7 +269,7 @@ body{
         width:80px;
         height:50px;
         margin:auto;
-        margin-top:25px;
+        margin-top:45px;
         
     }
 
@@ -202,7 +285,15 @@ body{
     width:30px;
     height:30px;
     position:absolute;
-    bottom:105px;
+    bottom:210px;
+    right:45px;
+}
+
+#pmErrorNote{
+    width:30px;
+    height:30px;
+    position:absolute;
+    bottom:70px;
     right:45px;
 }
 
@@ -283,6 +374,7 @@ body{
                         text-align: center;
                         padding-top:20px;
                         color:@textA;
+                        cursor:pointer;
                     }
                 }
             }
@@ -295,6 +387,7 @@ body{
         top:20px;
         right:15px;
         height:60px;
+        cursor:pointer;
 
         div{
             height:20px;
@@ -406,6 +499,10 @@ body{
 
     }
 
+    .receiptLink{
+        cursor:pointer;
+    }
+
 }
 
 .form-group{
@@ -481,6 +578,10 @@ body{
         -webkit-border-radius: 20px;
         -moz-border-radius: 20px;
         border-radius: 20px;
+        border-top:1px solid #666;
+        border-left:1px solid #333;
+        border-right:1px solid #333;
+        border-bottom:1px solid #333;
     }
 }
 
@@ -489,8 +590,8 @@ body{
     width:25px;
     height:30px;
     position:absolute;
-    top:-8px;
-    right:2px;
+    top:4px;
+    right:5px;
     background-image: url("../img/x.png");
     background-repeat: no-repeat;
     z-index: 500;
@@ -526,7 +627,11 @@ body{
         }
     }
 
+}
 
+.simplemodal-overlay, #simplemodal-overlay{
+    background-color:#1f2e37 !important;
+    opacity: 0.9 !important;
 }
 
 /*============== Notification styles ==============*/

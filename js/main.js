@@ -115,7 +115,7 @@ require(['jquery',
                                     window.location = "home.php";
                                 }else{
                                     errorFeedback();
-                                    $("#errorNote").notify("Incorrect details...");
+                                    $("#pmErrorNote").notify("Incorrect details...");
                                 }
                             }else{
                                 console.log("Error : " + JSON.stringify(data));
@@ -567,9 +567,9 @@ require(['jquery',
                     opacity:50,
                     overlayCss: {backgroundColor:"#000"},
                     onOpen: function(dialog){
-                        dialog.overlay.fadeIn('slow', function(){
-                            dialog.data.fadeIn(50, function() {
-                                dialog.container.fadeIn(500);
+                        dialog.overlay.fadeIn(100, function(){
+                            dialog.data.fadeIn(100, function() {
+                                dialog.container.fadeIn(100);
                             });
                         });
                         attachValEvent(div); //method located in val.js
@@ -789,7 +789,7 @@ require(['jquery',
                     path: "../js/sounds/",
                     preload: true,
                     multiplay: true,
-                    volume: 1.0
+                    volume: 3.0
                 });
 
                 //array to hold Ids of selected users, expenses and journeys
@@ -1094,6 +1094,11 @@ require(['jquery',
 
                 });
 
+                $(".btnTab").click(function(){
+                    $("form .input-group input").val("");
+                    $("form .input-group span").removeClass('err has-feedback errBorder');
+                    $("form .input-group input").removeClass('err has-feedback errBorder');
+                });
 
                 //confirm deletion modal
                 $("body").delegate("#modalDeleteConfirmation button", "click", function(event){
@@ -1132,6 +1137,9 @@ require(['jquery',
                         $(this).datepicker('hide');
                     });;
                 });
+
+                //fade out splash
+                $("#splash").delay("5000").fadeOut();
 
                 //initialise html and style for notifications
                 $.notify.addStyle('glide', {
