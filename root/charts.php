@@ -16,7 +16,7 @@
 	<div id = "search">
 		<form method = "POST" id = "getChartDataForm" >
 			<input type = 'hidden' name = 'action' value = 'getChartData' />
-			<input type = "hidden" name = "chartType" value = "barChart" />
+			<input type = "hidden" name = "chartType" value = "lineChart" />
 			
 			<div class = "form-group">
 				<div class = "searchInput input-group">
@@ -53,9 +53,9 @@
 			</div>
 		</form>
 		<div id = "chartIcons">
-			<span id = "barIcon" class="fa fa-bar-chart fa-3x chartIcon"></span>
-			<span id = "pieIcon" class="fa fa-pie-chart fa-3x chartIcon"></span>
 			<span id = "arrowIcon" class="fa fa-line-chart fa-3x chartIcon"></span>
+			<span id = "pieIcon" class="fa fa-pie-chart fa-3x chartIcon"></span>
+			<span id = "barIcon" class="fa fa-bar-chart fa-3x chartIcon"></span>
 		</div>
 	</div>
 

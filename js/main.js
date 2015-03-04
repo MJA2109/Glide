@@ -172,7 +172,7 @@ require(['jquery',
                         case "datatable" : getTableData(action);
                         break;
                         case "chart" :  attachValEvent("#search"); //attach validation to ajax loaded content
-                                        initialiseChart(emptySet, "bar");
+                                        initialiseChart(emptySet, "line");
                         break;
                         case "standard" : getLiabilities();
                                           getTopMerchants();
