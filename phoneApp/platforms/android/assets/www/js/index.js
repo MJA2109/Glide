@@ -1,7 +1,8 @@
 //Initialize application. Set global variables.
 var app = {
-    server: "http://192.168.1.74/Glide/api/handlers/mobileHandler.php",
+    server: "http://143.239.74.17/Glide/api/handlers/mobileHandler.php",
     useNodeServer: false,
+    nodeUrl : 'http://143.239.74:8000/',
     map: "",             //google map object
     trackerMarker: "",   //contains tracker marker
     markerArray: [],     //array of map markers
@@ -232,8 +233,10 @@ function setFormData(){
  */
 function refreshHistory(divId, attr, action){
 
-    var mostRecentExpense = 0; //id of most recent expense retreived
-    mostRecentExpense = $(divId + " ul li").attr(attr);
+    var mostRecentExpense = $(divId + " ul li").attr(attr);
+    if(typeof mostRecentExpense == "undefined"){
+        mostRecentExpense = 0; //id of most recent expense retreived
+    }
 
     var data = {
         action: action,
@@ -989,7 +992,7 @@ function clearGeoDataArrays(){
 
 
 function publishNotification(type){
-    var client = new Faye.Client('http://192.168.1.64:8000/', {
+    var client = new Faye.Client(app.nodeUrl, {
         timeout: 120
     });
 
@@ -1011,7 +1014,7 @@ function publishNotification(type){
 
 
 function isOnline(userOnline){
-    var client = new Faye.Client('http://192.168.1.64:8000/', {
+    var client = new Faye.Client(app.nodeUrl, {
         timeout: 120
     });
     client.publish('/' + localStorage.instanceId + "_onlineUsers", {

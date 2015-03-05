@@ -1,8 +1,8 @@
 //Initialize application. Set global variables.
 var app = {
-    server: "http://192.168.1.74/Glide/api/handlers/mobileHandler.php",
+    server: "http://143.239.74.17/Glide/api/handlers/mobileHandler.php",
     useNodeServer: false,
-    nodeUrl : 'http://192.168.1.64:8000/',
+    nodeUrl : 'http://143.239.74:8000/',
     map: "",             //google map object
     trackerMarker: "",   //contains tracker marker
     markerArray: [],     //array of map markers
