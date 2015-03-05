@@ -1,6 +1,7 @@
 //Initialize application. Set global variables.
 var app = {
-    server: "http://143.239.74.17/Glide/api/handlers/mobileHandler.php",
+    //server: "http://143.239.74.17/Glide/api/handlers/mobileHandler.php",
+    server: "http://192.168.1.90/Glide/api/handlers/mobileHandler.php",
     useNodeServer: false,
     nodeUrl : 'http://143.239.74:8000/',
     map: "",             //google map object
@@ -353,7 +354,7 @@ function startJourney(){
         timer: 5000
     });
 
-    var minimumAccuracy = 20;
+    var minimumAccuracy = 1000;
 
     app.watchId = navigator.geolocation.watchPosition(
         
@@ -418,15 +419,21 @@ function finishJourney(){
         resetMap();
 
     }else{
+        
         //alert("Device has not received sufficient GPS data.");
-        swal({
-            title: "Error!", 
-            type: "warning",    
-            text: "Device has not received sufficient GPS data.",
-            confirmButtonColor: "#4F758A"
-        }, function(){
-            $.mobile.changePage("#home");
-        });
+        // swal({
+        //     title: "Error!", 
+        //     type: "warning",    
+        //     text: "Device has not received sufficient GPS data.",
+        //     confirmButtonColor: "#4F758A"
+        // }, function(){
+        //     $.mobile.changePage("#home");
+        // });
+
+        setCurrentDateTime();
+        
+        $.mobile.changePage("#uploadJourneyData");
+        resetMap();
 
         $("#start").show();
         $("#finish").hide();
