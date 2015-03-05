@@ -224,8 +224,6 @@ function addJourneyValidation(){
 
 function editJourneyValidation(){
 
-    alert("edit journey working !!");
-
     $('#modalEditJourneyForm').bootstrapValidator({
 
         framework: 'bootstrap',
@@ -445,6 +443,7 @@ function editUserValidation(){
 
 
 function getChartDataForm(){
+
 
     $('#getChartDataForm').bootstrapValidator({
         

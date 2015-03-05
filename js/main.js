@@ -190,8 +190,8 @@ require(['jquery',
              * Purpose: Set link to active colour.
              */
             function setLinkColour(link){
-                $("nav a").css("background-color", "#7290a1");
-                $(link).css("background-color", "#1f2e37");
+                $("nav a").removeClass("activeLink");
+                $(link).addClass("activeLink");
             }
 
 
@@ -1044,7 +1044,9 @@ require(['jquery',
                     $(form + " input[name = 'journeyTime']").val(journeyTime);
                     $(form + " input[name = 'account']").val(account);
                     $(form + " input[name = 'comment']").val(comment);
+
                     displayModal("#modalEditJourney");
+
                 });
 
                 $("body").delegate("#btnEditUser", "click", function(){

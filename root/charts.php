@@ -56,6 +56,9 @@
 			<span id = "arrowIcon" class="fa fa-line-chart fa-3x chartIcon"></span>
 			<span id = "pieIcon" class="fa fa-pie-chart fa-3x chartIcon"></span>
 			<span id = "barIcon" class="fa fa-bar-chart fa-3x chartIcon"></span>
+			<span class = "iconName">Expenditure</span>
+			<span class = "iconName">Merchants</span>
+			<span class = "iconName">Categories</span>
 		</div>
 	</div>
 
