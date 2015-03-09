@@ -247,7 +247,6 @@ module.exports.metadata =
     "org.apache.cordova.file-transfer": "0.4.6-dev",
     "org.apache.cordova.device-motion": "0.2.9",
     "org.apache.cordova.device-orientation": "0.3.9-dev",
-    "org.apache.cordova.geolocation": "0.3.10-dev",
     "org.apache.cordova.network-information": "0.2.11"
 }
 // BOTTOM OF METADATA

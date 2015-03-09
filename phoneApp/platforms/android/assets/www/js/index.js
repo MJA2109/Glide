@@ -309,8 +309,8 @@ function getCurrentLocation(){
     
     var options = {
         enableHighAccuracy: true,
-        timeout: 60000,
-        maximumAge: 0
+        timeout: 90000,
+        maximumAge: 5000
     }
 
     navigator.geolocation.getCurrentPosition(onSuccess, onFail, options);
@@ -323,7 +323,7 @@ function getCurrentLocation(){
     }
 
     function onFail(error){
-        //alert(JSON.stringify(error));
+        // alert(JSON.stringify(error));
         // alert("Unable to retrieve GPS position. Check GPS is turned on.");
         swal({
             title: "Error!", 
