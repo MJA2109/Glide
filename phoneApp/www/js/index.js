@@ -1,7 +1,7 @@
 //Initialize application. Set global variables.
 var app = {
-    //server: "http://143.239.74.17/Glide/api/handlers/mobileHandler.php",
-    server: "http://192.168.1.90/Glide/api/handlers/mobileHandler.php",
+    server: "http://143.239.74.17/Glide/api/handlers/mobileHandler.php",
+    // server: "http://192.168.1.90/Glide/api/handlers/mobileHandler.php",
     useNodeServer: false,
     nodeUrl : 'http://143.239.74:8000/',
     map: "",             //google map object
