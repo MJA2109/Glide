@@ -1253,7 +1253,7 @@ class GlideWebAPI extends GlideBaseAPI{
                           AND ex.merchant_id = mc.merchant_id
                           AND ex.is_deleted = 0
                           AND mc.is_deleted = 0
-                          AND ex.expense_approved <> 'Awating...' ";
+                          AND ex.expense_approved <> 'Awaiting...' ";
                 
                 //add for single user only
                 if($option == "singleUser"){
@@ -1558,14 +1558,15 @@ class GlideWebAPI extends GlideBaseAPI{
             $database = GlideWebAPI::connectDB();
             $adminId = $_SESSION["adminId"];
 
+
              $sql_1 = "SELECT merchant_name, ROUND(SUM(expense_cost), 2) as total_spend
                           FROM merchants mc, expenses ex
                           WHERE expense_date BETWEEN SUBDATE(CURDATE(), INTERVAL 1 YEAR ) AND NOW()
-                          AND mc.merchant_id = ex.merchant_id
-                          AND mc.admin_id = $adminId
+                          AND ex.admin_id = $adminId
+                          AND ex.merchant_id = mc.merchant_id
                           AND ex.is_deleted = 0
                           AND mc.is_deleted = 0
-                          AND ex.expense_approved <> 'Awaiting...' 
+                          AND ex.expense_approved <> 'Awaiting...'
                           GROUP BY merchant_name
                           ORDER BY expense_cost DESC 
                           LIMIT 8 ";
