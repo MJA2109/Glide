@@ -1,2 +1,1 @@
 # Glide - Expense Notification Service
-Glide is an Expense Notificaiton Service that allows employers receive real-time expense notifications from their employees. The service has two interacting parts; namely a web app, for use by employers, and a phone app, for use by employees. Communication between the web and phone app can be routed independently of the web application updates thus improving reliability and efficiency of notifications. The service has various other features that make the process of managing expenses easier for both employers and employees.
