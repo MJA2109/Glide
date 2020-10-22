@@ -1,1 +1,1 @@
-# Glide - Expense Notification Service
+# Glide - Realtime Notification Service
